@@ -1,0 +1,13 @@
+{
+  "schema": "bugbrain.corpus/1",
+  "cases": [
+    {
+      "key": "tiny_auth_change",
+      "path": "cases/auth.diff"
+    },
+    {
+      "key": "tiny_retry_change",
+      "path": "cases/retry.diff"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+diff --git a/app/auth.py b/app/auth.py
+index 1111111..2222222 100644
+--- a/app/auth.py
++++ b/app/auth.py
+@@ -10,4 +10,5 @@ def authorize(request):
+     user = request.user
+-    return user is not None and user.active
++    token = request.headers.get("token")
++    return token is not None
+diff --git a/app/cache.py b/app/cache.py
+index 3333333..4444444 100644
+--- a/app/cache.py
++++ b/app/cache.py
+@@ -20,3 +20,4 @@ async def refresh(key):
+     value = await load(key)
++    cache[key] = value
+     return value
+diff --git a/tests/test_api.py b/tests/test_api.py
+index 5555555..6666666 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -4,2 +4,3 @@ def test_response():
+     response = client.get("/v1/items")
++    assert response.status_code == 200

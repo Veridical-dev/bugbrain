@@ -1,0 +1,16 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# The source data is large and separately licensed. Download it with `bugbrain download`.
+data/*
+!data/README.md
+cache/
+out/

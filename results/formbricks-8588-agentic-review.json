@@ -1,0 +1,95 @@
+{
+  "schema": "bugbrain.published-review/1",
+  "status": "manually_graded_shadow_findings",
+  "contract": {
+    "holdout": "formbricks_8588_interaction_parity",
+    "arm": "biological",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "reviewers": 8,
+    "repository_checkout_exposed_to_model": true,
+    "repository_sandbox": "read-only",
+    "user_config_enabled": true
+  },
+  "repository_receipt": {
+    "base": "0ed9568c5c5ddbba116387bba85599e216fb9e73",
+    "head": "6a2646be5dd22b81726a05ab5e756db2b5c2dbf9",
+    "changed_files": 37,
+    "changed_files_sha256": "7da7758ec80b0fd6c1fc85f3651a2d555f924b2b74666700ad381eb8254d9e48",
+    "tracked_worktree_clean": true
+  },
+  "findings": [
+    {
+      "id": "F001",
+      "reviewer_id": "biological-reviewer-01",
+      "file": "apps/web/modules/ee/contacts/segments/lib/filter/survey-interaction.ts",
+      "line": 96,
+      "severity": "medium",
+      "comment": "Completed-response windows are evaluated from response creation rather than completion, so a response started outside the window and completed inside it may be classified unexpectedly.",
+      "evidence": "The in-memory and Prisma paths compare response.createdAt for completion operators; the model has no dedicated completion timestamp. This concern was not independently confirmed as a defect."
+    },
+    {
+      "id": "F002",
+      "reviewer_id": "biological-reviewer-02",
+      "file": "apps/web/modules/ee/contacts/segments/lib/filter/prisma-query.ts",
+      "line": 377,
+      "severity": "medium",
+      "comment": "Completed-survey windows use response creation time rather than a completion timestamp.",
+      "evidence": "The Prisma query combines finished=true with createdAt >= windowStart. This duplicates F001 and was not independently confirmed as a defect."
+    },
+    {
+      "id": "F003",
+      "reviewer_id": "biological-reviewer-03",
+      "file": "apps/web/modules/ee/contacts/segments/lib/filter/survey-interaction.ts",
+      "line": 96,
+      "severity": "medium",
+      "comment": "Completion windows are measured from response creation rather than completion.",
+      "evidence": "The evaluator compares createdAt even when requireFinished is true. This duplicates F001 and was not independently confirmed as a defect."
+    },
+    {
+      "id": "F004",
+      "reviewer_id": "biological-reviewer-03",
+      "file": "apps/web/modules/ee/contacts/segments/components/segment-filter.tsx",
+      "line": 897,
+      "severity": "medium",
+      "comment": "The survey-option loader has no visible error or retry state, which can leave an empty picker without explaining why.",
+      "evidence": "The effect handles result.data but has no error state or retry path. The unhandled-rejection claim was overstated because the action normally returns a serverError object."
+    },
+    {
+      "id": "F005",
+      "reviewer_id": "biological-reviewer-05",
+      "file": "apps/web/modules/ee/contacts/api/v1/client/[workspaceId]/user/lib/segments.ts",
+      "line": 82,
+      "severity": "high",
+      "comment": "The new in-memory fast path and the Prisma membership path implement mixed AND/OR connectors with different precedence, so contact sync can disagree with previews.",
+      "evidence": "The in-memory combiner evaluates grouped AND terms separated by OR, while the Prisma builder accumulates sibling top-level AND and OR arrays. A contact matching only the OR branch can receive a different result."
+    },
+    {
+      "id": "F006",
+      "reviewer_id": "biological-reviewer-06",
+      "file": "apps/web/modules/ee/contacts/api/v1/client/[workspaceId]/user/lib/segments.ts",
+      "line": 82,
+      "severity": "high",
+      "comment": "Interaction-only segments are evaluated with connector semantics that differ from the existing Prisma path.",
+      "evidence": "For A OR B AND C, the in-memory path returns A OR (B AND C), while the Prisma shape requires C AND (A OR B). This duplicates the root reported by F005."
+    },
+    {
+      "id": "F007",
+      "reviewer_id": "biological-reviewer-07",
+      "file": "apps/web/modules/ee/contacts/api/v1/client/[workspaceId]/user/lib/segments.ts",
+      "line": 82,
+      "severity": "high",
+      "comment": "Do not short-circuit interaction-only segments while the in-memory and Prisma evaluators disagree on mixed connector precedence.",
+      "evidence": "For A=true, B=false, C=false with connectors [null, or, and], the in-memory result is true and the Prisma condition is false. This duplicates the root reported by F005."
+    },
+    {
+      "id": "F008",
+      "reviewer_id": "biological-reviewer-08",
+      "file": "apps/web/modules/ee/contacts/segments/actions.ts",
+      "line": 94,
+      "severity": "high",
+      "comment": "Reject survey-interaction references to surveys already targeted by the segment; the UI hides these circular references but the server-side write path only verifies workspace ownership.",
+      "evidence": "Create and update use the same ownership-only validation, while the picker explicitly excludes segment.surveys and documents the circular dependency. A direct action request can bypass the UI invariant."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+diff --git a/app/jobs.py b/app/jobs.py
+index 3333333..4444444 100644
+--- a/app/jobs.py
++++ b/app/jobs.py
+@@ -20,4 +20,7 @@ async def run(job):
+-    return await execute(job)
++    for attempt in range(3):
++        try:
++            return await execute(job)
++        except Exception:
++            continue

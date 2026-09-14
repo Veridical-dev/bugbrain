@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If BugBrain makes your experiment stranger or more reproducible, please cite it."
+title: "BugBrain: Connectome-routed agentic code review"
+type: software
+version: 0.1.0
+date-released: 2026-09-14
+authors:
+  - name: "Veridical Research"
+    email: "contact@veridical.dev"
+repository-code: "https://github.com/Veridical-dev/bugbrain"
+url: "https://github.com/Veridical-dev/bugbrain"
+license: Apache-2.0
+keywords:
+  - code review
+  - connectomics
+  - Drosophila
+  - reservoir computing
+  - agentic AI
+abstract: >-
+  BugBrain routes independent agentic code reviewers using a fixed reservoir
+  derived from the FlyWire adult fruit-fly connectome and evaluates the
+  biological topology against matched graph controls.

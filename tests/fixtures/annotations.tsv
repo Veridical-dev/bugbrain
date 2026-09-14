@@ -1,0 +1,9 @@
+root_id	flow	super_class	cell_class	cell_type	top_nt	top_nt_conf	known_nt
+100	afferent	sensory	visual	input-A	acetylcholine	0.99	""
+101	afferent	sensory	olfactory	input-B	acetylcholine	0.99	""
+102	intrinsic	central	integrator	middle-A	acetylcholine	0.90	""
+103	intrinsic	central	integrator	middle-B	GABA	0.95	""
+104	intrinsic	central	integrator	middle-C	acetylcholine	0.90	""
+105	efferent	descending	output	output-A	glutamate	0.80	""
+106	efferent	descending	output	output-B	acetylcholine	0.90	""
+107	intrinsic	central	other	unused	acetylcholine	0.90	""

@@ -1,0 +1,60 @@
+{
+  "schema": "bugbrain.truth-register/1",
+  "prs": [{
+    "key": "formbricks_8588_interaction_parity",
+    "repo": "formbricks/formbricks",
+    "pull": 8588,
+    "base": "0ed9568c5c5ddbba116387bba85599e216fb9e73",
+    "head": "6a2646be5dd22b81726a05ab5e756db2b5c2dbf9",
+    "registration": "pre-BugBrain-agentic-run, historical-audit-informed",
+    "truth": [
+    {
+      "truth_id": "formbricks-shared-filter-value-union-widening",
+      "truth_register": "pre",
+      "severity_calibrated": "medium",
+      "root_cause": "The shared segment-filter value union admits the structured survey-interaction value for unrelated filter kinds, allowing an object to reach evaluators that expect scalar values."
+    },
+    {
+      "truth_id": "formbricks-hidden-retained-circular-survey-selection",
+      "truth_register": "pre",
+      "severity_calibrated": "medium",
+      "root_cause": "The picker hides already-gated surveys but neither clears retained IDs nor enforces a circular-reference invariant on the write path."
+    },
+    {
+      "truth_id": "formbricks-any-scope-self-dependency",
+      "truth_register": "pre",
+      "severity_calibrated": "medium",
+      "root_cause": "surveyScope any includes the survey being gated, while neither segment writes nor survey assignment reject the resulting self-dependency."
+    },
+    {
+      "truth_id": "formbricks-evaluate-segment-drops-survey-interaction",
+      "truth_register": "pre",
+      "severity_calibrated": "high",
+      "root_cause": "The generic in-memory evaluateSegment chain omits surveyInteraction leaves, silently corrupting segment membership.",
+      "follow_up_commit": "4fe157dfc9caf447cd2cd1964aed56dddd523793"
+    },
+    {
+      "truth_id": "formbricks-unbounded-survey-reference-surface",
+      "truth_register": "pre",
+      "severity_calibrated": "medium",
+      "root_cause": "The survey-reference action and picker materialize an unbounded workspace survey list and accept an unbounded ID collection.",
+      "follow_up_commit": "4fe157dfc9caf447cd2cd1964aed56dddd523793"
+    },
+    {
+      "truth_id": "formbricks-per-segment-exception-erases-memberships",
+      "truth_register": "pre",
+      "severity_calibrated": "high",
+      "root_cause": "A malformed in-memory segment can throw into the outer catch and return an empty result, erasing memberships already computed for other segments.",
+      "competitor": "CodeRabbit",
+      "follow_up_commit": "dff979bdbe556586d4bc4dce3eb8d2fb5e80fd92"
+    },
+    {
+      "truth_id": "formbricks-mixed-and-or-precedence",
+      "truth_register": "pre",
+      "severity_calibrated": "high",
+      "root_cause": "The Prisma filter construction does not preserve mixed AND/OR precedence, violating the PR's in-memory/Prisma parity objective.",
+      "follow_up_commit": "4fe157dfc9caf447cd2cd1964aed56dddd523793"
+    }
+    ]
+  }]
+}

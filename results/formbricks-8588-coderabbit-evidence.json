@@ -1,0 +1,28 @@
+{
+  "schema": "bugbrain.competitor-evidence/1",
+  "pull_requests": [{
+    "key": "formbricks_8588_interaction_parity",
+    "repo": "formbricks/formbricks",
+    "pull": 8588,
+    "reviewed_head": "6a2646be5dd22b81726a05ab5e756db2b5c2dbf9",
+    "comparison_relation": "same_commit",
+    "competitor": "CodeRabbit",
+    "competitor_findings": [
+    {
+      "id": "3620195988",
+      "severity": "major",
+      "path": "apps/web/modules/ee/contacts/api/v1/client/[workspaceId]/user/lib/segments.ts",
+      "summary": "An unhandled in-memory evaluator exception can bubble to the outer fallback and erase all already-computed segment memberships.",
+      "url": "https://github.com/formbricks/formbricks/pull/8588#discussion_r3620195988"
+    },
+    {
+      "id": "3620196128",
+      "severity": "major",
+      "path": "apps/web/modules/ee/contacts/api/v1/client/[workspaceId]/user/lib/update-user.ts",
+      "summary": "Duplicated responses/displays select shapes can drift and should share one constant.",
+      "url": "https://github.com/formbricks/formbricks/pull/8588#discussion_r3620196128"
+    }
+    ],
+    "post_review_fix": "4fe157dfc9caf447cd2cd1964aed56dddd523793"
+  }]
+}

@@ -1,0 +1,9 @@
+diff --git a/app/auth.py b/app/auth.py
+index 1111111..2222222 100644
+--- a/app/auth.py
++++ b/app/auth.py
+@@ -10,4 +10,5 @@ def authorize(request):
+     user = request.user
+-    return user is not None and user.active
++    token = request.headers.get("token")
++    return token is not None

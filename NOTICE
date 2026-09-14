@@ -1,0 +1,26 @@
+BugBrain
+Copyright 2026 Veridical
+
+This distribution does not contain the FlyWire-derived graph data. The
+`bugbrain download` command retrieves separately licensed files from:
+
+  E. Correig-Fraga, R. Guimerà, and M. Sales-Pardo,
+  “Data and source data for ‘Structure alone supports efficient visual
+  computation in the Drosophila visual system’,” version 1.0.0,
+  Zenodo (2026), https://doi.org/10.5281/zenodo.21549559
+
+That release is derived from FlyWire Whole-brain Connectome Connectivity Data
+v783, https://doi.org/10.5281/zenodo.10676866. Downloaded and derived data remain
+subject to their source licenses and attribution requirements.
+
+The reservoir formulation was informed by the European Space Agency's public
+`fly_connectome` reference implementation at commit
+90679d672cd25905758b3abc6674fa6a28525d52.
+
+FlyWire, CodeRabbit, Formbricks, Codex, GitHub, ESA, and all other third-party
+names are the property of their respective owners. BugBrain is an independent
+experiment and is not affiliated with or endorsed by those projects or entities.
+
+The original BugBrain logo in `assets/bugbrain-logo.png` was generated with
+OpenAI image generation from the prompt recorded in BRAND.md and is distributed
+with this project under Apache-2.0.

@@ -1,0 +1,59 @@
+{
+  "schema": "bugbrain.public-results/1",
+  "date": "2026-09-14",
+  "mechanism": {
+    "protocol": {
+      "projects": 4,
+      "seeds": 50,
+      "paired_trials": 200,
+      "seed_start": 1714
+    },
+    "mean_heuristic_micro_f1": {
+      "biological": 0.376117,
+      "random_topology": 0.374884,
+      "weight_shuffled": 0.371842,
+      "semantic": 0.378743
+    },
+    "biological_deltas": {
+      "random_topology": {
+        "mean": 0.001234,
+        "seed_block_bootstrap_95_interval": [-0.006679, 0.009133]
+      },
+      "weight_shuffled": {
+        "mean": 0.004276,
+        "seed_block_bootstrap_95_interval": [-0.003432, 0.012]
+      },
+      "semantic": {
+        "mean": -0.002626,
+        "seed_block_bootstrap_95_interval": [-0.010447, 0.005011]
+      }
+    },
+    "conclusion": "no_measurable_biological_topology_advantage"
+  },
+  "agentic_case_study": {
+    "repository": "formbricks/formbricks",
+    "pull_request": 8588,
+    "base": "0ed9568c5c5ddbba116387bba85599e216fb9e73",
+    "head": "6a2646be5dd22b81726a05ab5e756db2b5c2dbf9",
+    "truth_roots": 7,
+    "bugbrain": {
+      "reviewer_sessions": 8,
+      "comments": 8,
+      "credited_comments": 4,
+      "unique_roots": 2,
+      "precision": 0.5,
+      "recall": 0.285714,
+      "f1": 0.363636
+    },
+    "coderabbit": {
+      "comments": 2,
+      "credited_comments": 1,
+      "unique_roots": 1,
+      "precision": 0.5,
+      "recall": 0.142857,
+      "f1": 0.222222
+    },
+    "credited_root_overlap": 0,
+    "comparison_is_model_or_budget_matched": false
+  }
+}

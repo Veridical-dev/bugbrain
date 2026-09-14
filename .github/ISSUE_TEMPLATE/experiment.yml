@@ -1,0 +1,33 @@
+name: Experiment proposal
+description: Propose a falsifiable way to make the fly earn its keep.
+title: "[experiment]: "
+labels: ["experiment"]
+body:
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Hypothesis
+      description: What result would support or falsify the idea?
+    validations:
+      required: true
+  - type: textarea
+    id: protocol
+    attributes:
+      label: Frozen protocol
+      description: Corpus, seeds, models, budgets, controls, and grading plan.
+    validations:
+      required: true
+  - type: textarea
+    id: leakage
+    attributes:
+      label: Leakage and confound checks
+      description: How will truth stay out of routing, and which variables are matched?
+    validations:
+      required: true
+  - type: checkboxes
+    id: commitment
+    attributes:
+      label: Publication commitment
+      options:
+        - label: I will report null and unfavorable results too.
+          required: true

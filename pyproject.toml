@@ -1,0 +1,36 @@
+[project]
+name = "bugbrain"
+version = "0.1.0"
+description = "Route agentic code reviewers through a real fruit-fly connectome. For science. Probably."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [{ name = "Veridical", email = "contact@veridical.dev" }]
+keywords = ["code-review", "connectome", "drosophila", "reservoir-computing", "neuromorphic"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = ["numpy>=2.0"]
+
+[project.urls]
+Homepage = "https://github.com/Veridical-dev/bugbrain"
+Repository = "https://github.com/Veridical-dev/bugbrain"
+Issues = "https://github.com/Veridical-dev/bugbrain/issues"
+Paper = "https://github.com/Veridical-dev/bugbrain/blob/main/PAPER.md"
+
+[project.scripts]
+bugbrain = "flywire_review.cli:main"
+flywire-review = "flywire_review.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["flywire_review*"]

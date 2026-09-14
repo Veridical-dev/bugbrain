@@ -1,0 +1,83 @@
+{
+  "schema": "bugbrain.manual-source-grades/1",
+  "key": "formbricks_8588_interaction_parity",
+  "reviewed_head": "6a2646be5dd22b81726a05ab5e756db2b5c2dbf9",
+  "method": "Manual exact-head validation against a seven-root pre-run register",
+  "bugbrain": [
+    {
+      "id": "F001",
+      "reviewer": "biological-reviewer-01",
+      "topic": "completion windows use response creation time",
+      "truth_id": null,
+      "classification": "unregistered product-semantics concern",
+      "reason": "The implementation explicitly defines windows by createdAt, has no dedicated completion timestamp, and has no independent confirmation that completion time was intended."
+    },
+    {
+      "id": "F002",
+      "reviewer": "biological-reviewer-02",
+      "topic": "completion windows use response creation time",
+      "truth_id": null,
+      "classification": "duplicate unregistered product-semantics concern",
+      "reason": "Same causal claim as F001; not independently confirmed as a defect."
+    },
+    {
+      "id": "F003",
+      "reviewer": "biological-reviewer-03",
+      "topic": "completion windows use response creation time",
+      "truth_id": null,
+      "classification": "duplicate unregistered product-semantics concern",
+      "reason": "Same causal claim as F001; not independently confirmed as a defect."
+    },
+    {
+      "id": "F004",
+      "reviewer": "biological-reviewer-03",
+      "topic": "survey picker has no visible error and retry state",
+      "truth_id": null,
+      "classification": "unregistered UX resilience concern",
+      "reason": "The missing UX state is observable, but the ordinary unhandled-rejection path was overstated and no registered correctness root supports credit."
+    },
+    {
+      "id": "F005",
+      "reviewer": "biological-reviewer-05",
+      "topic": "mixed AND/OR precedence differs across evaluators",
+      "truth_id": "formbricks-mixed-and-or-precedence",
+      "classification": "confirmed consequential correctness defect"
+    },
+    {
+      "id": "F006",
+      "reviewer": "biological-reviewer-06",
+      "topic": "mixed AND/OR precedence differs across evaluators",
+      "truth_id": "formbricks-mixed-and-or-precedence",
+      "classification": "duplicate confirmed consequential correctness defect"
+    },
+    {
+      "id": "F007",
+      "reviewer": "biological-reviewer-07",
+      "topic": "mixed AND/OR precedence differs across evaluators",
+      "truth_id": "formbricks-mixed-and-or-precedence",
+      "classification": "duplicate confirmed consequential correctness defect"
+    },
+    {
+      "id": "F008",
+      "reviewer": "biological-reviewer-08",
+      "topic": "server accepts circular survey references excluded by the UI",
+      "truth_id": "formbricks-hidden-retained-circular-survey-selection",
+      "classification": "confirmed consequential correctness defect"
+    }
+  ],
+  "competitor": [
+    {
+      "id": "3620195988",
+      "topic": "per-segment exception can erase earlier memberships",
+      "truth_id": "formbricks-per-segment-exception-erases-memberships",
+      "classification": "confirmed consequential correctness defect",
+      "reason": "The author confirmed and fixed the failure."
+    },
+    {
+      "id": "3620196128",
+      "topic": "duplicated select shapes may drift",
+      "truth_id": null,
+      "classification": "accepted maintainability advice, not a demonstrated present defect"
+    }
+  ]
+}
