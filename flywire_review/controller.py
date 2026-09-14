@@ -9,7 +9,7 @@ import time
 from pathlib import Path
 from typing import Any, Sequence
 
-from .policy import classify_codex_item, predict_history
+from .policy import DEFAULT_ACTIONS, TRAJECTORY_SCHEMA, classify_codex_item, predict_history
 
 
 RUN_SCHEMA = "bugbrain.live-controller/1"
@@ -544,4 +544,55 @@ object with status, a concise summary, concrete evidence, and any remaining next
         "reward": verifier["reward"] if verifier else None,
     }
     _atomic_json(args.out_dir / "run.json", payload)
+    if args.trajectory_key:
+        if verifier is None:
+            raise ValueError("A verifier is required when exporting a direct-agent trajectory")
+        previous: dict[str, Any] = {"status": "episode_started"}
+        steps = []
+        for position, tool in enumerate(receipt["tool_receipts"]):
+            action = str(tool["action"])
+            steps.append(
+                {
+                    "observation": {
+                        "goal": args.goal,
+                        "step": position,
+                        "previous_action": steps[-1]["action"] if steps else "none",
+                        "previous_result": previous,
+                    },
+                    "action": action,
+                    "reward": 0.0,
+                }
+            )
+            previous = dict(tool)
+        steps.append(
+            {
+                "observation": {
+                    "goal": args.goal,
+                    "step": len(steps),
+                    "previous_action": steps[-1]["action"] if steps else "none",
+                    "previous_result": previous,
+                },
+                "action": "stop",
+                "reward": verifier["reward"],
+            }
+        )
+        trajectory = {
+            "schema": TRAJECTORY_SCHEMA,
+            "actions": list(DEFAULT_ACTIONS),
+            "episodes": [
+                {
+                    "key": args.trajectory_key,
+                    "split": args.trajectory_split,
+                    "metadata": {
+                        "source": "bugbrain direct-run",
+                        "run": str(args.out_dir / "run.json"),
+                        "verifier": verifier["argv"],
+                        "model": args.model,
+                        "reasoning_effort": args.reasoning_effort,
+                    },
+                    "steps": steps,
+                }
+            ],
+        }
+        _atomic_json(args.out_dir / "trajectory.json", trajectory)
     return payload

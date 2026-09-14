@@ -258,6 +258,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Run the same Codex worker directly as a standard agentic baseline",
     )
     _add_live_agent_options(direct_parser)
+    direct_parser.add_argument("--trajectory-key")
+    direct_parser.add_argument(
+        "--trajectory-split",
+        choices=("train", "validation", "test"),
+        default="train",
+    )
     return parser
 
 

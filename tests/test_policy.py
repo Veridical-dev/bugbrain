@@ -15,7 +15,9 @@ from flywire_review.policy import (
     ObservationHasher,
     Trajectory,
     TrajectoryStep,
+    _softmax,
     build_sparse_core,
+    discounted_returns,
     import_codex_jsonl,
     load_connectome_checkpoint,
     load_policy_checkpoint,
@@ -128,8 +130,30 @@ class ConnectomePolicyTests(unittest.TestCase):
     def test_encoder_does_not_fit_on_holdout(self) -> None:
         encoder = ObservationHasher(width=32, seed=8).fit([{"phase": "train-only"}])
         before = encoder.idf.copy()
-        encoder.transform([{"phase": "holdout-secret"}])
+        transformed = encoder.transform([{"phase": "holdout-secret"}])
         np.testing.assert_array_equal(before, encoder.idf)
+        self.assertAlmostEqual(float(np.linalg.norm(transformed[0])), 1.0)
+
+    def test_discounted_terminal_reward_reaches_earlier_actions(self) -> None:
+        episode = Trajectory(
+            "reward",
+            "train",
+            (
+                TrajectoryStep({"step": 0}, "search"),
+                TrajectoryStep({"step": 1}, "inspect"),
+                TrajectoryStep({"step": 2}, "stop", 1.0),
+            ),
+            {},
+        )
+        np.testing.assert_allclose(
+            discounted_returns(episode),
+            np.asarray([0.97**2, 0.97, 1.0]),
+        )
+
+    def test_softmax_is_stable_for_large_logits(self) -> None:
+        probabilities = _softmax(np.asarray([10_000.0, 10_001.0]))
+        self.assertTrue(np.all(np.isfinite(probabilities)))
+        self.assertAlmostEqual(float(np.sum(probabilities)), 1.0)
 
     def test_sparse_controls_preserve_degrees_and_weight_multiset(self) -> None:
         graph, annotations = synthetic_graph()
@@ -194,6 +218,13 @@ class ConnectomePolicyTests(unittest.TestCase):
                 linear_encoder,
                 [step.observation for step in episodes[-1].steps],
             )
+            for arm in ("weight_shuffled", "degree_rewired"):
+                _, _, arm_receipt = load_policy_checkpoint(
+                    Path(temporary) / f"{arm}-seed-7.npz",
+                    graph,
+                    annotations,
+                )
+                self.assertEqual(arm_receipt["arm"], arm)
         self.assertEqual(receipt["topology_sha256"], result["base_graph"]["topology_sha256"])
         self.assertIn(prediction["next_action"], DEFAULT_ACTIONS)
         self.assertEqual(prediction["history_length"], len(episodes[-1].steps))
