@@ -19,6 +19,8 @@ Changes to experiments must preserve the parts that make the joke defensible:
 
 - preregister the corpus, seed range, model, budget, and grading rubric;
 - keep defect truth out of features, training, routing, and reviewer prompts;
+- split learned-policy trajectories by repository or task family, never by step;
+- derive policy rewards from independent verifiers, not model self-reports;
 - include matched topology and weight controls for biological claims;
 - persist failed calls and null results;
 - count duplicate findings against precision but only once toward root recall;
@@ -36,6 +38,7 @@ If a contribution changes an experimental contract, document the old and new con
 - reviewer-budget-matched baselines;
 - interactive routing visualizations;
 - platform-neutral agent backends;
+- real, permission-safe Codex trajectory datasets with hidden verifiers;
 - documentation that makes the project funnier without making the claims worse.
 
 ## Pull requests

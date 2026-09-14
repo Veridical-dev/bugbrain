@@ -1,0 +1,113 @@
+{
+  "schema": "bugbrain.trajectories/1",
+  "description": "Synthetic mechanics fixture. Replace with imported Codex JSONL traces before drawing conclusions.",
+  "actions": [
+    "search",
+    "inspect",
+    "test",
+    "reason",
+    "patch",
+    "verify",
+    "stop"
+  ],
+  "episodes": [
+    {
+      "key": "auth-cookie-train",
+      "split": "train",
+      "metadata": {"reward_source": "synthetic smoke verifier"},
+      "steps": [
+        {"observation": {"goal": "repair authentication regression", "state": "symbol location unknown"}, "action": "search"},
+        {"observation": {"goal": "repair authentication regression", "state": "candidate symbol found", "previous_exit": 0}, "action": "inspect"},
+        {"observation": {"goal": "repair authentication regression", "state": "runtime behavior uncertain", "changed_file": "auth.py"}, "action": "test"},
+        {"observation": {"goal": "repair authentication regression", "state": "targeted test failed", "previous_exit": 1}, "action": "reason"},
+        {"observation": {"goal": "repair authentication regression", "state": "root cause and repair identified"}, "action": "patch"},
+        {"observation": {"goal": "repair authentication regression", "state": "working tree changed"}, "action": "verify"},
+        {"observation": {"goal": "repair authentication regression", "state": "verifier passed", "previous_exit": 0}, "action": "stop", "reward": 1.0}
+      ]
+    },
+    {
+      "key": "retry-race-train",
+      "split": "train",
+      "metadata": {"reward_source": "synthetic smoke verifier"},
+      "steps": [
+        {"observation": {"goal": "review retry ordering", "state": "callers unknown"}, "action": "search"},
+        {"observation": {"goal": "review retry ordering", "state": "callers listed", "previous_exit": 0}, "action": "inspect"},
+        {"observation": {"goal": "review retry ordering", "state": "concurrency invariant uncertain"}, "action": "test"},
+        {"observation": {"goal": "review retry ordering", "state": "race reproduced", "previous_exit": 1}, "action": "reason"},
+        {"observation": {"goal": "review retry ordering", "state": "ordering repair selected"}, "action": "patch"},
+        {"observation": {"goal": "review retry ordering", "state": "patch applied and unverified"}, "action": "verify"},
+        {"observation": {"goal": "review retry ordering", "state": "race test passed", "previous_exit": 0}, "action": "stop", "reward": 1.0}
+      ]
+    },
+    {
+      "key": "migration-train",
+      "split": "train",
+      "metadata": {"reward_source": "synthetic smoke verifier"},
+      "steps": [
+        {"observation": {"goal": "repair schema migration", "state": "schema consumers unknown"}, "action": "search"},
+        {"observation": {"goal": "repair schema migration", "state": "consumer paths available", "previous_exit": 0}, "action": "inspect"},
+        {"observation": {"goal": "repair schema migration", "state": "backward compatibility unknown"}, "action": "test"},
+        {"observation": {"goal": "repair schema migration", "state": "old fixture rejected", "previous_exit": 1}, "action": "reason"},
+        {"observation": {"goal": "repair schema migration", "state": "compatibility repair ready"}, "action": "patch"},
+        {"observation": {"goal": "repair schema migration", "state": "migration changed"}, "action": "verify"},
+        {"observation": {"goal": "repair schema migration", "state": "old and new fixtures pass", "previous_exit": 0}, "action": "stop", "reward": 1.0}
+      ]
+    },
+    {
+      "key": "cache-key-train",
+      "split": "train",
+      "metadata": {"reward_source": "synthetic smoke verifier"},
+      "steps": [
+        {"observation": {"goal": "repair cache isolation", "state": "key construction unknown"}, "action": "search"},
+        {"observation": {"goal": "repair cache isolation", "state": "key definition found", "previous_exit": 0}, "action": "inspect"},
+        {"observation": {"goal": "repair cache isolation", "state": "tenant collision uncertain"}, "action": "test"},
+        {"observation": {"goal": "repair cache isolation", "state": "collision reproduced", "previous_exit": 1}, "action": "reason"},
+        {"observation": {"goal": "repair cache isolation", "state": "tenant-aware key ready"}, "action": "patch"},
+        {"observation": {"goal": "repair cache isolation", "state": "cache key changed"}, "action": "verify"},
+        {"observation": {"goal": "repair cache isolation", "state": "isolation verifier passed", "previous_exit": 0}, "action": "stop", "reward": 1.0}
+      ]
+    },
+    {
+      "key": "permission-validation",
+      "split": "validation",
+      "metadata": {"reward_source": "synthetic smoke verifier"},
+      "steps": [
+        {"observation": {"goal": "repair permission boundary", "state": "authorization source unknown"}, "action": "search"},
+        {"observation": {"goal": "repair permission boundary", "state": "authorization source located", "previous_exit": 0}, "action": "inspect"},
+        {"observation": {"goal": "repair permission boundary", "state": "denial behavior uncertain"}, "action": "test"},
+        {"observation": {"goal": "repair permission boundary", "state": "unauthorized access reproduced", "previous_exit": 1}, "action": "reason"},
+        {"observation": {"goal": "repair permission boundary", "state": "guard repair ready"}, "action": "patch"},
+        {"observation": {"goal": "repair permission boundary", "state": "guard changed"}, "action": "verify"},
+        {"observation": {"goal": "repair permission boundary", "state": "permission verifier passed", "previous_exit": 0}, "action": "stop", "reward": 1.0}
+      ]
+    },
+    {
+      "key": "pagination-test",
+      "split": "test",
+      "metadata": {"reward_source": "synthetic smoke verifier"},
+      "steps": [
+        {"observation": {"goal": "repair pagination cursor", "state": "cursor consumers unknown"}, "action": "search"},
+        {"observation": {"goal": "repair pagination cursor", "state": "cursor consumer found", "previous_exit": 0}, "action": "inspect"},
+        {"observation": {"goal": "repair pagination cursor", "state": "final page behavior uncertain"}, "action": "test"},
+        {"observation": {"goal": "repair pagination cursor", "state": "duplicate page reproduced", "previous_exit": 1}, "action": "reason"},
+        {"observation": {"goal": "repair pagination cursor", "state": "cursor repair selected"}, "action": "patch"},
+        {"observation": {"goal": "repair pagination cursor", "state": "pagination code changed"}, "action": "verify"},
+        {"observation": {"goal": "repair pagination cursor", "state": "pagination verifier passed", "previous_exit": 0}, "action": "stop", "reward": 1.0}
+      ]
+    },
+    {
+      "key": "webhook-test",
+      "split": "test",
+      "metadata": {"reward_source": "synthetic smoke verifier"},
+      "steps": [
+        {"observation": {"goal": "repair webhook signature", "state": "verification function unknown"}, "action": "search"},
+        {"observation": {"goal": "repair webhook signature", "state": "verification function located", "previous_exit": 0}, "action": "inspect"},
+        {"observation": {"goal": "repair webhook signature", "state": "tampered payload behavior uncertain"}, "action": "test"},
+        {"observation": {"goal": "repair webhook signature", "state": "tampered payload accepted", "previous_exit": 1}, "action": "reason"},
+        {"observation": {"goal": "repair webhook signature", "state": "raw-body repair ready"}, "action": "patch"},
+        {"observation": {"goal": "repair webhook signature", "state": "signature code changed"}, "action": "verify"},
+        {"observation": {"goal": "repair webhook signature", "state": "signature verifier passed", "previous_exit": 0}, "action": "stop", "reward": 1.0}
+      ]
+    }
+  ]
+}

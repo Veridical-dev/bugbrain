@@ -1,0 +1,14 @@
+[
+  {
+    "goal": "Review the authentication change",
+    "phase": "need_symbol",
+    "repository": "unseen-project",
+    "previous_exit": 0
+  },
+  {
+    "goal": "Review the authentication change",
+    "phase": "symbol_found",
+    "repository": "unseen-project",
+    "previous_exit": 0
+  }
+]

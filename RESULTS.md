@@ -9,6 +9,11 @@ BugBrain produced one negative result and one intriguing case study:
 
 These statements answer different questions. Neither licenses a “fly brain beats code review” headline.
 
+Version 0.2 also contains a trainable connectome-constrained action policy. Its
+bundled corpus is synthetic, and the successful FlyWire smoke run is not listed
+as a result: real repository trajectories, held-out verifiers, paired budgets,
+and confidence intervals are still required.
+
 ## Mechanism experiment
 
 Fifty consecutive seeds were run across four leave-one-project-out folds: 200 paired held-out trials.

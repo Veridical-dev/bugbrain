@@ -13,7 +13,7 @@
   <a href="https://doi.org/10.5281/zenodo.21549559"><img alt="Data DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.21549559.svg"></a>
 </p>
 
-BugBrain is an open experiment that routes agentic code reviewers using the wiring diagram of a real adult fruit-fly brain. Code changes become signals, signals pass through a fixed FlyWire connectome reservoir, and the resulting state helps assign files and review lenses to independent Codex agents.
+BugBrain is an open experiment that routes—and now trains a high-level controller for—agentic code reviewers using the wiring diagram of a real adult fruit-fly brain. Code changes become signals, signals pass through a fixed FlyWire connectome, and the resulting state either assigns review work or chooses the next repository action for a Codex worker.
 
 The connectome does **not** understand TypeScript. It is routing metadata, not evidence. The agents still have to inspect the repository and justify every finding from code.
 
@@ -25,22 +25,22 @@ We ran two different experiments, and honesty requires keeping both:
 |---|---|
 | Does biological fly wiring beat carefully matched random reservoirs at routing code? | **No measurable advantage.** All paired bootstrap intervals crossed zero. |
 | Can a fly-routed agent swarm find real bugs when every agent gets full repository access? | On one Formbricks PR, **BugBrain found 2 verified defect roots CodeRabbit missed; CodeRabbit found 1 BugBrain missed.** |
+| Can a trained connectome controller learn useful coding-agent actions? | **The reproducible experiment now exists; the real multi-repository run is not yet claimed.** |
 
 That is not proof that flies are better code reviewers. It is proof that weird experiments become useful when they have controls, receipts, and the courage to publish the embarrassing part.
 
-Read the full [paper](PAPER.md), the compact [results](RESULTS.md), and the [architecture](docs/ARCHITECTURE.md).
+Read the full [paper](PAPER.md), the compact [results](RESULTS.md), the [architecture](docs/ARCHITECTURE.md), and the new [training protocol](docs/TRAINING.md).
 
 ## What happens under the hood
 
 ```text
-PR diff ──► code features ──► fruit-fly reservoir ──► focus bundles + review lenses
-                                                              │
-                                                              ▼
-                                  independent Codex agents with full read-only repo access
-                                                              │
-                                                              ▼
-                                                evidence-backed review findings
+                                ┌─► focus bundles ─► independent Codex reviewers
+repository observation ─► fly ─┤
+                                └─► trained action policy ─► search / inspect / test /
+                                                             reason / patch / verify / stop
 ```
+
+In trained-controller mode, Codex supplies the language reasoning and concrete tool arguments while BugBrain chooses the high-level action. The worker still gets the full repository and normal shell/tool capacity. The connectome is a controller, not a substitute language model.
 
 The biological arm uses a 512-neuron, 6,421-edge core selected from the 139,255-neuron FlyWire FAFB v783 graph. An echo-state-network adaptation applies three independent recurrent passes and a ridge readout trained on other repositories. Matched controls preserve graph size, edge count, weight multiset, self-loop count, input projection, readout dimension, and target spectral radius.
 
@@ -61,6 +61,22 @@ uv run bugbrain reservoir-poc \
 ```
 
 The bundled corpus is deliberately tiny: it verifies that the full pipeline works, not that the fly deserves tenure.
+
+### Train the fly-constrained controller
+
+Record real `codex exec --json` trajectories, attach verifier rewards, and train paired biological and null arms:
+
+```bash
+uv run bugbrain trace-import \
+  --jsonl trace.jsonl --key task-001 --split train \
+  --goal "Review the authentication change" --reward 1 \
+  --out trajectories.json
+uv run bugbrain policy-train \
+  --trajectories trajectories.json --neurons 2048 --seeds 10 \
+  --checkpoint-dir out/checkpoints --out out/policy-report.json
+```
+
+The policy backpropagates through fixed FlyWire edges and learns recurrent flow gains plus an action decoder. Every run includes a weight shuffle, a degree-preserving rewiring, and an observation-only control. See [Training BugBrain](docs/TRAINING.md) before interpreting any number; the bundled trajectories are a mechanics fixture, not a result.
 
 ### Run an agentic review
 
@@ -87,6 +103,7 @@ See [Reproducing the experiments](docs/REPRODUCING.md) for the full protocol.
 
 - A production-ready GitHub bot
 - A claim that neural anatomy magically understands source code
+- A fine-tuned LLM or a biophysically faithful digital fly
 - A benchmark proving superiority over CodeRabbit, Codex, or anyone else
 - Affiliated with or endorsed by the FlyWire Consortium, the cited researchers, Formbricks, CodeRabbit, or ESA
 - Medical advice for flies
@@ -95,7 +112,7 @@ See [Reproducing the experiments](docs/REPRODUCING.md) for the full protocol.
 
 Because “we tried something strange and measured it properly” is more interesting than another architecture diagram with no falsifiable claim. The controls are the product here. If someone finds a representation, task, or learning rule where the biological graph consistently beats its nulls, we want to know.
 
-Good first contributions include new preregistered PR corpora, stronger graph nulls, alternative neuron selections, routing visualizations, and attempts to reproduce or falsify the current result. Please read [CONTRIBUTING.md](CONTRIBUTING.md).
+Good first contributions include preregistered Codex trajectory corpora, hidden repository verifiers, stronger graph nulls, alternative neuron selections, routing visualizations, and attempts to reproduce or falsify the current result. Please read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Data, attribution, and license
 

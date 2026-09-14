@@ -145,7 +145,28 @@ This work is a small research prototype.
 - The selected 512-neuron core and recurrence are engineering choices, not claims of biological fidelity.
 - A static connectome omits neural dynamics, plasticity, embodiment, neuromodulation, and the inconvenient fact that the fly did not consent to reviewing TypeScript.
 
-## 8. What would change our mind?
+## 8. Follow-up: train the controller, not the router
+
+Version 0.2 adds a preregisterable follow-up experiment inspired by
+connectome-constrained game controllers. Complete Codex trajectories are mapped
+to seven high-level software actions: search, inspect, test, reason, patch,
+verify, and stop. Repository or grading outcomes supply terminal rewards.
+
+A sparse recurrent policy uses the fixed directed FlyWire graph. Structured
+observations enter annotated afferent neurons; annotated efferent activity is
+pooled into action logits. Full-episode backpropagation updates only
+flow-conditioned recurrent gains, biases, and a small action decoder. It does
+not train a language model or rewrite the measured edge topology.
+
+Each paired seed also trains a weight-shuffled graph, a degree-preserving
+rewired graph, and an observation-only policy. Checkpoints bind learned arrays
+to topology, weight, neuron-ID, and input/output-interface receipts. The bundled
+synthetic trajectories and successful 2,048-neuron smoke run validate mechanics
+only. No real-repository biological advantage is claimed from them.
+
+The protocol and commands are documented in [Training BugBrain](docs/TRAINING.md).
+
+## 9. What would change our mind?
 
 A positive biological-topology claim should require a larger preregistered corpus, repeated end-to-end trials, exact-source validation, and a biological arm that consistently beats both matched graph nulls—not merely a code-only baseline.
 
@@ -159,7 +180,7 @@ Promising follow-ups include:
 6. ablations of recurrence, lens assignment, file atomicity, and swarm size;
 7. comparison against ordinary randomized agent swarms with identical prompts and cost.
 
-## 9. Conclusion
+## 10. Conclusion
 
 The fruit-fly connectome did not beat randomness as a routing representation. The fly-routed agent swarm nevertheless found two verified defects missed by another review tool on one PR. Those facts can coexist.
 

@@ -112,3 +112,39 @@ uv run bugbrain standalone-compare \
 - Never use truth descriptions in routing or prompts.
 - Do not compare product-level scores as though model and token budgets were matched when they were not.
 - Keep failed and null-result runs. That is where most of the science lives.
+
+## 7. Reproduce the trained-controller mechanics
+
+The included trajectory corpus is synthetic. Use it to verify training,
+checkpointing, inference, and null-arm bookkeeping—not to make a performance
+claim:
+
+```bash
+uv run bugbrain build \
+  --connections tests/fixtures/connections.csv \
+  --annotations tests/fixtures/annotations.tsv \
+  --cache /tmp/bugbrain-policy-mini.csr
+uv run bugbrain policy-train \
+  --trajectories examples/trajectories.json \
+  --cache /tmp/bugbrain-policy-mini.csr \
+  --annotations tests/fixtures/annotations.tsv \
+  --neurons 0 --features 48 --readout-width 12 --epochs 40 --seeds 3 \
+  --checkpoint-dir /tmp/bugbrain-policy-checkpoints \
+  --out /tmp/bugbrain-policy-report.json
+```
+
+For a real experiment, capture complete `codex exec --json` runs and import
+them one episode at a time:
+
+```bash
+uv run bugbrain trace-import \
+  --jsonl trace.jsonl --key project-task-001 --split train \
+  --goal "Review the exact base-to-head change" --reward 1 \
+  --out trajectories.json --append
+```
+
+Do not use `--append` for the first episode. The dataset must contain at least
+one train and one test episode before training. Keep each repository or closely
+related task family in only one split. See [Training BugBrain](TRAINING.md) for
+the action contract, reward rules, checkpoint inference, and matched-control
+design.

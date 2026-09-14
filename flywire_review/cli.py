@@ -54,7 +54,7 @@ def _write_json(payload: object, out: Path | None) -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="bugbrain",
-        description="Route code-review contexts through a fruit-fly connectome. For science. Probably.",
+        description="Route and train software-agent controllers through a fruit-fly connectome.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -155,6 +155,76 @@ def build_parser() -> argparse.ArgumentParser:
     competitor_parser.add_argument("--competitor-evidence", type=Path, required=True)
     competitor_parser.add_argument("--grades", type=Path, required=True)
     competitor_parser.add_argument("--out", type=Path, required=True)
+
+    trace_parser = subparsers.add_parser(
+        "trace-import",
+        help="Convert `codex exec --json` events into one trainable agent trajectory",
+    )
+    trace_parser.add_argument("--jsonl", type=Path, required=True)
+    trace_parser.add_argument("--key", required=True)
+    trace_parser.add_argument(
+        "--split", choices=("train", "validation", "test"), required=True
+    )
+    trace_parser.add_argument("--goal", required=True)
+    trace_parser.add_argument(
+        "--reward",
+        type=float,
+        required=True,
+        help="Terminal verifier reward recorded for this trajectory",
+    )
+    trace_parser.add_argument("--out", type=Path, required=True)
+    trace_parser.add_argument(
+        "--append",
+        action="store_true",
+        help="Append to an existing compatible trajectory document",
+    )
+
+    policy_parser = subparsers.add_parser(
+        "policy-train",
+        help="Train paired connectome software-agent policies from Codex trajectories",
+    )
+    _add_common_paths(policy_parser)
+    policy_parser.add_argument(
+        "--trajectories", type=Path, required=True, help="bugbrain.trajectories/1 JSON"
+    )
+    policy_parser.add_argument(
+        "--neurons",
+        type=int,
+        default=2_048,
+        help="Highest-degree induced core size; 0 retains the complete graph",
+    )
+    policy_parser.add_argument("--features", type=int, default=128)
+    policy_parser.add_argument("--readout-width", type=int, default=32)
+    policy_parser.add_argument("--epochs", type=int, default=80)
+    policy_parser.add_argument("--learning-rate", type=float, default=0.015)
+    policy_parser.add_argument("--reward-scale", type=float, default=0.35)
+    policy_parser.add_argument("--seed", type=int, default=2305)
+    policy_parser.add_argument(
+        "--seeds", type=int, default=3, help="Number of consecutive paired seeds"
+    )
+    policy_parser.add_argument(
+        "--unsigned", action="store_true", help="Ignore annotation-derived transmitter signs"
+    )
+    policy_parser.add_argument(
+        "--checkpoint-dir",
+        type=Path,
+        help="Save one reusable biological-policy checkpoint per seed",
+    )
+    policy_parser.add_argument("--out", type=Path, required=True)
+
+    predict_parser = subparsers.add_parser(
+        "policy-predict",
+        help="Load a trained biological policy and choose actions for an observation history",
+    )
+    _add_common_paths(predict_parser)
+    predict_parser.add_argument("--checkpoint", type=Path, required=True)
+    predict_parser.add_argument(
+        "--history",
+        type=Path,
+        required=True,
+        help="JSON array of observation objects, or an object with an observations array",
+    )
+    predict_parser.add_argument("--out", type=Path)
     return parser
 
 
@@ -305,6 +375,76 @@ def main(argv: list[str] | None = None) -> int:
                 f"{name}: comments={row['comments']} P={row['precision']:.3f} "
                 f"R={row['recall']:.3f} F1={row['f1']:.3f}"
             )
+        return 0
+    if args.command == "trace-import":
+        from .policy import import_codex_jsonl
+
+        payload = import_codex_jsonl(
+            args.jsonl,
+            key=args.key,
+            split=args.split,
+            goal=args.goal,
+            final_reward=args.reward,
+        )
+        if args.append and args.out.exists():
+            existing = json.loads(args.out.read_text(encoding="utf-8"))
+            if existing.get("schema") != payload["schema"]:
+                raise ValueError("Existing trajectory document has a different schema")
+            if existing.get("actions") != payload["actions"]:
+                raise ValueError("Existing trajectory document has a different action vocabulary")
+            existing_keys = {str(row.get("key")) for row in existing.get("episodes", [])}
+            new_key = str(payload["episodes"][0]["key"])
+            if new_key in existing_keys:
+                raise ValueError(f"Existing trajectory document already contains {new_key!r}")
+            existing["episodes"].extend(payload["episodes"])
+            payload = existing
+        _write_json(payload, args.out)
+        return 0
+    if args.command == "policy-train":
+        from .policy import load_trajectories, run_policy_experiment
+
+        if args.seeds < 1:
+            raise SystemExit("--seeds must be positive")
+        actions, episodes = load_trajectories(args.trajectories)
+        graph = load_cache(args.cache)
+        annotations = load_annotations(args.annotations)
+        result = run_policy_experiment(
+            actions,
+            episodes,
+            graph,
+            annotations,
+            seeds=tuple(range(args.seed, args.seed + args.seeds)),
+            node_count=args.neurons,
+            feature_width=args.features,
+            readout_width=args.readout_width,
+            epochs=args.epochs,
+            learning_rate=args.learning_rate,
+            reward_scale=args.reward_scale,
+            signed=not args.unsigned,
+            checkpoint_dir=args.checkpoint_dir,
+        )
+        _write_json(result, args.out)
+        return 0
+    if args.command == "policy-predict":
+        from .policy import load_connectome_checkpoint, predict_history
+
+        raw_history = json.loads(args.history.read_text(encoding="utf-8"))
+        if isinstance(raw_history, dict):
+            raw_history = raw_history.get("observations")
+        if not isinstance(raw_history, list) or not all(
+            isinstance(observation, dict) for observation in raw_history
+        ):
+            raise ValueError("History must be a JSON array of observation objects")
+        graph = load_cache(args.cache)
+        annotations = load_annotations(args.annotations)
+        policy, encoder, checkpoint = load_connectome_checkpoint(
+            args.checkpoint,
+            graph,
+            annotations,
+        )
+        result = predict_history(policy, encoder, raw_history)
+        result["checkpoint"] = checkpoint
+        _write_json(result, args.out)
         return 0
     raise AssertionError(f"Unhandled command {args.command}")
 
