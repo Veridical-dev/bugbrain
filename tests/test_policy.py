@@ -18,6 +18,7 @@ from flywire_review.policy import (
     build_sparse_core,
     import_codex_jsonl,
     load_connectome_checkpoint,
+    load_policy_checkpoint,
     load_trajectories,
     make_sparse_controls,
     predict_history,
@@ -169,6 +170,10 @@ class ConnectomePolicyTests(unittest.TestCase):
             )
             checkpoint = Path(temporary) / "biological-seed-7.npz"
             self.assertTrue(checkpoint.exists())
+            self.assertTrue((Path(temporary) / "weight_shuffled-seed-7.npz").exists())
+            self.assertTrue((Path(temporary) / "degree_rewired-seed-7.npz").exists())
+            linear_checkpoint = Path(temporary) / "observation_only-seed-7.npz"
+            self.assertTrue(linear_checkpoint.exists())
             policy, encoder, receipt = load_connectome_checkpoint(
                 checkpoint,
                 graph,
@@ -179,9 +184,21 @@ class ConnectomePolicyTests(unittest.TestCase):
                 encoder,
                 [step.observation for step in episodes[-1].steps],
             )
+            linear_policy, linear_encoder, linear_receipt = load_policy_checkpoint(
+                linear_checkpoint,
+                graph,
+                annotations,
+            )
+            linear_prediction = predict_history(
+                linear_policy,
+                linear_encoder,
+                [step.observation for step in episodes[-1].steps],
+            )
         self.assertEqual(receipt["topology_sha256"], result["base_graph"]["topology_sha256"])
         self.assertIn(prediction["next_action"], DEFAULT_ACTIONS)
         self.assertEqual(prediction["history_length"], len(episodes[-1].steps))
+        self.assertEqual(linear_receipt["arm"], "observation_only")
+        self.assertIn(linear_prediction["next_action"], DEFAULT_ACTIONS)
         self.assertEqual(result["schema"], "bugbrain.connectome-policy/1")
         self.assertEqual(
             {trial["arm"] for trial in result["trials"]},

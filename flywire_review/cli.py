@@ -35,6 +35,24 @@ def _add_route_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--out", type=Path, help="Write JSON here instead of stdout")
 
 
+def _add_live_agent_options(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--repo", type=Path, required=True)
+    parser.add_argument("--goal", required=True)
+    parser.add_argument("--out-dir", type=Path, required=True)
+    parser.add_argument("--mode", choices=("review", "implement"), default="implement")
+    parser.add_argument("--codex-cli", default="codex")
+    parser.add_argument("--model", default="gpt-5.6-luna")
+    parser.add_argument("--reasoning-effort", default="low")
+    parser.add_argument("--timeout-seconds", type=int, default=600)
+    parser.add_argument("--verifier-json", type=Path)
+    parser.add_argument("--verifier-timeout-seconds", type=int, default=600)
+    parser.add_argument(
+        "--use-user-config",
+        action="store_true",
+        help="Enable the operator's normal Codex configuration and MCP servers",
+    )
+
+
 def _read_units(path: Path | None):
     if path:
         return parse_review_input(path)
@@ -214,7 +232,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     predict_parser = subparsers.add_parser(
         "policy-predict",
-        help="Load a trained biological policy and choose actions for an observation history",
+        help="Load any trained policy arm and choose actions for an observation history",
     )
     _add_common_paths(predict_parser)
     predict_parser.add_argument("--checkpoint", type=Path, required=True)
@@ -225,6 +243,21 @@ def build_parser() -> argparse.ArgumentParser:
         help="JSON array of observation objects, or an object with an observations array",
     )
     predict_parser.add_argument("--out", type=Path)
+
+    run_parser = subparsers.add_parser(
+        "policy-run",
+        help="Let a trained policy control bounded actions of a repository-capable Codex worker",
+    )
+    _add_common_paths(run_parser)
+    run_parser.add_argument("--checkpoint", type=Path, required=True)
+    run_parser.add_argument("--max-steps", type=int, default=8)
+    _add_live_agent_options(run_parser)
+
+    direct_parser = subparsers.add_parser(
+        "direct-run",
+        help="Run the same Codex worker directly as a standard agentic baseline",
+    )
+    _add_live_agent_options(direct_parser)
     return parser
 
 
@@ -426,7 +459,7 @@ def main(argv: list[str] | None = None) -> int:
         _write_json(result, args.out)
         return 0
     if args.command == "policy-predict":
-        from .policy import load_connectome_checkpoint, predict_history
+        from .policy import load_policy_checkpoint, predict_history
 
         raw_history = json.loads(args.history.read_text(encoding="utf-8"))
         if isinstance(raw_history, dict):
@@ -437,7 +470,7 @@ def main(argv: list[str] | None = None) -> int:
             raise ValueError("History must be a JSON array of observation objects")
         graph = load_cache(args.cache)
         annotations = load_annotations(args.annotations)
-        policy, encoder, checkpoint = load_connectome_checkpoint(
+        policy, encoder, checkpoint = load_policy_checkpoint(
             args.checkpoint,
             graph,
             annotations,
@@ -445,6 +478,28 @@ def main(argv: list[str] | None = None) -> int:
         result = predict_history(policy, encoder, raw_history)
         result["checkpoint"] = checkpoint
         _write_json(result, args.out)
+        return 0
+    if args.command == "policy-run":
+        from .controller import run_policy_controller
+        from .policy import load_policy_checkpoint
+
+        graph = load_cache(args.cache)
+        annotations = load_annotations(args.annotations)
+        policy, encoder, checkpoint = load_policy_checkpoint(
+            args.checkpoint,
+            graph,
+            annotations,
+        )
+        result = run_policy_controller(args, policy, encoder, checkpoint)
+        print(args.out_dir / "run.json")
+        print(f"reward={result['reward']}")
+        return 0
+    if args.command == "direct-run":
+        from .controller import run_direct_agent
+
+        result = run_direct_agent(args)
+        print(args.out_dir / "run.json")
+        print(f"reward={result['reward']}")
         return 0
     raise AssertionError(f"Unhandled command {args.command}")
 

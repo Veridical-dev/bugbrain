@@ -26,6 +26,7 @@ DEFAULT_ACTIONS = (
 TRAJECTORY_SCHEMA = "bugbrain.trajectories/1"
 REPORT_SCHEMA = "bugbrain.connectome-policy/1"
 CHECKPOINT_SCHEMA = "bugbrain.connectome-checkpoint/1"
+LINEAR_CHECKPOINT_SCHEMA = "bugbrain.linear-checkpoint/1"
 _TOKEN = re.compile(r"[A-Za-z_$][A-Za-z0-9_$.-]{1,}")
 
 
@@ -645,6 +646,8 @@ def save_connectome_checkpoint(
     destination.parent.mkdir(parents=True, exist_ok=True)
     metadata = {
         "seed": int(seed),
+        "arm": policy.core.name,
+        "control_seed": policy.core.metadata.get("control_seed"),
         "signed": bool(signed),
         "nodes": policy.core.node_count,
         "edges": policy.core.edge_count,
@@ -685,13 +688,23 @@ def load_connectome_checkpoint(
             raise ValueError(f"Checkpoint must use schema {CHECKPOINT_SCHEMA!r}")
         metadata = json.loads(str(archive["metadata_json"].item()))
         node_count = int(metadata["nodes"])
-        core = build_sparse_core(
+        base_core = build_sparse_core(
             graph,
             annotations,
             node_count=0 if node_count == graph.node_count else node_count,
             recurrence_scale=float(metadata["recurrence_scale"]),
             signed=bool(metadata["signed"]),
         )
+        arm = str(metadata.get("arm") or "biological")
+        if arm == "biological":
+            core = base_core
+        elif arm in {"weight_shuffled", "degree_rewired"}:
+            control_seed = metadata.get("control_seed")
+            if control_seed is None:
+                raise ValueError("Graph-null checkpoint lacks its control seed")
+            core = make_sparse_controls(base_core, seed=int(control_seed))[arm]
+        else:
+            raise ValueError(f"Unknown connectome checkpoint arm: {arm!r}")
         if core.metadata["topology_sha256"] != metadata["topology_sha256"]:
             raise ValueError("Checkpoint topology receipt differs from the supplied graph")
         if not np.array_equal(core.node_ids, archive["node_ids"]):
@@ -733,8 +746,68 @@ def load_connectome_checkpoint(
     return policy, encoder, metadata
 
 
+def save_linear_checkpoint(
+    path: str | Path,
+    policy: LinearActionPolicy,
+    encoder: ObservationHasher,
+    *,
+    seed: int,
+) -> Path:
+    destination = Path(path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(
+        destination,
+        schema=np.asarray(LINEAR_CHECKPOINT_SCHEMA),
+        metadata_json=np.asarray(json.dumps({"seed": int(seed), "arm": "observation_only"})),
+        actions=np.asarray(policy.actions),
+        feature_width=np.asarray(encoder.width, dtype=np.int64),
+        encoder_seed=np.asarray(encoder.seed, dtype=np.int64),
+        encoder_idf=encoder.idf,
+        parameter__weights=policy.parameters["weights"],
+        parameter__bias=policy.parameters["bias"],
+    )
+    return destination
+
+
+def load_linear_checkpoint(
+    path: str | Path,
+) -> tuple[LinearActionPolicy, ObservationHasher, dict[str, Any]]:
+    with np.load(Path(path), allow_pickle=False) as archive:
+        if str(archive["schema"].item()) != LINEAR_CHECKPOINT_SCHEMA:
+            raise ValueError(f"Checkpoint must use schema {LINEAR_CHECKPOINT_SCHEMA!r}")
+        metadata = json.loads(str(archive["metadata_json"].item()))
+        actions = tuple(str(action) for action in archive["actions"].tolist())
+        feature_width = int(archive["feature_width"].item())
+        policy = LinearActionPolicy(feature_width, actions, seed=int(metadata["seed"]))
+        for name, destination in policy.parameters.items():
+            source = archive[f"parameter__{name}"]
+            if source.shape != destination.shape:
+                raise ValueError(f"Checkpoint parameter {name!r} has the wrong shape")
+            destination[...] = source
+        encoder = ObservationHasher(
+            feature_width,
+            seed=int(archive["encoder_seed"].item()),
+        )
+        encoder.idf = archive["encoder_idf"].astype(np.float64, copy=True)
+    return policy, encoder, metadata
+
+
+def load_policy_checkpoint(
+    path: str | Path,
+    graph: Connectome,
+    annotations: Sequence[NeuronAnnotation],
+) -> tuple[ConnectomeActionPolicy | LinearActionPolicy, ObservationHasher, dict[str, Any]]:
+    with np.load(Path(path), allow_pickle=False) as archive:
+        schema = str(archive["schema"].item())
+    if schema == CHECKPOINT_SCHEMA:
+        return load_connectome_checkpoint(path, graph, annotations)
+    if schema == LINEAR_CHECKPOINT_SCHEMA:
+        return load_linear_checkpoint(path)
+    raise ValueError(f"Unknown policy checkpoint schema: {schema!r}")
+
+
 def predict_history(
-    policy: ConnectomeActionPolicy,
+    policy: ConnectomeActionPolicy | LinearActionPolicy,
     encoder: ObservationHasher,
     observations: Sequence[dict[str, Any]],
 ) -> dict[str, Any]:
@@ -912,9 +985,9 @@ def run_policy_experiment(
                 losses.append(epoch_loss / len(splits["train"]))
                 gradients.append(epoch_gradient / len(splits["train"]))
             checkpoint = None
-            if arm == "biological" and checkpoint_dir is not None:
+            if checkpoint_dir is not None:
                 checkpoint = save_connectome_checkpoint(
-                    Path(checkpoint_dir) / f"biological-seed-{seed}.npz",
+                    Path(checkpoint_dir) / f"{arm}-seed-{seed}.npz",
                     policy,
                     encoder,
                     seed=seed,
@@ -953,6 +1026,14 @@ def run_policy_experiment(
                 loss, _ = baseline.train_episode(*encoded, optimizer)
                 epoch_loss += loss
             losses.append(epoch_loss / len(splits["train"]))
+        checkpoint = None
+        if checkpoint_dir is not None:
+            checkpoint = save_linear_checkpoint(
+                Path(checkpoint_dir) / f"observation_only-seed-{seed}.npz",
+                baseline,
+                encoder,
+                seed=seed,
+            )
         trials.append(
             {
                 "seed": int(seed),
@@ -963,6 +1044,7 @@ def run_policy_experiment(
                     "first_epoch_loss": round(losses[0], 8),
                     "final_epoch_loss": round(losses[-1], 8),
                 },
+                "checkpoint": str(checkpoint) if checkpoint else None,
                 "metrics": {
                     split: _metrics(baseline, rows, encoder, action_index)
                     for split, rows in splits.items()
