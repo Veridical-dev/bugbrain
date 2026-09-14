@@ -1,0 +1,698 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/degree_rewired-seed-2315.npz",
+    "checkpoint_receipt": {
+      "arm": "degree_rewired",
+      "control_seed": 102315,
+      "core_sha256": "065f52dcac9c0ecd4880291ef2e6373d50066750873fa864c97a5902a23920f6",
+      "edges": 75803,
+      "nodes": 2048,
+      "recurrence_scale": 0.92,
+      "seed": 2315,
+      "signed": true,
+      "topology_sha256": "1ea1f04971c57f26b8e5046d0df72de369f1f5dabe1c026e38427d9d526aac44"
+    },
+    "checkpoint_sha256": "e5688fd23e6e583a7c2109eccf77a6e5f11a4d8c9931b579f167966fc09d4849",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix standalone review parsing so findings outside changed pull-request files are rejected.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 0,
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+    "status": []
+  },
+  "repository_before": {
+    "diff_chars": 673,
+    "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+    "status": [
+      " M flywire_review/standalone.py"
+    ]
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.06614413,
+        "patch": 0.00809363,
+        "reason": 0.00027625,
+        "search": 0.75978975,
+        "stop": 0.00071439,
+        "test": 0.00748773,
+        "verify": 0.15749412
+      },
+      "repository_after": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "flywire_review/standalone.py:29-34 defines parse_review_response with valid_files.",
+          "flywire_review/standalone.py:57-58 contains the intended outside-changed-files rejection, but it is disabled by `if False and`.",
+          "flywire_review/standalone.py:271-275 passes the repository changed-file paths into the parser.",
+          "tests/test_standalone.py:56-73 expects findings outside changed PR files to be rejected."
+        ],
+        "proposed_next": "Consider a patch action to remove the disabling `False and` guard so the existing validation enforces changed-file boundaries.",
+        "status": "continue",
+        "summary": "Located the standalone parser, its changed-file input, and the disabled validation guard. No files were edited and no tests were run."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 67584,
+        "input_tokens": 86770,
+        "output_tokens": 653,
+        "reasoning_output_tokens": 120
+      },
+      "wall_seconds": 26.452
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.11803802,
+        "patch": 0.05060665,
+        "reason": 1.28e-05,
+        "search": 0.50798455,
+        "stop": 0.00016492,
+        "test": 0.0244569,
+        "verify": 0.29873617
+      },
+      "repository_after": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "Command: `rg -n -C 3 \"if False and|def parse_review_response|valid_files|changed_files|outside\" flywire_review/standalone.py tests/test_standalone.py`",
+          "`flywire_review/standalone.py:57-58` shows outside-file rejection disabled by `if False and`.",
+          "`tests/test_standalone.py:56-73` expects findings outside changed PR files to be rejected.",
+          "`flywire_review/standalone.py:271-275` passes changed-file paths as `valid_files`."
+        ],
+        "proposed_next": "Consider a patch action removing the `False and` guard so the existing changed-file validation is enforced.",
+        "status": "continue",
+        "summary": "Completed one bounded search step. Located the disabled standalone parser boundary check and its corresponding test expectation. No files were edited and no tests were run."
+      },
+      "selected_action": "search",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 20992,
+        "input_tokens": 27244,
+        "output_tokens": 409,
+        "reasoning_output_tokens": 68
+      },
+      "wall_seconds": 15.56
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.09164106,
+        "patch": 0.3065198,
+        "reason": 3.09e-06,
+        "search": 0.2473898,
+        "stop": 0.0003047,
+        "test": 0.20641698,
+        "verify": 0.14772457
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "inspect",
+          "patch"
+        ],
+        "evidence": [
+          "Updated `flywire_review/standalone.py` to remove the disabled `False and` guard from outside-changed-file validation.",
+          "No tests were run, per contract."
+        ],
+        "proposed_next": "Controller may verify the patch separately.",
+        "status": "done",
+        "summary": "Enabled standalone review parsing to reject findings whose file paths are outside the changed pull-request files."
+      },
+      "selected_action": "patch",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 48128,
+        "input_tokens": 54332,
+        "output_tokens": 553,
+        "reasoning_output_tokens": 66
+      },
+      "wall_seconds": 22.536
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.04184497,
+        "patch": 0.30732135,
+        "reason": 1.74e-06,
+        "search": 0.1328842,
+        "stop": 0.00105778,
+        "test": 0.4603395,
+        "verify": 0.05655046
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command `pytest -q tests/test_standalone.py` could not run: `pytest` is not installed or unavailable (`command not found`, exit 127).",
+          "No files were edited."
+        ],
+        "proposed_next": "Run the focused standalone test using the repository\u2019s available test runner or install/use the project test environment.",
+        "status": "blocked",
+        "summary": "Attempted the single focused standalone test, but the pytest executable was unavailable."
+      },
+      "selected_action": "test",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 26945,
+        "output_tokens": 414,
+        "reasoning_output_tokens": 155
+      },
+      "wall_seconds": 15.744
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02492358,
+        "patch": 0.17822407,
+        "reason": 2.24e-06,
+        "search": 0.11675889,
+        "stop": 0.00597631,
+        "test": 0.61343881,
+        "verify": 0.06067611
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command `python -m pytest -q tests/test_standalone.py` failed: `python` is unavailable (`command not found`, exit 127).",
+          "No files were edited."
+        ],
+        "proposed_next": "Use the repository\u2019s available Python interpreter or configured test environment to run `tests/test_standalone.py`.",
+        "status": "blocked",
+        "summary": "Attempted the focused standalone test via Python\u2019s module runner, but no `python` executable is available."
+      },
+      "selected_action": "test",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27161,
+        "output_tokens": 324,
+        "reasoning_output_tokens": 82
+      },
+      "wall_seconds": 14.692
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01464575,
+        "patch": 0.08292939,
+        "reason": 4.15e-06,
+        "search": 0.11187381,
+        "stop": 0.03561226,
+        "test": 0.63494885,
+        "verify": 0.11998579
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command `python3 -m pytest -q tests/test_standalone.py` failed: Python 3.14 is available, but the `pytest` module is not installed.",
+          "No files were edited."
+        ],
+        "proposed_next": "Run the focused test in the repository\u2019s configured environment where pytest is installed.",
+        "status": "blocked",
+        "summary": "Attempted the focused standalone test with python3, but pytest is unavailable."
+      },
+      "selected_action": "test",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27509,
+        "output_tokens": 334,
+        "reasoning_output_tokens": 79
+      },
+      "wall_seconds": 12.389
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00732078,
+        "patch": 0.03493834,
+        "reason": 6.87e-06,
+        "search": 0.0859559,
+        "stop": 0.1305344,
+        "test": 0.51324499,
+        "verify": 0.22799872
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "Command `uv run --offline pytest -q tests/test_standalone.py` could not initialize uv\u2019s cache at `/Users/lukasz/.cache/uv` due to permission denial.",
+          "No files were edited."
+        ],
+        "proposed_next": "Run the focused test with a writable configured uv/cache environment or an installed pytest runner.",
+        "status": "blocked",
+        "summary": "Attempted the single focused standalone test through uv, but the test runner was blocked by cache permissions."
+      },
+      "selected_action": "test",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27965,
+        "output_tokens": 479,
+        "reasoning_output_tokens": 208
+      },
+      "wall_seconds": 15.87
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00335729,
+        "patch": 0.01510963,
+        "reason": 8.1e-06,
+        "search": 0.0537977,
+        "stop": 0.25161177,
+        "test": 0.35423699,
+        "verify": 0.32187852
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command `UV_CACHE_DIR=/private/tmp/bugbrain-uv-cache uv run --offline pytest -q tests/test_standalone.py` could not run because cached dependencies lacked `numpy==2.5.3` and network access is disabled.",
+          "No files were edited."
+        ],
+        "proposed_next": "Run the focused test in an environment with the project dependencies already installed or available offline.",
+        "status": "blocked",
+        "summary": "Attempted the focused standalone test with a writable uv cache, but dependency resolution was blocked by the unavailable numpy package."
+      },
+      "selected_action": "test",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 17920,
+        "input_tokens": 28277,
+        "output_tokens": 361,
+        "reasoning_output_tokens": 66
+      },
+      "wall_seconds": 17.78
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0016173,
+        "patch": 0.00710706,
+        "reason": 8.03e-06,
+        "search": 0.03453714,
+        "stop": 0.33789339,
+        "test": 0.24130822,
+        "verify": 0.37752887
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "verify",
+          "search",
+          "verify"
+        ],
+        "evidence": [
+          "`flywire_review/standalone.py:57-58` actively rejects files outside `valid_files`.",
+          "`python3 -m py_compile flywire_review/standalone.py` passed.",
+          "Direct boundary verification passed: changed-file finding accepted; outside-file finding rejected with the expected error.",
+          "Working tree has no uncommitted changes."
+        ],
+        "proposed_next": "No further action required; controller may record the verification as successful.",
+        "status": "done",
+        "summary": "Verified the standalone review boundary behavior without editing files."
+      },
+      "selected_action": "verify",
+      "step": 8,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 50176,
+        "input_tokens": 58297,
+        "output_tokens": 802,
+        "reasoning_output_tokens": 183
+      },
+      "wall_seconds": 26.514
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00090439,
+        "patch": 0.00405821,
+        "reason": 7.54e-06,
+        "search": 0.02472147,
+        "stop": 0.37441519,
+        "test": 0.1822639,
+        "verify": 0.41362931
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "verify",
+          "inspect",
+          "inspect"
+        ],
+        "evidence": [
+          "`git diff -- flywire_review/standalone.py` and `git status --short` show no uncommitted changes.",
+          "`python3 -m py_compile flywire_review/standalone.py` passed.",
+          "Direct parser verification accepted `src/a.py` and rejected `secret.py` with the expected outside-file error."
+        ],
+        "proposed_next": "No further action required; record verification as successful.",
+        "status": "done",
+        "summary": "Verified standalone review parsing enforces the changed-file boundary without editing files."
+      },
+      "selected_action": "verify",
+      "step": 9,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 50176,
+        "input_tokens": 58379,
+        "output_tokens": 691,
+        "reasoning_output_tokens": 117
+      },
+      "wall_seconds": 24.838
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00059546,
+        "patch": 0.00273939,
+        "reason": 7.06e-06,
+        "search": 0.01992568,
+        "stop": 0.38459003,
+        "test": 0.15129007,
+        "verify": 0.44085231
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "verify",
+          "inspect",
+          "inspect"
+        ],
+        "evidence": [
+          "`git status --short` and `git diff -- flywire_review/standalone.py` show no uncommitted changes.",
+          "`python3 -m py_compile flywire_review/standalone.py` passed.",
+          "Direct parser verification accepted `src/a.py` and rejected `secret.py` with the expected outside-file error."
+        ],
+        "proposed_next": "No further action required; record verification as successful.",
+        "status": "done",
+        "summary": "Verified standalone review parsing enforces the changed-file boundary without editing files."
+      },
+      "selected_action": "verify",
+      "step": 10,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 49152,
+        "input_tokens": 58943,
+        "output_tokens": 689,
+        "reasoning_output_tokens": 107
+      },
+      "wall_seconds": 26.207
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00043614,
+        "patch": 0.00207496,
+        "reason": 6.62e-06,
+        "search": 0.01762487,
+        "stop": 0.38158753,
+        "test": 0.13627555,
+        "verify": 0.46199434
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "verify",
+          "search",
+          "verify"
+        ],
+        "evidence": [
+          "`git status --short` and `git diff -- flywire_review/standalone.py` show no changes.",
+          "`python3 -m py_compile flywire_review/standalone.py` passed.",
+          "Direct `parse_review_response` check accepted `src/a.py` and rejected `secret.py` with the expected outside-file error."
+        ],
+        "proposed_next": "No further action required; record verification as successful.",
+        "status": "done",
+        "summary": "Verified standalone review parsing enforces the changed-file boundary without editing files."
+      },
+      "selected_action": "verify",
+      "step": 11,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 48128,
+        "input_tokens": 64400,
+        "output_tokens": 912,
+        "reasoning_output_tokens": 132
+      },
+      "wall_seconds": 24.617
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 440320,
+    "input_tokens": 546222,
+    "output_tokens": 6621,
+    "reasoning_output_tokens": 1383
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.393s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.474
+  }
+}

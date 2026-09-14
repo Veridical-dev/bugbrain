@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If BugBrain makes your experiment stranger or more reproducible, please cite it."
-title: "BugBrain: Connectome-routed agentic code review"
+title: "BugBrain: Connectome-routed review and trained software-agent control"
 type: software
-version: 0.1.0
+version: 0.3.0
 date-released: 2026-09-14
 authors:
   - name: "Veridical Research"
@@ -18,5 +18,6 @@ keywords:
   - agentic AI
 abstract: >-
   BugBrain routes independent agentic code reviewers using a fixed reservoir
-  derived from the FlyWire adult fruit-fly connectome and evaluates the
-  biological topology against matched graph controls.
+  derived from the FlyWire adult fruit-fly connectome, trains a sparse
+  connectome-constrained software-agent controller, and evaluates biological
+  topology against matched graph and observation-only controls.

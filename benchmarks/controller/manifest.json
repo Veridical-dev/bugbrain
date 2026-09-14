@@ -1,0 +1,23 @@
+{
+  "schema": "bugbrain.controller-benchmark/1",
+  "base_commit": "24d5e4d",
+  "verifier": ["{python}", "-m", "unittest", "discover", "-s", "tests", "-v"],
+  "tasks": [
+    {"key": "feature-normalization", "split": "train", "mutation": "mutations/feature-normalization.patch", "goal": "Fix the failing observation-feature encoding regression while preserving deterministic hashing."},
+    {"key": "discounted-reward", "split": "train", "mutation": "mutations/discounted-reward.patch", "goal": "Fix the failing trajectory-return calculation so terminal verifier outcomes reach earlier decisions."},
+    {"key": "stable-softmax", "split": "train", "mutation": "mutations/stable-softmax.patch", "goal": "Fix the numerical-stability regression in action probability calculation."},
+    {"key": "effectome-sign", "split": "train", "mutation": "mutations/effectome-sign.patch", "goal": "Fix the annotation-derived neurotransmitter sign regression."},
+    {"key": "risk-tagging", "split": "train", "mutation": "mutations/risk-tagging.patch", "goal": "Fix the diff risk-tagging regression for asynchronous and ordered code."},
+    {"key": "prompt-budget", "split": "train", "mutation": "mutations/prompt-budget.patch", "goal": "Fix the reviewer prompt construction regression that violates its context budget."},
+    {"key": "weight-control-copy", "split": "train", "mutation": "mutations/weight-control-copy.patch", "goal": "Fix the graph-control construction regression that fails to preserve the biological weight multiset."},
+    {"key": "verifier-reward", "split": "train", "mutation": "mutations/verifier-reward.patch", "goal": "Fix the independent verifier reward regression."},
+    {"key": "required-test-split", "split": "validation", "mutation": "mutations/required-test-split.patch", "goal": "Fix trajectory validation so experiments cannot train without a held-out test split."},
+    {"key": "action-compliance", "split": "validation", "mutation": "mutations/action-compliance.patch", "goal": "Fix live-worker action-contract compliance when a required tool action is missing."},
+    {"key": "terminal-message", "split": "test", "mutation": "mutations/terminal-message.patch", "goal": "Fix Codex trace import so intermediate commentary does not terminate an episode."},
+    {"key": "degree-rewiring", "split": "test", "mutation": "mutations/degree-rewiring.patch", "goal": "Fix the degree-preserving graph-null construction regression."},
+    {"key": "checkpoint-interface", "split": "test", "mutation": "mutations/checkpoint-interface.patch", "goal": "Fix checkpoint validation so incompatible neuron interfaces are rejected."},
+    {"key": "review-file-boundary", "split": "test", "mutation": "mutations/review-file-boundary.patch", "goal": "Fix standalone review parsing so findings outside changed pull-request files are rejected."},
+    {"key": "target-shuffle-copy", "split": "test", "mutation": "mutations/target-shuffle-copy.patch", "goal": "Fix target-shuffled graph creation so it cannot mutate the source connectome."},
+    {"key": "random-topology-null", "split": "test", "mutation": "mutations/random-topology-null.patch", "goal": "Fix the matched random-topology control so it actually ablates biological topology."}
+  ]
+}

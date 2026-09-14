@@ -1,0 +1,175 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/observation_only-seed-2306.npz",
+    "checkpoint_receipt": {
+      "arm": "observation_only",
+      "seed": 2306
+    },
+    "checkpoint_sha256": "dc091fef4943f31d3a15950252afb602f4de8d08f562ab7d6f880261da2f684e",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix target-shuffled graph creation so it cannot mutate the source connectome.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 564,
+    "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/observation_only/target-shuffle-copy/repo",
+    "status": [
+      " M flywire_review/connectome.py"
+    ]
+  },
+  "repository_before": {
+    "diff_chars": 564,
+    "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/observation_only/target-shuffle-copy/repo",
+    "status": [
+      " M flywire_review/connectome.py"
+    ]
+  },
+  "reward": 0.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00030346,
+        "patch": 0.00752972,
+        "reason": 0.00068868,
+        "search": 0.98773505,
+        "stop": 0.00175787,
+        "test": 0.00010367,
+        "verify": 0.00188155
+      },
+      "repository_after": {
+        "diff_chars": 564,
+        "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 564,
+        "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/connectome.py:111-123` defines `Connectome.shuffled_targets`; line 113 aliases `self.targets`, and line 114 shuffles it in place.",
+          "`flywire_review/router.py:219-224` invokes `graph.shuffled_targets(seed)` for the shuffled arm.",
+          "`tests/test_poc.py:84-88` covers shuffled target preservation but no source-mutation assertion is visible in the searched block."
+        ],
+        "proposed_next": "Patch `shuffled_targets` to shuffle a copy of `self.targets`, then add or run focused verification in the patch action.",
+        "status": "continue",
+        "summary": "Located the target-shuffled graph creation path and identified the source mutation: `random.Random(seed).shuffle(self.targets)` occurs through an alias inside `Connectome.shuffled_targets`."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 29952,
+        "input_tokens": 49785,
+        "output_tokens": 520,
+        "reasoning_output_tokens": 77
+      },
+      "wall_seconds": 20.384
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0064619,
+        "patch": 0.0271056,
+        "reason": 0.01691343,
+        "search": 0.04421171,
+        "stop": 0.84494394,
+        "test": 0.01409051,
+        "verify": 0.0462729
+      },
+      "repository_after": {
+        "diff_chars": 564,
+        "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 564,
+        "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "No tools called, per the controller decision and action contract.",
+          "Prior observation identified the mutation at `flywire_review/connectome.py:111-123`: `shuffled_targets` aliases `self.targets` before shuffling.",
+          "Prior observation identified the caller at `flywire_review/router.py:219-224` and existing coverage at `tests/test_poc.py:84-88`.",
+          "No patch or verification was performed in this stop step."
+        ],
+        "proposed_next": "If resumed, patch `Connectome.shuffled_targets` to shuffle a copy of `self.targets`, then add/run a focused source-preservation test.",
+        "status": "continue",
+        "summary": "Stopped as instructed. The source-mutation bug is identified, but the overall goal is not complete because no edits or verification were allowed."
+      },
+      "selected_action": "stop",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 12950,
+        "output_tokens": 171,
+        "reasoning_output_tokens": 0
+      },
+      "wall_seconds": 11.5
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 38912,
+    "input_tokens": 62735,
+    "output_tokens": 691,
+    "reasoning_output_tokens": 77
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": false,
+    "returncode": 1,
+    "reward": 0.0,
+    "stderr_tail": "ark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... FAIL\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n======================================================================\nFAIL: test_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/bugbrain-live-eval/observation_only/target-shuffle-copy/repo/tests/test_poc.py\", line 88, in test_target_shuffle_preserves_degrees_and_target_multiset\n    self.assertNotEqual(shuffled.targets, self.graph.targets)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: array('I', [3, 2, 4, 6, 5, 5, 6, 2]) == array('I', [3, 2, 4, 6, 5, 5, 6, 2])\n\n----------------------------------------------------------------------\nRan 30 tests in 0.427s\n\nFAILED (failures=1)\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.543
+  }
+}

@@ -1,0 +1,12 @@
+diff --git a/flywire_review/policy.py b/flywire_review/policy.py
+--- a/flywire_review/policy.py
++++ b/flywire_review/policy.py
+@@ -334,7 +334,7 @@ def make_sparse_controls(core: SparseCore, *, seed: int) -> dict[str, SparseCor
+     # disclosed rather than silently repaired.
+     permutation = rng.permutation(core.edge_count)
+     rewired_targets = core.targets[permutation]
+-    rewired_weights = core.weights[permutation]
++    rewired_weights = np.zeros_like(core.weights)
+ 
+     def variant(name: str, targets: np.ndarray, weights: np.ndarray, control: str) -> SparseCore:
+         payload = np.stack((core.sources, targets), axis=1).astype("<i8", copy=False).tobytes()

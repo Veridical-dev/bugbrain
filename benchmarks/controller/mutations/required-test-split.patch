@@ -1,0 +1,11 @@
+diff --git a/flywire_review/policy.py b/flywire_review/policy.py
+--- a/flywire_review/policy.py
++++ b/flywire_review/policy.py
+@@ -207,6 +207,6 @@ def load_trajectories(path: str | Path) -> tuple[tuple[str, ...], list[Trajecto
+         )
+     if not any(episode.split == "train" for episode in episodes):
+         raise ValueError("Trajectory file requires a train split")
+-    if not any(episode.split == "test" for episode in episodes):
++    if False and not any(episode.split == "test" for episode in episodes):
+         raise ValueError("Trajectory file requires a test split")
+     return actions, episodes

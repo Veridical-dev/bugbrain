@@ -1,0 +1,533 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/degree_rewired-seed-2315.npz",
+    "checkpoint_receipt": {
+      "arm": "degree_rewired",
+      "control_seed": 102315,
+      "core_sha256": "065f52dcac9c0ecd4880291ef2e6373d50066750873fa864c97a5902a23920f6",
+      "edges": 75803,
+      "nodes": 2048,
+      "recurrence_scale": 0.92,
+      "seed": 2315,
+      "signed": true,
+      "topology_sha256": "1ea1f04971c57f26b8e5046d0df72de369f1f5dabe1c026e38427d9d526aac44"
+    },
+    "checkpoint_sha256": "e5688fd23e6e583a7c2109eccf77a6e5f11a4d8c9931b579f167966fc09d4849",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix Codex trace import so intermediate commentary does not terminate an episode.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 0,
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+    "status": []
+  },
+  "repository_before": {
+    "diff_chars": 647,
+    "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+    "status": [
+      " M flywire_review/policy.py"
+    ]
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.06614413,
+        "patch": 0.00809363,
+        "reason": 0.00027625,
+        "search": 0.75978975,
+        "stop": 0.00071439,
+        "test": 0.00748773,
+        "verify": 0.15749412
+      },
+      "repository_after": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py:1164-1189` defines Codex item classification.",
+          "`flywire_review/policy.py:1223-1247` collects completed items and selects `terminal_messages[0]`, skipping other `agent_message`/`message` items.",
+          "`tests/test_policy.py:318-333` covers a trace ending with an `agent_message` and expects `search`, `inspect`, `stop`."
+        ],
+        "proposed_next": "Consider an inspect action focused on how intermediate commentary versus the final agent message is identified during import.",
+        "status": "continue",
+        "summary": "Located the Codex JSONL importer in `flywire_review/policy.py`; its terminal-message selection currently uses the first message item and skips subsequent messages, which is the likely area causing intermediate commentary to terminate or truncate an episode."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 20992,
+        "input_tokens": 49178,
+        "output_tokens": 585,
+        "reasoning_output_tokens": 158
+      },
+      "wall_seconds": 23.086
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.12112605,
+        "patch": 0.05064606,
+        "reason": 1.31e-05,
+        "search": 0.51907778,
+        "stop": 0.00016327,
+        "test": 0.02453893,
+        "verify": 0.28443481
+      },
+      "repository_after": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py:1206-1207` classifies every `agent_message`/`message` as `stop`.",
+          "`flywire_review/policy.py:1234-1247` collects message items but selects `terminal_messages[0]`, skipping later messages; this treats intermediate commentary as terminal and may omit the final message.",
+          "`tests/test_policy.py:290-333` includes an intermediate `agent_message` before tool actions and a final `agent_message`, covering the affected import path."
+        ],
+        "proposed_next": "Inspect the complete importer and test assertions to determine the intended rule for identifying the final agent message, likely using the last message item or trace termination metadata.",
+        "status": "continue",
+        "summary": "Searched Codex importer and related tests. The likely defect is confirmed: importer selects the first completed message as terminal, so intermediate commentary can terminate the episode while the final message is skipped."
+      },
+      "selected_action": "search",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 20992,
+        "input_tokens": 28210,
+        "output_tokens": 405,
+        "reasoning_output_tokens": 53
+      },
+      "wall_seconds": 16.237
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.08875475,
+        "patch": 0.29356243,
+        "reason": 3.18e-06,
+        "search": 0.26172472,
+        "stop": 0.00029459,
+        "test": 0.21685953,
+        "verify": 0.1388008
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "inspect",
+          "patch"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py`: changed terminal Codex message selection from `terminal_messages[0]` to `terminal_messages[-1]`.",
+          "Intermediate `agent_message`/`message` items are now skipped while the final message remains classified as `stop`.",
+          "Tests were not run per contract."
+        ],
+        "proposed_next": "Consider running the focused importer tests in a separate step.",
+        "status": "done",
+        "summary": "Patched Codex JSONL import to treat the last completed agent message as terminal, preventing intermediate commentary from terminating the episode."
+      },
+      "selected_action": "patch",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 36096,
+        "input_tokens": 42394,
+        "output_tokens": 418,
+        "reasoning_output_tokens": 57
+      },
+      "wall_seconds": 17.424
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0379483,
+        "patch": 0.27820781,
+        "reason": 1.86e-06,
+        "search": 0.13924678,
+        "stop": 0.0011057,
+        "test": 0.48851422,
+        "verify": 0.05497533
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test",
+          "test"
+        ],
+        "evidence": [
+          "`pytest -q tests/test_policy.py -k 'intermediate or codex'` failed: `pytest: command not found`.",
+          "`python -m pytest -q tests/test_policy.py -k 'intermediate or codex'` failed: `python: command not found`."
+        ],
+        "proposed_next": "Consider locating the repository\u2019s test runner or virtual environment and rerunning the focused importer test.",
+        "status": "blocked",
+        "summary": "The focused test could not run because neither pytest nor python is available in the environment."
+      },
+      "selected_action": "test",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 34048,
+        "input_tokens": 40471,
+        "output_tokens": 456,
+        "reasoning_output_tokens": 99
+      },
+      "wall_seconds": 20.2
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02176975,
+        "patch": 0.15609663,
+        "reason": 2.54e-06,
+        "search": 0.11854834,
+        "stop": 0.00682447,
+        "test": 0.63663664,
+        "verify": 0.06012163
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "`uv run pytest -q tests/test_policy.py -k 'intermediate or codex'` could not start.",
+          "uv failed initializing its cache at `/Users/lukasz/.cache/uv` due to permission denied."
+        ],
+        "proposed_next": "Consider rerunning the focused test with a writable uv cache or the repository\u2019s available virtual environment/test runner.",
+        "status": "blocked",
+        "summary": "The focused importer test remains blocked because uv cannot access its default cache directory."
+      },
+      "selected_action": "test",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 13056,
+        "input_tokens": 27321,
+        "output_tokens": 307,
+        "reasoning_output_tokens": 87
+      },
+      "wall_seconds": 17.622
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01234555,
+        "patch": 0.07190792,
+        "reason": 4.78e-06,
+        "search": 0.10997758,
+        "stop": 0.04159234,
+        "test": 0.6481393,
+        "verify": 0.11603251
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "`UV_CACHE_DIR=/private/tmp/codex-uv-cache uv run pytest -q tests/test_policy.py -k 'intermediate or codex'` created `.venv` but failed resolving `setuptools>=68` because network/DNS access to PyPI is unavailable."
+        ],
+        "proposed_next": "Consider using an existing fully provisioned virtual environment or offline dependency cache to run the focused test.",
+        "status": "blocked",
+        "summary": "The focused importer test could not run: uv cache permissions were resolved, but dependency installation is blocked by unavailable PyPI network access."
+      },
+      "selected_action": "test",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27947,
+        "output_tokens": 335,
+        "reasoning_output_tokens": 64
+      },
+      "wall_seconds": 23.568
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0061384,
+        "patch": 0.02980713,
+        "reason": 7.74e-06,
+        "search": 0.08506158,
+        "stop": 0.15793211,
+        "test": 0.50723904,
+        "verify": 0.21381401
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Ran `find . -maxdepth 3 -type f \\( -path '*/bin/pytest' -o -path '*/bin/python' -o -name 'pytest' \\) -print`.",
+          "No repository-local pytest or Python executable was found."
+        ],
+        "proposed_next": "Consider locating a provisioned system or external test runner before rerunning the focused importer test.",
+        "status": "blocked",
+        "summary": "Performed one bounded test-environment check; no usable repository-local test runner was available, so the focused test remains blocked."
+      },
+      "selected_action": "test",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 17920,
+        "input_tokens": 27813,
+        "output_tokens": 331,
+        "reasoning_output_tokens": 54
+      },
+      "wall_seconds": 14.326
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00285022,
+        "patch": 0.0131563,
+        "reason": 8.82e-06,
+        "search": 0.05298904,
+        "stop": 0.30300135,
+        "test": 0.34088361,
+        "verify": 0.28711065
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test",
+          "test"
+        ],
+        "evidence": [
+          "`command -v` found `/Library/Frameworks/Python.framework/Versions/3.14/bin/python3`.",
+          "`python3 -m pytest -q tests/test_policy.py -k 'intermediate or codex'` failed: No module named pytest."
+        ],
+        "proposed_next": "Consider using a provisioned environment containing pytest or an offline dependency cache.",
+        "status": "blocked",
+        "summary": "The focused importer test remains blocked because the available Python interpreter does not have pytest installed."
+      },
+      "selected_action": "test",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 36096,
+        "input_tokens": 42795,
+        "output_tokens": 499,
+        "reasoning_output_tokens": 167
+      },
+      "wall_seconds": 18.173
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00144849,
+        "patch": 0.006763,
+        "reason": 8.39e-06,
+        "search": 0.0337593,
+        "stop": 0.39896858,
+        "test": 0.23679673,
+        "verify": 0.32225551
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "`flywire_review/policy.py`: Codex terminal message selection changed from `terminal_messages[0]` to `terminal_messages[-1]`.",
+          "Intermediate commentary messages are skipped while the final agent message is retained as `stop`.",
+          "Focused tests could not run: available Python lacks pytest, and dependency installation was blocked by unavailable PyPI access."
+        ],
+        "proposed_next": "Run the focused Codex importer tests in a provisioned environment with pytest available.",
+        "status": "blocked",
+        "summary": "The importer fix is applied, but test verification remains blocked by the unavailable pytest/dependency environment."
+      },
+      "selected_action": "stop",
+      "step": 8,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 12032,
+        "input_tokens": 14152,
+        "output_tokens": 174,
+        "reasoning_output_tokens": 41
+      },
+      "wall_seconds": 7.535
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 213248,
+    "input_tokens": 300281,
+    "output_tokens": 3510,
+    "reasoning_output_tokens": 780
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.452s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.602
+  }
+}

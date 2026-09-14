@@ -2,6 +2,16 @@
 
 All notable changes will be documented here.
 
+## 0.3.0 — 2026-09-14
+
+- Added live `policy-run` and direct-agent controller baselines with complete repository access.
+- Published 16 real verifier-backed Codex trajectories, 16 deterministic mutations, and four validation-selected checkpoints.
+- Trained 30 paired seeds on a 2,048-neuron FlyWire core and published the full policy report.
+- Ran four controller arms and direct Codex across six held-out repairs with per-task cost, compliance, and verifier receipts.
+- Found no biological-topology advantage: biological tied direct Codex at 5/6 repairs but required more tokens and time.
+- Enforced read-only process sandboxes for every non-patch controller action.
+- Added deterministic Wilson intervals, exact paired sign tests, and exact task bootstrap intervals.
+
 ## 0.2.0 — 2026-09-14
 
 - Added a sparse connectome-constrained action policy with full-episode BPTT.

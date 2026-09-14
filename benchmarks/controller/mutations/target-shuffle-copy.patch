@@ -1,0 +1,12 @@
+diff --git a/flywire_review/connectome.py b/flywire_review/connectome.py
+--- a/flywire_review/connectome.py
++++ b/flywire_review/connectome.py
+@@ -110,7 +110,7 @@ class Connectome:
+ 
+     def shuffled_targets(self, seed: int) -> Connectome:
+         """Return a target-shuffled null preserving every source out-degree and global in-degree."""
+-        targets = array("I", self.targets)
++        targets = self.targets
+         random.Random(seed).shuffle(targets)
+         return Connectome(
+             neuron_ids=self.neuron_ids,

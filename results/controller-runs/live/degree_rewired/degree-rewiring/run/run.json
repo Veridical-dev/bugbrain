@@ -1,0 +1,566 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/degree_rewired-seed-2315.npz",
+    "checkpoint_receipt": {
+      "arm": "degree_rewired",
+      "control_seed": 102315,
+      "core_sha256": "065f52dcac9c0ecd4880291ef2e6373d50066750873fa864c97a5902a23920f6",
+      "edges": 75803,
+      "nodes": 2048,
+      "recurrence_scale": 0.92,
+      "seed": 2315,
+      "signed": true,
+      "topology_sha256": "1ea1f04971c57f26b8e5046d0df72de369f1f5dabe1c026e38427d9d526aac44"
+    },
+    "checkpoint_sha256": "e5688fd23e6e583a7c2109eccf77a6e5f11a4d8c9931b579f167966fc09d4849",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix the degree-preserving graph-null construction regression.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 720,
+    "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+    "status": [
+      " M flywire_review/policy.py"
+    ]
+  },
+  "repository_before": {
+    "diff_chars": 728,
+    "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+    "status": [
+      " M flywire_review/policy.py"
+    ]
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.06614413,
+        "patch": 0.00809363,
+        "reason": 0.00027625,
+        "search": 0.75978975,
+        "stop": 0.00071439,
+        "test": 0.00748773,
+        "verify": 0.15749412
+      },
+      "repository_after": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py:325` defines `make_sparse_controls`.",
+          "`flywire_review/policy.py:336` constructs `rewired_targets` with `rng.integers(...)`, while `policy.py:382` claims target in-degree preservation.",
+          "Relevant tests are in `tests/test_policy.py:188-198`; documentation is in `docs/TRAINING.md:109-112`."
+        ],
+        "proposed_next": "Consider a patch action focused on degree-preserving target rewiring in `make_sparse_controls`.",
+        "status": "continue",
+        "summary": "Searched repository symbols and paths only. Located the graph-null construction and a likely regression: degree_rewired targets are independently randomized despite the documented target in-degree invariant."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 40192,
+        "input_tokens": 57485,
+        "output_tokens": 664,
+        "reasoning_output_tokens": 135
+      },
+      "wall_seconds": 23.966
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.12058819,
+        "patch": 0.05039918,
+        "reason": 1.26e-05,
+        "search": 0.50568282,
+        "stop": 0.00017423,
+        "test": 0.02366827,
+        "verify": 0.29947471
+      },
+      "repository_after": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py:331-336` claims target in-degree preservation but assigns `rewired_targets = rng.integers(...)` independently.",
+          "`tests/test_policy.py:182-198` checks degree preservation; `docs/TRAINING.md:109-114` documents the invariant."
+        ],
+        "proposed_next": "Patch `make_sparse_controls` so rewired targets preserve the original target in-degree sequence while retaining the intended configuration-multigraph behavior.",
+        "status": "continue",
+        "summary": "Completed the bounded search step and confirmed the regression location and documented/tested invariant. No files were edited and no tests were run."
+      },
+      "selected_action": "search",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 12032,
+        "input_tokens": 29387,
+        "output_tokens": 364,
+        "reasoning_output_tokens": 55
+      },
+      "wall_seconds": 15.528
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.09659605,
+        "patch": 0.30405907,
+        "reason": 3.14e-06,
+        "search": 0.2562529,
+        "stop": 0.00032822,
+        "test": 0.20161484,
+        "verify": 0.14114578
+      },
+      "repository_after": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "inspect",
+          "inspect",
+          "patch"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py:336` now derives `rewired_targets` by permuting `core.targets`, preserving target in-degree counts.",
+          "No tests were run, per contract."
+        ],
+        "proposed_next": "Consider running the focused policy test in a subsequent action.",
+        "status": "done",
+        "summary": "Patched degree-rewired null construction to preserve the original target in-degree sequence while retaining randomized source-slot assignment."
+      },
+      "selected_action": "patch",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 48128,
+        "input_tokens": 56357,
+        "output_tokens": 595,
+        "reasoning_output_tokens": 173
+      },
+      "wall_seconds": 23.414
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.04421677,
+        "patch": 0.30573879,
+        "reason": 1.8e-06,
+        "search": 0.13909464,
+        "stop": 0.00113611,
+        "test": 0.45709179,
+        "verify": 0.0527201
+      },
+      "repository_after": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `pytest -q tests/test_policy.py -k degree`",
+          "Result: `pytest` is not installed or unavailable (`zsh: command not found: pytest`).",
+          "No files were edited."
+        ],
+        "proposed_next": "Consider rerunning the focused test through the repository\u2019s available test runner or installed virtual environment.",
+        "status": "continue",
+        "summary": "The focused test action was attempted, but could not run because pytest is unavailable."
+      },
+      "selected_action": "test",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 26756,
+        "output_tokens": 355,
+        "reasoning_output_tokens": 91
+      },
+      "wall_seconds": 11.794
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02641874,
+        "patch": 0.17483042,
+        "reason": 2.3e-06,
+        "search": 0.12283937,
+        "stop": 0.00670091,
+        "test": 0.6120066,
+        "verify": 0.05720165
+      },
+      "repository_after": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python -m unittest tests.test_policy`",
+          "Result: Python is unavailable (`zsh: command not found: python`).",
+          "No files were edited."
+        ],
+        "proposed_next": "Consider using an available Python executable or repository virtual environment to run the focused policy test.",
+        "status": "blocked",
+        "summary": "Attempted one focused test through unittest, but no Python executable is available in the environment."
+      },
+      "selected_action": "test",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 26792,
+        "output_tokens": 293,
+        "reasoning_output_tokens": 82
+      },
+      "wall_seconds": 12.39
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01569179,
+        "patch": 0.08194781,
+        "reason": 4.1e-06,
+        "search": 0.11703312,
+        "stop": 0.04101285,
+        "test": 0.63535676,
+        "verify": 0.10895356
+      },
+      "repository_after": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python3 -m unittest tests.test_policy`",
+          "Result: test discovery failed because the environment lacks `numpy` (`ModuleNotFoundError`).",
+          "No files were edited."
+        ],
+        "proposed_next": "Consider running the focused test in an environment with the repository dependencies installed.",
+        "status": "blocked",
+        "summary": "Attempted one focused policy test using Python 3; it could not run because numpy is unavailable."
+      },
+      "selected_action": "test",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 13056,
+        "input_tokens": 27423,
+        "output_tokens": 262,
+        "reasoning_output_tokens": 50
+      },
+      "wall_seconds": 11.802
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00822257,
+        "patch": 0.03681199,
+        "reason": 6.6e-06,
+        "search": 0.09041195,
+        "stop": 0.15376995,
+        "test": 0.51784043,
+        "verify": 0.19293651
+      },
+      "repository_after": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [
+          "verify"
+        ],
+        "evidence": [
+          "Command: `git diff --check`",
+          "Result: passed with no whitespace errors; no files were edited."
+        ],
+        "proposed_next": "Consider running the focused policy test in an environment with NumPy and the repository test dependencies installed.",
+        "status": "continue",
+        "summary": "Ran one bounded repository check successfully. The patch has no whitespace errors, but the degree-preservation test remains unexecuted due to missing dependencies."
+      },
+      "selected_action": "test",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 26112,
+        "input_tokens": 27582,
+        "output_tokens": 337,
+        "reasoning_output_tokens": 140
+      },
+      "wall_seconds": 11.96
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00393509,
+        "patch": 0.01654624,
+        "reason": 7.77e-06,
+        "search": 0.05830768,
+        "stop": 0.31372723,
+        "test": 0.35175369,
+        "verify": 0.2557223
+      },
+      "repository_after": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python3 -m unittest tests.test_policy`",
+          "Test discovery failed: `ModuleNotFoundError: No module named 'numpy'`",
+          "No files were edited."
+        ],
+        "proposed_next": "Consider running the focused policy test after installing the repository dependencies.",
+        "status": "blocked",
+        "summary": "Attempted one focused policy test; it could not run because NumPy is unavailable."
+      },
+      "selected_action": "test",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 13056,
+        "input_tokens": 28108,
+        "output_tokens": 401,
+        "reasoning_output_tokens": 206
+      },
+      "wall_seconds": 13.601
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00196637,
+        "patch": 0.00781631,
+        "reason": 7.37e-06,
+        "search": 0.03742066,
+        "stop": 0.44655705,
+        "test": 0.22400255,
+        "verify": 0.2822297
+      },
+      "repository_after": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 720,
+        "diff_sha256": "0aa7c74d53b79d68fe4c2cde7b1c5595b80e9d68f591a95f8467cc70b80f4b80",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "`flywire_review/policy.py:336` now permutes `core.targets`, preserving target in-degree counts.",
+          "`git diff --check` passed with no whitespace errors.",
+          "Focused tests could not run because NumPy is unavailable (`ModuleNotFoundError`)."
+        ],
+        "proposed_next": "Consider running the focused policy tests in an environment with NumPy and repository dependencies installed.",
+        "status": "blocked",
+        "summary": "The degree-preserving rewiring regression was patched, but the invariant remains unverified because the test environment lacks NumPy."
+      },
+      "selected_action": "stop",
+      "step": 8,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 13920,
+        "output_tokens": 177,
+        "reasoning_output_tokens": 56
+      },
+      "wall_seconds": 8.178
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 205568,
+    "input_tokens": 293810,
+    "output_tokens": 3448,
+    "reasoning_output_tokens": 988
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.447s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.577
+  }
+}

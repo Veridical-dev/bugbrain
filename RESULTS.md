@@ -9,10 +9,10 @@ BugBrain produced one negative result and one intriguing case study:
 
 These statements answer different questions. Neither licenses a “fly brain beats code review” headline.
 
-Version 0.2 also contains a trainable connectome-constrained action policy. Its
-bundled corpus is synthetic, and the successful FlyWire smoke run is not listed
-as a result: real repository trajectories, held-out verifiers, paired budgets,
-and confidence intervals are still required.
+The trained-controller follow-up is now complete on a frozen real-repository
+corpus. It produced another useful negative result: the controller sometimes
+changes which task Codex solves, but biological topology did not earn causal
+credit and the extra orchestration was less efficient.
 
 ## Mechanism experiment
 
@@ -54,6 +54,63 @@ CodeRabbit found:
 - A per-segment exception-isolation failure that could erase memberships computed for earlier segments.
 
 There was no overlap. Duplicates count against BugBrain's precision and never increase unique-root recall.
+
+## Trained-controller experiment
+
+We recorded 16 real, independently verified Codex repair episodes against
+deterministic mutations of BugBrain itself: 8 train, 2 validation, and 6
+held-out test tasks. The corpus contains 153 actual tool actions, including 19
+patches, 50 test actions, and 31 verification actions. Direct Codex passed 14
+of the 16 source tasks; failed runs remain reward-zero examples.
+
+The 2,048-neuron FlyWire core has 75,803 directed edges. Four policies received
+identical observations and training settings over 30 paired seeds:
+
+| Offline arm | Mean held-out action accuracy | Population SD |
+|---|---:|---:|
+| Biological FlyWire | 0.497175 | 0.041823 |
+| Weight-shuffled | 0.475141 | 0.044946 |
+| Degree-preserving rewired | **0.519774** | 0.036961 |
+| Observation-only | 0.491525 | 0.000000 |
+
+The biological-minus-rewired macro delta was −0.0225 with a paired task/seed
+bootstrap 95% interval of [−0.0468, +0.0017]. Biological-minus-observation-only
+was +0.0145 with [−0.0892, +0.0996]. The literal FlyWire topology did not
+improve imitation of held-out actions.
+
+For the operational test, we selected each arm's checkpoint by validation
+accuracy only, then gave its worker a complete disposable checkout and up to 12
+high-level actions on each held-out mutation. An independent 30-test command
+assigned binary reward. The direct baseline used the same Codex model and full
+repository access with normal autonomy.
+
+| Live arm | Verifiers passed | Mean input tokens | Mean worker time | Action compliance |
+|---|---:|---:|---:|---:|
+| Biological FlyWire | **5/6** | 289,925 | 154.2 s | 84.6% |
+| Weight-shuffled | 4/6 | 300,694 | 149.0 s | 85.2% |
+| Degree-preserving rewired | 4/6 | 324,568 | 152.5 s | 85.5% |
+| Observation-only | 3/6 | 308,777 | 151.6 s | 90.9% |
+| Direct Codex | **5/6** | **242,889** | **64.6 s** | n/a |
+
+Biological BugBrain and direct Codex succeeded on different five-task subsets:
+the controller rescued `terminal-message`, which direct missed, while direct
+solved `target-shuffle-copy`, which every controller missed. Their paired pass
+delta is exactly zero (one win, one loss, four ties; two-sided exact sign
+test p=1.0). Biological versus each graph null had one win and no losses, but
+with six tasks the two-sided exact p-value is also 1.0. The biological arm used
+1.19× the input tokens, 1.71× the output tokens, and 2.39× the worker time of
+direct execution.
+
+The worker obeyed the selected action contract on 84.6% of biological steps.
+Repository snapshots confirmed zero mutations outside a selected `patch` step;
+v0.3 additionally enforces read-only sandboxes for every non-patch action. This
+means the useful artifact is a measurable iterative-agent scaffold, not evidence
+that a fly learned software engineering.
+
+The exact corpus, selected checkpoints, mutations, 30-seed policy report,
+per-task scores, confidence intervals, and receipts are under
+[`benchmarks/controller/`](benchmarks/controller/) and
+[`results/controller-benchmark.json`](results/controller-benchmark.json).
 
 ## The invalid run we do not count
 

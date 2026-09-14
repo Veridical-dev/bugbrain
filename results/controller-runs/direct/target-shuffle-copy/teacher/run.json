@@ -1,0 +1,83 @@
+{
+  "call_state": "ok",
+  "contract": {
+    "goal": "Fix target-shuffled graph creation so it cannot mutate the source connectome.",
+    "model": "gpt-5.6-luna",
+    "prompt_sha256": "d7c13d2a635c2a687231d456efd5de41ab4b0e4ed8b70a20a9694bbfe49f330c",
+    "reasoning_effort": "low",
+    "repository_diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+    "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "sandbox": "workspace-write",
+    "schema": "bugbrain.direct-agent-call/1",
+    "user_config_enabled": false
+  },
+  "repository_after": {
+    "diff_chars": 916,
+    "diff_sha256": "4c796ad15fdfc52da7cb723b8e36fb93ff3c7b29ffd699cbf17852efd2e9579e",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-controller-benchmark/target-shuffle-copy/repo",
+    "status": [
+      " M tests/test_poc.py"
+    ]
+  },
+  "repository_before": {
+    "diff_chars": 564,
+    "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-controller-benchmark/target-shuffle-copy/repo",
+    "status": [
+      " M flywire_review/connectome.py"
+    ]
+  },
+  "response": {
+    "evidence": [
+      "Copied `self.targets` before shuffling in `Connectome.shuffled_targets`.",
+      "Added a regression assertion that source targets remain unchanged.",
+      "Focused suite passed: 8/8 tests.",
+      "`git diff --check` passed; pytest unavailable in environment."
+    ],
+    "proposed_next": "Optionally run the full pytest suite where pytest is installed.",
+    "status": "done",
+    "summary": "Fixed target-shuffled graph creation so it cannot mutate the source connectome."
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.direct-agent/1",
+  "status": "completed",
+  "tool_actions": [
+    "search",
+    "verify",
+    "search",
+    "patch",
+    "test",
+    "test",
+    "test",
+    "test",
+    "verify",
+    "verify"
+  ],
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 193024,
+    "input_tokens": 222000,
+    "output_tokens": 1876,
+    "reasoning_output_tokens": 284
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.384s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.481
+  },
+  "wall_seconds": 70.733
+}

@@ -1,0 +1,80 @@
+{
+  "call_state": "ok",
+  "contract": {
+    "goal": "Fix checkpoint validation so incompatible neuron interfaces are rejected.",
+    "model": "gpt-5.6-luna",
+    "prompt_sha256": "eab79095ece8446a98a531d041607e81a74a3f56d5fa92d86345b2678adba978",
+    "reasoning_effort": "low",
+    "repository_diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+    "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "sandbox": "workspace-write",
+    "schema": "bugbrain.direct-agent-call/1",
+    "user_config_enabled": false
+  },
+  "repository_after": {
+    "diff_chars": 0,
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-controller-benchmark/checkpoint-interface/repo",
+    "status": []
+  },
+  "repository_before": {
+    "diff_chars": 795,
+    "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-controller-benchmark/checkpoint-interface/repo",
+    "status": [
+      " M flywire_review/policy.py"
+    ]
+  },
+  "response": {
+    "evidence": [
+      "Enabled `core_sha256` comparison in `flywire_review/policy.py:712`, so changed neuron flow/interface metadata now raises `ValueError`.",
+      "`git diff --check` passes.",
+      "Tests could not run because NumPy/pytest are unavailable and network access prevented dependency download."
+    ],
+    "proposed_next": "Run `pytest -q` in an environment with project dependencies installed.",
+    "status": "done",
+    "summary": "Checkpoint validation now rejects incompatible neuron interfaces by enforcing the existing core receipt check."
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.direct-agent/1",
+  "status": "completed",
+  "tool_actions": [
+    "search",
+    "verify",
+    "search",
+    "inspect",
+    "patch",
+    "test",
+    "test",
+    "test",
+    "verify",
+    "verify"
+  ],
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 264448,
+    "input_tokens": 331054,
+    "output_tokens": 1859,
+    "reasoning_output_tokens": 211
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.393s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.495
+  },
+  "wall_seconds": 61.088
+}

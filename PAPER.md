@@ -10,7 +10,7 @@
 
 We investigate whether the directed, weighted wiring diagram of an adult *Drosophila melanogaster* brain can provide a useful inductive bias for routing code-review work. We encode code hunks into a fixed FlyWire-derived reservoir, train a small ridge readout on other repositories, cluster files into reviewer assignments, and send those assignments to independent agentic code reviewers with full read-only repository access.
 
-The experiment has two results. First, across 200 paired leave-one-project-out trials, the biological topology does not measurably outperform matched random-topology, weight-shuffled, or code-only controls. Second, in a same-commit case study on Formbricks pull request #8588, eight biological-arm reviewer agents identify two registered correctness roots missed by CodeRabbit; CodeRabbit identifies a different registered root missed by the swarm. The case study is intriguing but is neither model-matched nor budget-matched and cannot establish general superiority.
+The experiment has three results. First, across 200 paired leave-one-project-out routing trials, the biological topology does not measurably outperform matched random-topology, weight-shuffled, or code-only controls. Second, in a same-commit case study on Formbricks pull request #8588, eight biological-arm reviewer agents identify two registered correctness roots missed by CodeRabbit; CodeRabbit identifies a different registered root missed by the swarm. Third, a trained 2,048-neuron connectome controller reaches 49.7% held-out action-imitation accuracy across 30 paired seeds and ties direct Codex at five of six live repairs, but a degree-preserving rewiring reaches 52.0% imitation accuracy and direct Codex is faster and cheaper. The live studies are small and cannot establish general superiority.
 
 Our conclusion is less cinematic than “flies can code”: connectome routing is currently an entertaining, falsifiable diversity mechanism whose biological specificity remains unsupported. Publishing the controls, negative result, and failed precursor is the point.
 
@@ -143,28 +143,76 @@ This work is a small research prototype.
 - CodeRabbit's internal models, prompts, tools, context construction, latency, and cost are unknown.
 - The truth register predates the agentic run but incorporates historical audit evidence, including CodeRabbit's confirmed root.
 - The selected 512-neuron core and recurrence are engineering choices, not claims of biological fidelity.
+- The controller corpus mutates one repository, includes only six held-out tasks, and has one live Codex rollout per arm/task.
+- Controller and direct runs use the same model but are not token-matched; the controller deliberately purchases multiple fresh calls.
+- The original live-controller run enforced edit boundaries by prompt and audited snapshots. Action-label compliance was 84.6% for the biological arm, although no non-patch step changed the repository. Version 0.3 enforces read-only sandboxes outside `patch` steps.
 - A static connectome omits neural dynamics, plasticity, embodiment, neuromodulation, and the inconvenient fact that the fly did not consent to reviewing TypeScript.
 
-## 8. Follow-up: train the controller, not the router
+## 8. Experiment C: train the controller, not the router
 
-Version 0.2 adds a preregisterable follow-up experiment inspired by
-connectome-constrained game controllers. Complete Codex trajectories are mapped
-to seven high-level software actions: search, inspect, test, reason, patch,
-verify, and stop. Repository or grading outcomes supply terminal rewards.
+Inspired by connectome-constrained game controllers, we mapped complete Codex
+trajectories to seven high-level software actions: search, inspect, test,
+reason, patch, verify, and stop. Repository verifier outcomes supply terminal
+reward. A sparse recurrent policy uses a fixed 2,048-neuron, 75,803-edge
+FlyWire core. Structured observations enter annotated afferent neurons;
+annotated efferent activity is pooled into action logits. Full-episode
+backpropagation updates only flow-conditioned recurrent gains, biases, and a
+small action decoder. It does not train a language model or rewrite the graph.
 
-A sparse recurrent policy uses the fixed directed FlyWire graph. Structured
-observations enter annotated afferent neurons; annotated efferent activity is
-pooled into action logits. Full-episode backpropagation updates only
-flow-conditioned recurrent gains, biases, and a small action decoder. It does
-not train a language model or rewrite the measured edge topology.
+### 8.1 Frozen corpus and controls
 
-Each paired seed also trains a weight-shuffled graph, a degree-preserving
-rewired graph, and an observation-only policy. Checkpoints bind learned arrays
-to topology, weight, neuron-ID, and input/output-interface receipts. The bundled
-synthetic trajectories and successful 2,048-neuron smoke run validate mechanics
-only. No real-repository biological advantage is claimed from them.
+We created 16 deterministic regressions against commit `24d5e4d`: eight train,
+two validation, and six test. A normal repository-capable Codex worker generated
+153 observed actions. The same independent 30-test verifier supplied binary
+reward, and failed teacher runs were retained. The corpus and mutation patches
+are published.
 
-The protocol and commands are documented in [Training BugBrain](docs/TRAINING.md).
+Thirty paired seeds trained the biological core, a weight-shuffled core, a
+degree-preserving rewiring, and an observation-only model. Every arm shared the
+data, feature map, action interface, optimizer, and paired initialization.
+
+| Offline arm | Mean held-out action accuracy | Population SD |
+|---|---:|---:|
+| Biological FlyWire | 0.497175 | 0.041823 |
+| Weight-shuffled | 0.475141 | 0.044946 |
+| Degree-preserving rewired | **0.519774** | 0.036961 |
+| Observation-only | 0.491525 | 0.000000 |
+
+The biological-minus-rewired macro delta is −0.0225 (paired task/seed bootstrap
+95% interval [−0.0468, +0.0017]). Biological-minus-observation-only is +0.0145
+([−0.0892, +0.0996]). Exact trajectory accuracy is zero for every
+validation-selected checkpoint. Biological topology did not improve held-out
+action imitation.
+
+### 8.2 Live repository repair
+
+We selected one checkpoint per arm using validation action accuracy, then ran
+each controller on fresh copies of the six held-out mutations. At every step,
+the policy selected a high-level action and a fresh `gpt-5.6-luna` worker with
+low reasoning effort received the complete checkout. The worker chose paths,
+commands, reasoning, and patch content. Each controller had at most 12 steps.
+A same-model direct baseline received normal autonomy in one call.
+
+| Live arm | Verifiers passed | Mean input tokens | Mean worker time |
+|---|---:|---:|---:|
+| Biological FlyWire | **5/6** | 289,925 | 154.2 s |
+| Weight-shuffled | 4/6 | 300,694 | 149.0 s |
+| Degree-preserving rewired | 4/6 | 324,568 | 152.5 s |
+| Observation-only | 3/6 | 308,777 | 151.6 s |
+| Direct Codex | **5/6** | **242,889** | **64.6 s** |
+
+Biological and direct execution each passed five tasks, but not the same five.
+The biological controller rescued one direct failure and introduced one new
+failure: one win, one loss, four ties, paired pass-rate delta 0, two-sided exact
+sign p=1.0. Biological had one win and no losses against each graph null, also
+insufficient on six tasks (p=1.0). It used 1.19 times the input tokens and 2.39
+times the worker time of direct Codex.
+
+The operationally interesting result is that iterative decomposition changed
+outcomes and rescued a direct failure. The causal result is that the FlyWire
+topology did not explain that benefit. Full statistics and per-task outcomes
+are in [`results/controller-benchmark.json`](results/controller-benchmark.json);
+the protocol is documented in [Training BugBrain](docs/TRAINING.md).
 
 ## 9. What would change our mind?
 
@@ -182,7 +230,7 @@ Promising follow-ups include:
 
 ## 10. Conclusion
 
-The fruit-fly connectome did not beat randomness as a routing representation. The fly-routed agent swarm nevertheless found two verified defects missed by another review tool on one PR. Those facts can coexist.
+The fruit-fly connectome did not beat randomness as a routing representation. The fly-routed agent swarm nevertheless found two verified defects missed by another review tool on one PR. A trained FlyWire controller then tied direct Codex on six held-out repairs, but did so with more computation and without a supported topology advantage. Those facts can coexist.
 
 The defensible public line is:
 
@@ -191,6 +239,11 @@ The defensible public line is:
 The more important line is:
 
 > We ran the controls, and the literal fly wiring has not earned the credit—yet.
+
+The most useful engineering lesson is less zoological: bounded, iterative
+repository workers can alter failure modes, but a learned scheduler must beat a
+simple scheduler and direct execution on reliability and cost before it belongs
+in a product.
 
 ## References
 

@@ -1,0 +1,84 @@
+{
+  "call_state": "ok",
+  "contract": {
+    "goal": "Fix the matched random-topology control so it actually ablates biological topology.",
+    "model": "gpt-5.6-luna",
+    "prompt_sha256": "93bafca56494af700efe4f1ce49c0a2131f808962212e5d8f059840923c0fccc",
+    "reasoning_effort": "low",
+    "repository_diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+    "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "sandbox": "workspace-write",
+    "schema": "bugbrain.direct-agent-call/1",
+    "user_config_enabled": false
+  },
+  "repository_after": {
+    "diff_chars": 834,
+    "diff_sha256": "680e79ff75a685c8e09d9be8979b7d63c46b8ae89fc7759487fd07eaea9b17d4",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-controller-benchmark/random-topology-null/repo",
+    "status": [
+      " M tests/test_reservoir.py"
+    ]
+  },
+  "repository_before": {
+    "diff_chars": 802,
+    "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-controller-benchmark/random-topology-null/repo",
+    "status": [
+      " M flywire_review/reservoir.py"
+    ]
+  },
+  "response": {
+    "evidence": [
+      "Fixed `make_matched_controls` so `random_topology` uses sampled loop/non-loop positions instead of biological edge positions, preserving edge count, self-loop count, and weight multiset.",
+      "Added a regression assertion verifying random topology positions differ from biological positions.",
+      "`git diff --check` and `python3 -m compileall -q flywire_review tests` pass.",
+      "Tests could not run: NumPy/pytest are unavailable locally and dependency download is blocked by network/DNS restrictions."
+    ],
+    "proposed_next": "Run `pytest -q` in an environment with project dependencies installed.",
+    "status": "done",
+    "summary": "The matched random-topology control now genuinely rewires biological topology while preserving its matching constraints."
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.direct-agent/1",
+  "status": "completed",
+  "tool_actions": [
+    "search",
+    "verify",
+    "patch",
+    "test",
+    "test",
+    "patch",
+    "test",
+    "test",
+    "verify",
+    "patch",
+    "verify"
+  ],
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 258048,
+    "input_tokens": 290527,
+    "output_tokens": 2723,
+    "reasoning_output_tokens": 659
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.388s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.484
+  },
+  "wall_seconds": 75.536
+}

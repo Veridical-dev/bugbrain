@@ -1,0 +1,681 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/observation_only-seed-2306.npz",
+    "checkpoint_receipt": {
+      "arm": "observation_only",
+      "seed": 2306
+    },
+    "checkpoint_sha256": "dc091fef4943f31d3a15950252afb602f4de8d08f562ab7d6f880261da2f684e",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix checkpoint validation so incompatible neuron interfaces are rejected.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 0,
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+    "status": []
+  },
+  "repository_before": {
+    "diff_chars": 795,
+    "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+    "status": [
+      " M flywire_review/policy.py"
+    ]
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00271511,
+        "patch": 0.0052711,
+        "reason": 0.00183794,
+        "search": 0.97242056,
+        "stop": 0.01049398,
+        "test": 0.00056459,
+        "verify": 0.00669672
+      },
+      "repository_after": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py:679` defines `load_connectome_checkpoint` and performs checkpoint receipt checks.",
+          "`flywire_review/policy.py:712-713` has the graph-weight/neuron-interface check disabled behind `if False`.",
+          "`tests/test_policy.py:256-265` expects changed neuron flow/interface metadata to raise `ValueError` containing `interface`.",
+          "`flywire_review/policy.py:636-675` contains checkpoint serialization and receipt metadata."
+        ],
+        "proposed_next": "Consider a patch action targeting the disabled `core_sha256` validation in `load_connectome_checkpoint`.",
+        "status": "continue",
+        "summary": "Located checkpoint loading and the incompatible-interface validation path. The relevant check is explicitly disabled with `if False`, while the existing test expects interface changes to be rejected."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 38144,
+        "input_tokens": 50504,
+        "output_tokens": 557,
+        "reasoning_output_tokens": 120
+      },
+      "wall_seconds": 21.225
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01384315,
+        "patch": 0.56565131,
+        "reason": 0.00928926,
+        "search": 0.14990543,
+        "stop": 0.10079206,
+        "test": 0.01663567,
+        "verify": 0.14388312
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "inspect",
+          "patch"
+        ],
+        "evidence": [
+          "Patched `flywire_review/policy.py` to enable the existing `core_sha256` comparison in `load_connectome_checkpoint`.",
+          "The loader now raises `ValueError` when graph weights or neuron interfaces differ from checkpoint metadata.",
+          "Tests were not run per contract."
+        ],
+        "proposed_next": "No further action needed.",
+        "status": "done",
+        "summary": "Enabled checkpoint core validation so incompatible neuron interfaces are rejected."
+      },
+      "selected_action": "patch",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 34048,
+        "input_tokens": 39944,
+        "output_tokens": 382,
+        "reasoning_output_tokens": 50
+      },
+      "wall_seconds": 22.408
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01244284,
+        "patch": 0.05871492,
+        "reason": 0.01086926,
+        "search": 0.5328317,
+        "stop": 0.3592582,
+        "test": 0.00361286,
+        "verify": 0.02227022
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py:712-713` compares checkpoint `core_sha256` metadata and raises `ValueError` mentioning neuron interfaces.",
+          "`tests/test_policy.py:264-265` expects incompatible interface metadata to raise `ValueError`."
+        ],
+        "proposed_next": "No further action needed; a controller may consider the goal complete.",
+        "status": "done",
+        "summary": "Searched checkpoint validation symbols and confirmed the incompatible-neuron-interface rejection is enabled and covered by an existing test."
+      },
+      "selected_action": "search",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 12032,
+        "input_tokens": 27132,
+        "output_tokens": 358,
+        "reasoning_output_tokens": 108
+      },
+      "wall_seconds": 13.558
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02273894,
+        "patch": 0.20456726,
+        "reason": 0.01139783,
+        "search": 0.55234807,
+        "stop": 0.06906523,
+        "test": 0.020871,
+        "verify": 0.11901166
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg -n \"load_connectome_checkpoint|core_sha256|neuron interface|interface\" flywire_review/policy.py tests/test_policy.py` found the enabled comparison at `flywire_review/policy.py:712-713`.",
+          "`tests/test_policy.py:264-265` verifies changed interface metadata raises `ValueError` containing `interface`.",
+          "No files were edited and no tests were run, per the search-action contract."
+        ],
+        "proposed_next": "Consider the checkpoint-validation goal complete.",
+        "status": "done",
+        "summary": "Searched checkpoint validation symbols and confirmed incompatible neuron interfaces are rejected by the enabled core_sha256 check and covered by an existing test."
+      },
+      "selected_action": "search",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 20992,
+        "input_tokens": 26649,
+        "output_tokens": 343,
+        "reasoning_output_tokens": 57
+      },
+      "wall_seconds": 12.724
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01479961,
+        "patch": 0.00875897,
+        "reason": 0.01250482,
+        "search": 0.61836808,
+        "stop": 0.26787371,
+        "test": 0.00429002,
+        "verify": 0.07340478
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg -n \"load_connectome_checkpoint|core_sha256|neuron interface|interface\" flywire_review/policy.py tests/test_policy.py` located the enabled validation at `flywire_review/policy.py:712-713`.",
+          "`tests/test_policy.py:264-265` verifies changed interface metadata raises `ValueError` containing `interface`.",
+          "No files were edited and no tests were run, per the search-action contract."
+        ],
+        "proposed_next": "Consider the checkpoint-validation goal complete.",
+        "status": "done",
+        "summary": "Searched checkpoint validation symbols and confirmed incompatible neuron interfaces are rejected by the enabled core_sha256 check and covered by an existing test."
+      },
+      "selected_action": "search",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 17920,
+        "input_tokens": 27238,
+        "output_tokens": 338,
+        "reasoning_output_tokens": 46
+      },
+      "wall_seconds": 14.79
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01967396,
+        "patch": 0.01086119,
+        "reason": 0.01600139,
+        "search": 0.55793441,
+        "stop": 0.2545528,
+        "test": 0.00539782,
+        "verify": 0.13557843
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg -n \"load_connectome_checkpoint|core_sha256|neuron interface|interface\" flywire_review/policy.py tests/test_policy.py` located enabled validation at `flywire_review/policy.py:712-713`.",
+          "`tests/test_policy.py:264-265` verifies changed interface metadata raises `ValueError` containing `interface`.",
+          "No files were edited and no tests were run, per the search-action contract."
+        ],
+        "proposed_next": "Consider the checkpoint-validation goal complete; a controller may proceed to finalization.",
+        "status": "done",
+        "summary": "Searched checkpoint validation symbols and confirmed incompatible neuron interfaces are rejected by the enabled `core_sha256` check and covered by an existing test."
+      },
+      "selected_action": "search",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 17920,
+        "input_tokens": 27617,
+        "output_tokens": 318,
+        "reasoning_output_tokens": 20
+      },
+      "wall_seconds": 13.485
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.04196646,
+        "patch": 0.0110846,
+        "reason": 0.01701831,
+        "search": 0.46947821,
+        "stop": 0.33085759,
+        "test": 0.00688965,
+        "verify": 0.12270519
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg -n \"load_connectome_checkpoint|core_sha256|neuron interface|interface\" flywire_review/policy.py tests/test_policy.py` found enabled validation at `flywire_review/policy.py:712-713`.",
+          "`tests/test_policy.py:264-265` verifies incompatible interface metadata raises `ValueError` containing `interface`.",
+          "No files were edited and no tests were run, per the search-action contract."
+        ],
+        "proposed_next": "Consider the checkpoint-validation goal complete and proceed to finalization.",
+        "status": "done",
+        "summary": "Searched checkpoint validation symbols and confirmed incompatible neuron interfaces are rejected by the enabled `core_sha256` check and covered by an existing test."
+      },
+      "selected_action": "search",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 26112,
+        "input_tokens": 28028,
+        "output_tokens": 360,
+        "reasoning_output_tokens": 61
+      },
+      "wall_seconds": 20.907
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02522887,
+        "patch": 0.01299713,
+        "reason": 0.01078659,
+        "search": 0.6394378,
+        "stop": 0.19485009,
+        "test": 0.0052614,
+        "verify": 0.11143811
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg -n \"load_connectome_checkpoint|core_sha256|neuron interface|interface\" flywire_review/policy.py tests/test_policy.py` found enabled validation at `flywire_review/policy.py:712-713`.",
+          "`tests/test_policy.py:264-265` verifies incompatible interface metadata raises `ValueError` containing `interface`.",
+          "No files were edited and no tests were run, per the search-only contract."
+        ],
+        "proposed_next": "Consider the checkpoint-validation goal complete and proceed to finalization.",
+        "status": "done",
+        "summary": "Searched checkpoint validation symbols and confirmed incompatible neuron interfaces are rejected by the enabled `core_sha256` check and covered by an existing test."
+      },
+      "selected_action": "search",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 26112,
+        "input_tokens": 28425,
+        "output_tokens": 368,
+        "reasoning_output_tokens": 69
+      },
+      "wall_seconds": 14.844
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.03023245,
+        "patch": 0.01098336,
+        "reason": 0.01165925,
+        "search": 0.57810673,
+        "stop": 0.22727075,
+        "test": 0.00527806,
+        "verify": 0.13646939
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg -n \"load_connectome_checkpoint|core_sha256|neuron interface|interface\" flywire_review/policy.py tests/test_policy.py` located the enabled validation at `flywire_review/policy.py:712-713`.",
+          "`tests/test_policy.py:264-265` verifies incompatible interface metadata raises `ValueError` containing `interface`.",
+          "No files were edited and no tests were run, per the search-only contract."
+        ],
+        "proposed_next": "Consider the checkpoint-validation goal complete and proceed to finalization.",
+        "status": "done",
+        "summary": "Searched checkpoint validation symbols and confirmed incompatible neuron interfaces are rejected by the enabled `core_sha256` check and covered by an existing test."
+      },
+      "selected_action": "search",
+      "step": 8,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 28738,
+        "output_tokens": 349,
+        "reasoning_output_tokens": 49
+      },
+      "wall_seconds": 13.913
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.04067206,
+        "patch": 0.01235053,
+        "reason": 0.01316998,
+        "search": 0.50657981,
+        "stop": 0.23134464,
+        "test": 0.00477656,
+        "verify": 0.19110641
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "Ran `rg -n \"load_connectome_checkpoint|core_sha256|neuron interface|interface\" flywire_review tests`.",
+          "`flywire_review/policy.py:712-713` compares `core_sha256` and raises `ValueError` for differing graph weights or neuron interfaces.",
+          "`tests/test_policy.py:264-265` covers incompatible interface metadata rejection."
+        ],
+        "proposed_next": "Consider the checkpoint-validation goal complete and proceed to finalization.",
+        "status": "done",
+        "summary": "Searched checkpoint validation symbols and confirmed incompatible neuron interfaces are rejected by the enabled core hash check with existing test coverage; no files were edited and no tests were run."
+      },
+      "selected_action": "search",
+      "step": 9,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 28687,
+        "output_tokens": 337,
+        "reasoning_output_tokens": 53
+      },
+      "wall_seconds": 15.087
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.03197852,
+        "patch": 0.04890147,
+        "reason": 0.01237908,
+        "search": 0.75136097,
+        "stop": 0.05848981,
+        "test": 0.02678195,
+        "verify": 0.0701082
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg -n \"load_connectome_checkpoint|core_sha256|neuron interface|interface\" flywire_review tests` found validation at `flywire_review/policy.py:712-713`.",
+          "`tests/test_policy.py:264-265` covers rejection of changed interface metadata.",
+          "No files were edited and no tests were run, per the search-only contract."
+        ],
+        "proposed_next": "Proceed to a patch action to implement or adjust checkpoint interface validation.",
+        "status": "continue",
+        "summary": "Searched checkpoint validation symbols and confirmed the existing core hash comparison rejects incompatible graph weights or neuron interfaces, with test coverage."
+      },
+      "selected_action": "search",
+      "step": 10,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 28778,
+        "output_tokens": 352,
+        "reasoning_output_tokens": 77
+      },
+      "wall_seconds": 12.013
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00829304,
+        "patch": 0.02744568,
+        "reason": 0.01884273,
+        "search": 0.39634047,
+        "stop": 0.41900822,
+        "test": 0.00326976,
+        "verify": 0.1268001
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "`flywire_review/policy.py:712-713` compares `core_sha256` and raises `ValueError` when graph weights or neuron interfaces differ.",
+          "`tests/test_policy.py:264-265` covers rejection of changed interface metadata.",
+          "No files were edited and no tests were run in this stop action."
+        ],
+        "proposed_next": "Consider the checkpoint-validation goal complete and finalize.",
+        "status": "done",
+        "summary": "Checkpoint validation already rejects incompatible neuron interfaces through the core hash comparison, with an existing regression test."
+      },
+      "selected_action": "stop",
+      "step": 11,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 14209,
+        "output_tokens": 192,
+        "reasoning_output_tokens": 73
+      },
+      "wall_seconds": 6.993
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 255232,
+    "input_tokens": 355949,
+    "output_tokens": 4254,
+    "reasoning_output_tokens": 783
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.391s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.477
+  }
+}

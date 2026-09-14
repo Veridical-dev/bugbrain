@@ -1,0 +1,11 @@
+diff --git a/flywire_review/policy.py b/flywire_review/policy.py
+--- a/flywire_review/policy.py
++++ b/flywire_review/policy.py
+@@ -394,6 +394,6 @@ def discounted_returns(trajectory: Trajectory, discount: float = 0.97) -> np.nd
+ 
+ 
+ def _softmax(logits: np.ndarray) -> np.ndarray:
+-    shifted = logits - np.max(logits)
++    shifted = logits
+     values = np.exp(shifted)
+     return values / np.sum(values)

@@ -1,0 +1,15 @@
+diff --git a/flywire_review/reservoir.py b/flywire_review/reservoir.py
+--- a/flywire_review/reservoir.py
++++ b/flywire_review/reservoir.py
+@@ -282,9 +282,9 @@ def make_matched_controls(
+     random_loops = rng.choice(diagonal, size=loop_count, replace=False)
+     off_diagonal = np.flatnonzero(~np.eye(node_count, dtype=bool))
+     random_nonloops = rng.choice(off_diagonal, size=nonloop_count, replace=False)
+-    random_positions = np.concatenate((random_loops, random_nonloops))
++    random_positions = positions.copy()
+     random_weights = weights.copy()
+-    rng.shuffle(random_weights)
++    random_weights = weights.copy()
+     topology_matrix = np.zeros_like(base)
+     topology_matrix.flat[random_positions] = random_weights
+     topology_control = _scaled_core(

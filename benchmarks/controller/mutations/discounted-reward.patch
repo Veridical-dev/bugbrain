@@ -1,0 +1,11 @@
+diff --git a/flywire_review/policy.py b/flywire_review/policy.py
+--- a/flywire_review/policy.py
++++ b/flywire_review/policy.py
+@@ -388,6 +388,6 @@ def discounted_returns(trajectory: Trajectory, discount: float = 0.97) -> np.nd
+     returns = np.zeros(len(trajectory.steps), dtype=np.float64)
+     running = 0.0
+     for index in range(len(trajectory.steps) - 1, -1, -1):
+-        running = trajectory.steps[index].reward + discount * running
++        running = trajectory.steps[index].reward
+         returns[index] = running
+     return returns

@@ -1,0 +1,485 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/degree_rewired-seed-2315.npz",
+    "checkpoint_receipt": {
+      "arm": "degree_rewired",
+      "control_seed": 102315,
+      "core_sha256": "065f52dcac9c0ecd4880291ef2e6373d50066750873fa864c97a5902a23920f6",
+      "edges": 75803,
+      "nodes": 2048,
+      "recurrence_scale": 0.92,
+      "seed": 2315,
+      "signed": true,
+      "topology_sha256": "1ea1f04971c57f26b8e5046d0df72de369f1f5dabe1c026e38427d9d526aac44"
+    },
+    "checkpoint_sha256": "e5688fd23e6e583a7c2109eccf77a6e5f11a4d8c9931b579f167966fc09d4849",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix checkpoint validation so incompatible neuron interfaces are rejected.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 0,
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+    "status": []
+  },
+  "repository_before": {
+    "diff_chars": 795,
+    "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+    "status": [
+      " M flywire_review/policy.py"
+    ]
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.06614413,
+        "patch": 0.00809363,
+        "reason": 0.00027625,
+        "search": 0.75978975,
+        "stop": 0.00071439,
+        "test": 0.00748773,
+        "verify": 0.15749412
+      },
+      "repository_after": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "flywire_review/policy.py:679-713 \u2014 load_connectome_checkpoint performs receipt checks, but the core_sha256/interface check is disabled by `if False`.",
+          "flywire_review/policy.py:288-320 \u2014 core_sha256 is computed from node IDs, edges, weights, flow groups, and interface-related arrays.",
+          "flywire_review/policy.py:647-655 \u2014 checkpoints persist the core_sha256 receipt in metadata.",
+          "flywire_review/connectome.py:87-92 \u2014 Connectome stores neuron IDs, topology, weights, and strength fields."
+        ],
+        "proposed_next": "Consider a patch action to enable the disabled core/interface receipt validation, followed by appropriate tests.",
+        "status": "continue",
+        "summary": "Located checkpoint loading and receipt generation. The incompatible-interface rejection is visibly disabled at flywire_review/policy.py:712 via `if False`; no files were edited and no tests were run."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 54272,
+        "input_tokens": 74408,
+        "output_tokens": 669,
+        "reasoning_output_tokens": 115
+      },
+      "wall_seconds": 20.814
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.1213545,
+        "patch": 0.04906573,
+        "reason": 1.264e-05,
+        "search": 0.52196022,
+        "stop": 0.00016189,
+        "test": 0.02439475,
+        "verify": 0.28305026
+      },
+      "repository_after": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "Prior search located the disabled validation at `flywire_review/policy.py:712` (`if False`) and the related receipt generation/loading paths.",
+          "No patch or tests performed, per the search-only action contract."
+        ],
+        "proposed_next": "Consider a patch action to enable the core/interface receipt validation, then run targeted tests.",
+        "status": "continue",
+        "summary": "Search step confirms checkpoint loading and receipt-generation symbols relevant to rejecting incompatible neuron interfaces; no repository changes were made."
+      },
+      "selected_action": "search",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 12954,
+        "output_tokens": 293,
+        "reasoning_output_tokens": 74
+      },
+      "wall_seconds": 14.895
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.09726857,
+        "patch": 0.29939754,
+        "reason": 2.98e-06,
+        "search": 0.26346024,
+        "stop": 0.00027793,
+        "test": 0.21229753,
+        "verify": 0.12729522
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "inspect",
+          "patch"
+        ],
+        "evidence": [
+          "flywire_review/policy.py:712 \u2014 removed the `if False` guard so mismatched `core_sha256` receipts now raise `ValueError`.",
+          "No tests run, as required by the action contract."
+        ],
+        "proposed_next": "Consider running targeted checkpoint-validation tests in a separate action.",
+        "status": "done",
+        "summary": "Enabled checkpoint core/interface receipt validation with a one-line source edit."
+      },
+      "selected_action": "patch",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 29952,
+        "input_tokens": 40276,
+        "output_tokens": 381,
+        "reasoning_output_tokens": 50
+      },
+      "wall_seconds": 20.331
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.04436945,
+        "patch": 0.29688018,
+        "reason": 1.57e-06,
+        "search": 0.14299235,
+        "stop": 0.00091984,
+        "test": 0.47045624,
+        "verify": 0.04438037
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [
+          "search",
+          "test",
+          "test"
+        ],
+        "evidence": [
+          "Focused command `python3 -m unittest tests.test_policy` failed during import because `numpy` is not installed.",
+          "The patched validation remains at `flywire_review/policy.py:712`."
+        ],
+        "proposed_next": "Install project test dependencies, then rerun the focused checkpoint-validation test.",
+        "status": "continue",
+        "summary": "Attempted the focused policy test module; execution was blocked by the missing numpy dependency, so the fix is not yet verified."
+      },
+      "selected_action": "test",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 50176,
+        "input_tokens": 57872,
+        "output_tokens": 619,
+        "reasoning_output_tokens": 232
+      },
+      "wall_seconds": 25.062
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02749908,
+        "patch": 0.17742543,
+        "reason": 2.06e-06,
+        "search": 0.13101648,
+        "stop": 0.00547642,
+        "test": 0.61174786,
+        "verify": 0.04683267
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python3 -m unittest tests.test_policy`",
+          "Test import failed: `ModuleNotFoundError: No module named 'numpy'`"
+        ],
+        "proposed_next": "Install the project test dependencies, then rerun the focused policy test.",
+        "status": "continue",
+        "summary": "The focused checkpoint-validation test could not run because numpy is missing; no files were edited."
+      },
+      "selected_action": "test",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 26813,
+        "output_tokens": 295,
+        "reasoning_output_tokens": 90
+      },
+      "wall_seconds": 11.352
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01684095,
+        "patch": 0.08541445,
+        "reason": 3.9e-06,
+        "search": 0.13427594,
+        "stop": 0.03686353,
+        "test": 0.62923671,
+        "verify": 0.09736451
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [
+          "inspect"
+        ],
+        "evidence": [
+          "Command: `python3 -m py_compile flywire_review/policy.py`",
+          "Syntax check passed with exit code 0; no files were edited."
+        ],
+        "proposed_next": "Consider installing the missing numpy dependency and rerunning `python3 -m unittest tests.test_policy` to verify behavior.",
+        "status": "continue",
+        "summary": "The patched policy module compiles successfully, but the checkpoint-validation tests remain unverified because numpy is unavailable."
+      },
+      "selected_action": "test",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 26112,
+        "input_tokens": 27334,
+        "output_tokens": 345,
+        "reasoning_output_tokens": 106
+      },
+      "wall_seconds": 13.027
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00841349,
+        "patch": 0.03408338,
+        "reason": 6.42e-06,
+        "search": 0.10785116,
+        "stop": 0.16815849,
+        "test": 0.47591091,
+        "verify": 0.20557615
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python3 -m unittest tests.test_policy`",
+          "Test import failed: `ModuleNotFoundError: No module named 'numpy'`",
+          "No files were edited."
+        ],
+        "proposed_next": "Install project test dependencies, then rerun `python3 -m unittest tests.test_policy`.",
+        "status": "continue",
+        "summary": "The focused policy test remains blocked by the missing numpy dependency, so the checkpoint-validation fix is not behaviorally verified."
+      },
+      "selected_action": "test",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27721,
+        "output_tokens": 289,
+        "reasoning_output_tokens": 65
+      },
+      "wall_seconds": 11.759
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00351791,
+        "patch": 0.01317775,
+        "reason": 6.7e-06,
+        "search": 0.06214263,
+        "stop": 0.35083004,
+        "test": 0.28418936,
+        "verify": 0.2861356
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/degree_rewired/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "flywire_review/policy.py:712 \u2014 removed the disabled `if False` guard, enabling `core_sha256` mismatch rejection via `ValueError`.",
+          "`python3 -m py_compile flywire_review/policy.py` passed.",
+          "`python3 -m unittest tests.test_policy` could not run: `ModuleNotFoundError: No module named 'numpy'`."
+        ],
+        "proposed_next": "Consider installing test dependencies and rerunning the focused policy tests to behaviorally verify checkpoint rejection.",
+        "status": "continue",
+        "summary": "The checkpoint validation fix is applied and syntactically valid, but behavioral verification remains blocked because numpy is unavailable."
+      },
+      "selected_action": "stop",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 13827,
+        "output_tokens": 218,
+        "reasoning_output_tokens": 74
+      },
+      "wall_seconds": 9.845
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 222464,
+    "input_tokens": 281205,
+    "output_tokens": 3109,
+    "reasoning_output_tokens": 806
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.402s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.484
+  }
+}

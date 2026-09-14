@@ -1,0 +1,14 @@
+diff --git a/flywire_review/controller.py b/flywire_review/controller.py
+--- a/flywire_review/controller.py
++++ b/flywire_review/controller.py
+@@ -187,9 +187,7 @@ def _action_contract_compliant(selected: str, actual: Sequence[str]) -> bool:
+         "verify": {"verify", "test", "inspect", "search"},
+         "stop": set(),
+     }[selected]
+-    return all(action in allowed for action in actual) and (
+-        not required or any(action in required for action in actual)
+-    )
++    return all(action in allowed for action in actual)
+ 
+ 
+ def _worker_prompt(

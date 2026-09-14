@@ -1,0 +1,529 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/weight_shuffled-seed-2307.npz",
+    "checkpoint_receipt": {
+      "arm": "weight_shuffled",
+      "control_seed": 102307,
+      "core_sha256": "aa8aa0811cff7675bf8514686b1c2c796c1d503fc30d44e57695de23e69c78bf",
+      "edges": 75803,
+      "nodes": 2048,
+      "recurrence_scale": 0.92,
+      "seed": 2307,
+      "signed": true,
+      "topology_sha256": "5eb0289f32bf8e54977e47f0f63e401c8f06158d3b51bdb72d82a63a4b4b25ad"
+    },
+    "checkpoint_sha256": "fdc6ffe89aeff658b6b918579174ec889dc0caca942cbcc60a7445c231e1f408",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix Codex trace import so intermediate commentary does not terminate an episode.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 0,
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+    "status": []
+  },
+  "repository_before": {
+    "diff_chars": 647,
+    "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+    "status": [
+      " M flywire_review/policy.py"
+    ]
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.04650248,
+        "patch": 0.01562587,
+        "reason": 0.00998282,
+        "search": 0.70435264,
+        "stop": 0.01783369,
+        "test": 0.01128999,
+        "verify": 0.1944125
+      },
+      "repository_after": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "flywire_review/policy.py:1165-1208 defines classify_codex_item; agent_message/message maps to stop.",
+          "flywire_review/policy.py:1235-1248 selects the first agent_message/message as terminal and skips later messages, so intermediate commentary can terminate the imported episode.",
+          "tests/test_policy.py:294-318 contains Codex JSONL importer fixtures."
+        ],
+        "proposed_next": "Inspect or patch import_codex_jsonl/classification so intermediate commentary is ignored and only the final agent message terminates the episode.",
+        "status": "continue",
+        "summary": "Located the importer and identified the likely termination bug: all agent messages are treated as terminal candidates, with the first one selected and classified as stop."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 36096,
+        "input_tokens": 46881,
+        "output_tokens": 488,
+        "reasoning_output_tokens": 77
+      },
+      "wall_seconds": 17.431
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.08732887,
+        "patch": 0.06216063,
+        "reason": 0.00112512,
+        "search": 0.60225728,
+        "stop": 0.00267383,
+        "test": 0.03586093,
+        "verify": 0.20859334
+      },
+      "repository_after": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "flywire_review/policy.py:1164-1208 defines classify_codex_item; agent_message/message maps to stop.",
+          "flywire_review/policy.py:1234-1248 collects all terminal messages but selects terminal_messages[0], causing the first commentary to terminate the episode and skipping later messages.",
+          "tests/test_policy.py:290-333 includes an intermediate commentary followed by tool actions and a final message; current expected actions are search, inspect, stop."
+        ],
+        "proposed_next": "Patch import_codex_jsonl to select the final agent_message/message as the sole terminal message, then update or extend importer coverage during the patch action.",
+        "status": "continue",
+        "summary": "Completed the bounded search step and confirmed the termination bug's exact control flow and existing fixture coverage. No files were edited and no tests were run."
+      },
+      "selected_action": "search",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 20992,
+        "input_tokens": 28620,
+        "output_tokens": 410,
+        "reasoning_output_tokens": 52
+      },
+      "wall_seconds": 14.748
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.10787932,
+        "patch": 0.38793212,
+        "reason": 7.25e-06,
+        "search": 0.20523137,
+        "stop": 5.945e-05,
+        "test": 0.22482837,
+        "verify": 0.07406212
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 647,
+        "diff_sha256": "2733cbed75cd9f6c624347e2a23abc8bfd2334568343577f8813d1010ba5c571",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "inspect",
+          "patch"
+        ],
+        "evidence": [
+          "flywire_review/policy.py:1240 now selects terminal_messages[-1], preserving intermediate commentary and terminating only on the final agent message."
+        ],
+        "proposed_next": "Run the existing policy/importer tests in a separate verification step.",
+        "status": "done",
+        "summary": "Patched Codex JSONL import to ignore intermediate agent commentary and use the final agent message as the episode terminator. Tests were not run per contract."
+      },
+      "selected_action": "patch",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 40443,
+        "output_tokens": 391,
+        "reasoning_output_tokens": 62
+      },
+      "wall_seconds": 30.625
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0380192,
+        "patch": 0.46450878,
+        "reason": 5e-08,
+        "search": 0.03218301,
+        "stop": 2.51e-06,
+        "test": 0.45474541,
+        "verify": 0.01054105
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "flywire_review/policy.py:1240 selects terminal_messages[-1], so intermediate commentary is preserved and only the final agent message terminates the imported episode.",
+          "No tests were run, per contract."
+        ],
+        "proposed_next": "Consider running the existing policy/importer tests in a separate verification step.",
+        "status": "done",
+        "summary": "Fixed Codex JSONL trace import to terminate episodes only on the final agent message, preventing intermediate commentary from ending the episode."
+      },
+      "selected_action": "patch",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 13291,
+        "output_tokens": 183,
+        "reasoning_output_tokens": 76
+      },
+      "wall_seconds": 10.159
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01384369,
+        "patch": 0.3335929,
+        "reason": 1e-08,
+        "search": 0.01635169,
+        "stop": 4.55e-06,
+        "test": 0.62973289,
+        "verify": 0.00647428
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `pytest -q tests/test_policy.py -k codex`",
+          "Result: `pytest` is not installed (`command not found`)."
+        ],
+        "proposed_next": "Run the focused test using the repository\u2019s available test runner or install/activate the project test environment.",
+        "status": "blocked",
+        "summary": "Attempted one focused Codex importer test, but verification was blocked because pytest is unavailable."
+      },
+      "selected_action": "test",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27084,
+        "output_tokens": 293,
+        "reasoning_output_tokens": 45
+      },
+      "wall_seconds": 18.736
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0066692,
+        "patch": 0.14139783,
+        "reason": 3e-08,
+        "search": 0.02907219,
+        "stop": 0.00023139,
+        "test": 0.81221113,
+        "verify": 0.01041822
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python -m unittest tests.test_policy`",
+          "Result: `python` is not installed (`command not found`)."
+        ],
+        "proposed_next": "Consider running the focused test with an available Python interpreter or project test environment.",
+        "status": "blocked",
+        "summary": "Attempted one focused importer test, but verification was blocked because Python is unavailable."
+      },
+      "selected_action": "test",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27393,
+        "output_tokens": 303,
+        "reasoning_output_tokens": 92
+      },
+      "wall_seconds": 12.962
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0030409,
+        "patch": 0.03493674,
+        "reason": 6.4e-07,
+        "search": 0.05375604,
+        "stop": 0.0241871,
+        "test": 0.86158538,
+        "verify": 0.02249319
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "Command: `uv run pytest -q tests/test_policy.py -k codex`",
+          "Result: blocked because uv could not initialize `/Users/lukasz/.cache/uv` due to permission denial (exit 2).",
+          "No files were edited."
+        ],
+        "proposed_next": "Run the focused test with an accessible Python/pytest environment or configure uv cache within the writable workspace.",
+        "status": "blocked",
+        "summary": "Attempted one focused Codex importer test via uv, but verification was blocked by uv cache permissions."
+      },
+      "selected_action": "test",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27765,
+        "output_tokens": 400,
+        "reasoning_output_tokens": 108
+      },
+      "wall_seconds": 15.415
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00056227,
+        "patch": 0.00469788,
+        "reason": 3.99e-06,
+        "search": 0.02263437,
+        "stop": 0.34486327,
+        "test": 0.59285133,
+        "verify": 0.03438688
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python3 -m pytest -q tests/test_policy.py -k codex`",
+          "Result: Python 3 is available, but pytest is not installed (`No module named pytest`)."
+        ],
+        "proposed_next": "Run the focused test after activating or providing an environment with pytest installed.",
+        "status": "blocked",
+        "summary": "Attempted one focused Codex importer test with Python 3; verification was blocked because pytest is unavailable."
+      },
+      "selected_action": "test",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27989,
+        "output_tokens": 310,
+        "reasoning_output_tokens": 69
+      },
+      "wall_seconds": 15.118
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 8.424e-05,
+        "patch": 0.00065204,
+        "reason": 7.16e-06,
+        "search": 0.00362183,
+        "stop": 0.72850625,
+        "test": 0.23900345,
+        "verify": 0.02812502
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/terminal-message/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "flywire_review/policy.py:1240 selects terminal_messages[-1], preserving intermediate commentary and using only the final agent message as the episode terminator.",
+          "Verification remains unavailable: pytest is not installed, Python test invocation failed, and uv cache initialization was permission-blocked.",
+          "No tools were called in this stop step."
+        ],
+        "proposed_next": "Run the focused Codex importer tests in an environment with pytest available and verify intermediate commentary is preserved while the final agent message terminates the episode.",
+        "status": "continue",
+        "summary": "The importer fix is present, but the overall goal is not fully verified because all available test-runner attempts were blocked."
+      },
+      "selected_action": "stop",
+      "step": 8,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 13982,
+        "output_tokens": 209,
+        "reasoning_output_tokens": 65
+      },
+      "wall_seconds": 10.122
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 176128,
+    "input_tokens": 253448,
+    "output_tokens": 2987,
+    "reasoning_output_tokens": 646
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.441s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.564
+  }
+}

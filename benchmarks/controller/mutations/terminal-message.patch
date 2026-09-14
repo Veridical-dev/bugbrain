@@ -1,0 +1,12 @@
+diff --git a/flywire_review/policy.py b/flywire_review/policy.py
+--- a/flywire_review/policy.py
++++ b/flywire_review/policy.py
+@@ -1236,7 +1236,7 @@ def import_codex_jsonl(
+         for index, item in enumerate(completed_items)
+         if str(item.get("type") or "") in {"agent_message", "message"}
+     ]
+-    terminal_message = terminal_messages[-1] if terminal_messages else None
++    terminal_message = terminal_messages[0] if terminal_messages else None
+     steps: list[dict[str, Any]] = []
+     previous: dict[str, Any] = {"status": "episode_started"}
+     for item_index, item in enumerate(completed_items):

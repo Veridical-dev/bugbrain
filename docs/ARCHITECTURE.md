@@ -18,7 +18,7 @@ repository observation ─► signed hashing├─► biological graph ───
 ```
 
 The original file-routing reservoir remains available. The diagram shows the
-v0.2 trained-controller experiment, where the connectome chooses an action and
+trained-controller experiment, where the connectome chooses an action and
 Codex supplies language reasoning, concrete paths/commands, and patches.
 
 ## Modules
@@ -29,6 +29,7 @@ Codex supplies language reasoning, concrete paths/commands, and patches.
 | `diff_parser.py` | Deterministic conversion of unified diffs or frozen JSON into code units |
 | `reservoir.py` | Feature hashing, graph controls, echo-state recurrence, ridge readout, paired benchmarks |
 | `policy.py` | Trajectory schema, sparse recurrent policy, BPTT, graph nulls, checkpoints, Codex trace import |
+| `controller.py` | Live policy/direct runners, bounded Codex workers, action receipts, repository snapshots, independent verifier reward |
 | `router.py` | Legacy sparse-walk routing retained for comparison and small demos |
 | `standalone.py` | Direct Codex CLI sessions, repository receipts, response parsing, competitor scoring |
 | `cli.py` | Public command-line surface |
@@ -91,3 +92,10 @@ Implementation trajectories require write access by definition. Record those
 only in disposable worktrees with the narrowest useful sandbox, execute project
 verifiers separately, and attach their result as reward. A model's claim that
 tests passed is not a verifier.
+
+In live implementation mode, only a policy-selected `patch` step receives a
+workspace-write sandbox. Search, inspection, testing, reasoning, verification,
+and stopping are process-enforced read-only. Every step records repository
+snapshots; the frozen v0.3 benchmark observed zero changes outside `patch`
+steps. Action-label compliance is measured separately because a shell command
+can cross semantic categories even when it cannot write.

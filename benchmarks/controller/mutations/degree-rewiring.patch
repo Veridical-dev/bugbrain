@@ -1,0 +1,12 @@
+diff --git a/flywire_review/policy.py b/flywire_review/policy.py
+--- a/flywire_review/policy.py
++++ b/flywire_review/policy.py
+@@ -333,7 +333,7 @@ def make_sparse_controls(core: SparseCore, *, seed: int) -> dict[str, SparseCor
+     # directed configuration multigraph, so parallel edges and changed self-loop counts are
+     # disclosed rather than silently repaired.
+     permutation = rng.permutation(core.edge_count)
+-    rewired_targets = core.targets[permutation]
++    rewired_targets = rng.integers(0, core.node_count, size=core.edge_count)
+     rewired_weights = core.weights[permutation]
+ 
+     def variant(name: str, targets: np.ndarray, weights: np.ndarray, control: str) -> SparseCore:

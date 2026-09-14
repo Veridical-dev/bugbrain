@@ -1,0 +1,489 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/biological-seed-2323.npz",
+    "checkpoint_receipt": {
+      "arm": "biological",
+      "control_seed": null,
+      "core_sha256": "6c4ebf1942158a09f070a48a3381cb54394698c8ffff3eba0aa6cadeab2bfb90",
+      "edges": 75803,
+      "nodes": 2048,
+      "recurrence_scale": 0.92,
+      "seed": 2323,
+      "signed": true,
+      "topology_sha256": "5eb0289f32bf8e54977e47f0f63e401c8f06158d3b51bdb72d82a63a4b4b25ad"
+    },
+    "checkpoint_sha256": "c72bb6b06d764c0b204c1d088150a99957e9b464f141697a7ad301b8fe8313ee",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix checkpoint validation so incompatible neuron interfaces are rejected.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 0,
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+    "status": []
+  },
+  "repository_before": {
+    "diff_chars": 795,
+    "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+    "status": [
+      " M flywire_review/policy.py"
+    ]
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.06151081,
+        "patch": 0.00500743,
+        "reason": 0.00024015,
+        "search": 0.71965579,
+        "stop": 0.0011856,
+        "test": 0.00500171,
+        "verify": 0.20739852
+      },
+      "repository_after": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py:636` defines `save_connectome_checkpoint`; `:679` defines `load_connectome_checkpoint`.",
+          "`flywire_review/policy.py:709-713` contains topology, neuron-ID, and graph-weight/neuron-interface receipt checks.",
+          "`flywire_review/policy.py:278-295` derives `input_nodes`/`output_nodes` and includes them in the core digest.",
+          "`tests/test_policy.py:256-265` covers rejection after changing an annotation flow to create an incompatible interface.",
+          "Search command used: `rg --files` and `rg -n -S \"checkpoint|neuron interface|interface|validate|validation\" .`; no files were edited and no tests were run."
+        ],
+        "proposed_next": "Inspect the checkpoint save/load receipt construction and add or adjust validation in a subsequent patch action.",
+        "status": "continue",
+        "summary": "Located the checkpoint validation implementation and existing neuron-interface regression coverage. The relevant code is in `flywire_review/policy.py`, with tests in `tests/test_policy.py`; this search-only step is complete."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 52224,
+        "input_tokens": 67787,
+        "output_tokens": 749,
+        "reasoning_output_tokens": 166
+      },
+      "wall_seconds": 26.323
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.12097744,
+        "patch": 0.03245054,
+        "reason": 1.619e-05,
+        "search": 0.51516312,
+        "stop": 0.00022814,
+        "test": 0.01542448,
+        "verify": 0.31574008
+      },
+      "repository_after": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "`rg -n -C 8 \"save_connectome_checkpoint|load_connectome_checkpoint|neuron interface|interface|receipt\" flywire_review/policy.py tests/test_policy.py` located checkpoint receipt logic.",
+          "`flywire_review/policy.py:712` disables the compatibility check with `if False and core.metadata[\"core_sha256\"] != metadata[\"core_sha256\"]`; the following error explicitly covers graph weights or neuron interface.",
+          "`tests/test_policy.py:256-265` expects changed neuron flow annotations to raise `ValueError` containing `interface`.",
+          "No files were edited and no tests were run."
+        ],
+        "proposed_next": "Consider a patch action to remove the disabled guard so the existing core receipt validation rejects incompatible neuron interfaces.",
+        "status": "continue",
+        "summary": "Completed the bounded search-only step. Confirmed the checkpoint interface validation exists but is unreachable because it is guarded by `if False`."
+      },
+      "selected_action": "search",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 39168,
+        "input_tokens": 57581,
+        "output_tokens": 524,
+        "reasoning_output_tokens": 72
+      },
+      "wall_seconds": 21.251
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.10859478,
+        "patch": 0.3207289,
+        "reason": 1.028e-05,
+        "search": 0.24476605,
+        "stop": 0.0003276,
+        "test": 0.1867616,
+        "verify": 0.13881079
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 795,
+        "diff_sha256": "8a0a848aba9c12703fb9762c04b7eaff17a6ff15b41bc4df795cde59175ed7d2",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "patch"
+        ],
+        "evidence": [
+          "Patched `flywire_review/policy.py` to remove the `if False` guard from the core receipt comparison.",
+          "Checkpoint loading now rejects mismatched core digests, including incompatible neuron interfaces."
+        ],
+        "proposed_next": "Consider running the existing checkpoint validation tests in a separate action.",
+        "status": "done",
+        "summary": "Enabled the existing checkpoint compatibility validation with a one-line source edit. Tests were not run per contract."
+      },
+      "selected_action": "patch",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 26645,
+        "output_tokens": 293,
+        "reasoning_output_tokens": 45
+      },
+      "wall_seconds": 17.477
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0382252,
+        "patch": 0.34524354,
+        "reason": 7.92e-06,
+        "search": 0.08448424,
+        "stop": 0.00072501,
+        "test": 0.48947675,
+        "verify": 0.04183734
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Focused command: `pytest -q tests/test_policy.py -k 'checkpoint and interface'`",
+          "Result: failed to run because `pytest` is not installed or not on PATH (`command not found`, exit 127).",
+          "No files were edited."
+        ],
+        "proposed_next": "Consider rerunning the focused test through the repository\u2019s configured test runner or after making pytest available.",
+        "status": "blocked",
+        "summary": "The focused checkpoint interface regression test could not execute because pytest is unavailable in the environment."
+      },
+      "selected_action": "test",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 26926,
+        "output_tokens": 307,
+        "reasoning_output_tokens": 55
+      },
+      "wall_seconds": 13.847
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02321696,
+        "patch": 0.20454766,
+        "reason": 1.332e-05,
+        "search": 0.07240493,
+        "stop": 0.00372467,
+        "test": 0.64971646,
+        "verify": 0.046376
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Focused command: `python -m unittest tests.test_policy.PolicyTests.test_checkpoint_rejects_incompatible_neuron_interface`",
+          "Result: failed to run because `python` is not installed or not on PATH (`command not found`, exit 127).",
+          "No files were edited."
+        ],
+        "proposed_next": "Consider using the repository\u2019s available Python environment or test runner to execute the focused regression test.",
+        "status": "blocked",
+        "summary": "The alternate focused test command could not execute because Python is unavailable in the environment."
+      },
+      "selected_action": "test",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27079,
+        "output_tokens": 339,
+        "reasoning_output_tokens": 71
+      },
+      "wall_seconds": 13.675
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01914292,
+        "patch": 0.10004691,
+        "reason": 3.153e-05,
+        "search": 0.09782668,
+        "stop": 0.02865022,
+        "test": 0.63020053,
+        "verify": 0.12410122
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "Focused command: `uv run pytest -q tests/test_policy.py -k 'checkpoint and interface'`",
+          "Test runner failed before execution because uv could not initialize `/Users/lukasz/.cache/uv` due to permission denied (exit 2).",
+          "No files were edited."
+        ],
+        "proposed_next": "Consider rerunning with a repository-local writable uv cache or another available configured test runner.",
+        "status": "blocked",
+        "summary": "The focused checkpoint interface test could not execute because uv's cache directory is inaccessible."
+      },
+      "selected_action": "test",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27486,
+        "output_tokens": 374,
+        "reasoning_output_tokens": 139
+      },
+      "wall_seconds": 13.122
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01172372,
+        "patch": 0.03034531,
+        "reason": 5.327e-05,
+        "search": 0.10454545,
+        "stop": 0.15309909,
+        "test": 0.41408373,
+        "verify": 0.28614943
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Focused command: `UV_CACHE_DIR=.uv-cache uv run pytest -q tests/test_policy.py -k 'checkpoint and interface'`",
+          "uv found CPython 3.14 and created `.venv`, but test execution failed while resolving `setuptools>=68` because network/DNS access to PyPI is unavailable (exit 1).",
+          "No source files were edited."
+        ],
+        "proposed_next": "Consider running the focused test with preinstalled/offline dependencies or an available repository-configured environment.",
+        "status": "blocked",
+        "summary": "The focused checkpoint interface regression test could not execute because uv could not fetch the build dependency `setuptools>=68` in the network-restricted environment."
+      },
+      "selected_action": "test",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 28272,
+        "output_tokens": 365,
+        "reasoning_output_tokens": 45
+      },
+      "wall_seconds": 23.903
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00512192,
+        "patch": 0.00628829,
+        "reason": 5.182e-05,
+        "search": 0.07167666,
+        "stop": 0.36517058,
+        "test": 0.19604969,
+        "verify": 0.35564102
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/checkpoint-interface/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "`flywire_review/policy.py` core receipt validation was enabled by removing the unreachable `if False` guard.",
+          "Checkpoint loading now compares `core.metadata[\"core_sha256\"]` and raises the existing incompatibility error for mismatched neuron interfaces.",
+          "Focused tests could not run: pytest/Python unavailable; uv dependency setup was blocked by inaccessible cache/network."
+        ],
+        "proposed_next": "Consider verifying the focused checkpoint interface regression test in an environment with Python and dependencies available.",
+        "status": "continue",
+        "summary": "The validation fix is applied, but test execution remains unverified because the environment lacks an executable test setup."
+      },
+      "selected_action": "stop",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 14042,
+        "output_tokens": 196,
+        "reasoning_output_tokens": 59
+      },
+      "wall_seconds": 10.372
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 201472,
+    "input_tokens": 275818,
+    "output_tokens": 3147,
+    "reasoning_output_tokens": 652
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.394s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.48
+  }
+}

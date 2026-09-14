@@ -1,0 +1,694 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/weight_shuffled-seed-2307.npz",
+    "checkpoint_receipt": {
+      "arm": "weight_shuffled",
+      "control_seed": 102307,
+      "core_sha256": "aa8aa0811cff7675bf8514686b1c2c796c1d503fc30d44e57695de23e69c78bf",
+      "edges": 75803,
+      "nodes": 2048,
+      "recurrence_scale": 0.92,
+      "seed": 2307,
+      "signed": true,
+      "topology_sha256": "5eb0289f32bf8e54977e47f0f63e401c8f06158d3b51bdb72d82a63a4b4b25ad"
+    },
+    "checkpoint_sha256": "fdc6ffe89aeff658b6b918579174ec889dc0caca942cbcc60a7445c231e1f408",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix standalone review parsing so findings outside changed pull-request files are rejected.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 0,
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+    "status": []
+  },
+  "repository_before": {
+    "diff_chars": 673,
+    "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+    "status": [
+      " M flywire_review/standalone.py"
+    ]
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.04650248,
+        "patch": 0.01562587,
+        "reason": 0.00998282,
+        "search": 0.70435264,
+        "stop": 0.01783369,
+        "test": 0.01128999,
+        "verify": 0.1944125
+      },
+      "repository_after": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/standalone.py:29` defines `parse_review_response(response, reviewer_id, valid_files)`.",
+          "`flywire_review/standalone.py:187-197` builds `repository_receipt[\"changed_file_paths\"]` from `git diff --name-only base..head`.",
+          "`flywire_review/standalone.py:271-276` passes the changed-file set into standalone response parsing.",
+          "`tests/test_standalone.py:56-71` covers acceptance and rejection of findings based on `valid_files`.",
+          "`flywire_review/standalone.py:269-270` states reviewers may report only on PR files while evidence may come from anywhere."
+        ],
+        "proposed_next": "Consider the patch action to inspect and modify the standalone parser or its caller so every finding is validated against the changed-file set.",
+        "status": "continue",
+        "summary": "Located the standalone parser, the changed-file receipt source, its validation call site, and the existing parser test covering out-of-scope files. No files were edited and no tests were run."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 41216,
+        "input_tokens": 54937,
+        "output_tokens": 646,
+        "reasoning_output_tokens": 157
+      },
+      "wall_seconds": 20.149
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0939718,
+        "patch": 0.05131572,
+        "reason": 0.00099374,
+        "search": 0.66042211,
+        "stop": 0.00207566,
+        "test": 0.03143202,
+        "verify": 0.15978896
+      },
+      "repository_after": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`flywire_review/standalone.py:29-33` defines `parse_review_response(..., valid_files)`.",
+          "`flywire_review/standalone.py:57` contains `if False and path not in valid_files`, disabling out-of-scope finding rejection.",
+          "`flywire_review/standalone.py:271-275` passes changed-file paths into the parser.",
+          "`tests/test_standalone.py:60-71` includes acceptance and rejection cases using `valid_files`.",
+          "Search command: `rg -n \"parse_review_response|valid_files|changed_file_paths|standalone\" flywire_review tests`"
+        ],
+        "proposed_next": "Consider the patch action to re-enable the `valid_files` path validation in `flywire_review/standalone.py` and then update or run focused tests as appropriate.",
+        "status": "continue",
+        "summary": "Completed the bounded search step. Located the standalone parser, its changed-file validation input, the disabled validation condition, and focused tests. No files were edited and no tests were run."
+      },
+      "selected_action": "search",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 27089,
+        "output_tokens": 433,
+        "reasoning_output_tokens": 71
+      },
+      "wall_seconds": 14.82
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.20650839,
+        "patch": 0.20938271,
+        "reason": 1.282e-05,
+        "search": 0.36796631,
+        "stop": 4.96e-05,
+        "test": 0.14108549,
+        "verify": 0.07499468
+      },
+      "repository_after": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "`flywire_review/standalone.py:29-33` defines `parse_review_response(..., valid_files)`.",
+          "`flywire_review/standalone.py:57` disables out-of-scope rejection via `if False and path not in valid_files`.",
+          "`flywire_review/standalone.py:271-275` passes changed-file paths to the parser.",
+          "`tests/test_standalone.py:60-71` covers valid and invalid finding paths.",
+          "Search command: `rg -n \"parse_review_response|valid_files|changed_file_paths|standalone\" flywire_review tests`"
+        ],
+        "proposed_next": "Consider the patch action to re-enable the `valid_files` path validation in `flywire_review/standalone.py`, followed by focused test updates or execution.",
+        "status": "continue",
+        "summary": "Completed the bounded search step. Located the disabled standalone finding path validation, its changed-file input, and focused tests. No files were edited or tests run."
+      },
+      "selected_action": "search",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 13264,
+        "output_tokens": 211,
+        "reasoning_output_tokens": 0
+      },
+      "wall_seconds": 10.378
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.15991984,
+        "patch": 0.45353048,
+        "reason": 1.2e-07,
+        "search": 0.07367185,
+        "stop": 1.71e-06,
+        "test": 0.29712091,
+        "verify": 0.01575508
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 673,
+        "diff_sha256": "bf2734925f651aaa3bb4f20c720e43da82bfd52c1cb6692737bf4c57f33e0389",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": [
+          " M flywire_review/standalone.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "patch"
+        ],
+        "evidence": [
+          "Edited `flywire_review/standalone.py`: re-enabled `path not in valid_files` rejection in `parse_review_response`.",
+          "No tests were run, per contract."
+        ],
+        "proposed_next": "Consider running the focused standalone parser tests.",
+        "status": "done",
+        "summary": "Completed the bounded patch: standalone findings outside changed pull-request files are now rejected."
+      },
+      "selected_action": "patch",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27233,
+        "output_tokens": 265,
+        "reasoning_output_tokens": 43
+      },
+      "wall_seconds": 15.413
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.07125894,
+        "patch": 0.57561168,
+        "reason": 1e-08,
+        "search": 0.02042586,
+        "stop": 1.03e-06,
+        "test": 0.32617776,
+        "verify": 0.00652472
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "`flywire_review/standalone.py`: re-enabled rejection when a finding path is not in `valid_files`.",
+          "No tests were run, per contract."
+        ],
+        "proposed_next": "Consider running the focused standalone parser tests.",
+        "status": "done",
+        "summary": "Standalone review findings outside changed pull-request files are now rejected."
+      },
+      "selected_action": "patch",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 13657,
+        "output_tokens": 141,
+        "reasoning_output_tokens": 61
+      },
+      "wall_seconds": 8.262
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.05573351,
+        "patch": 0.48964037,
+        "reason": 2e-08,
+        "search": 0.02235789,
+        "stop": 1.056e-05,
+        "test": 0.42286825,
+        "verify": 0.00938941
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [
+          "verify",
+          "inspect"
+        ],
+        "evidence": [
+          "`flywire_review/standalone.py:57` rejects paths not present in `valid_files`.",
+          "No tests were run, per contract."
+        ],
+        "proposed_next": "No further action required.",
+        "status": "done",
+        "summary": "Verified standalone parsing rejects findings outside the changed pull-request files."
+      },
+      "selected_action": "patch",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 35072,
+        "input_tokens": 42008,
+        "output_tokens": 353,
+        "reasoning_output_tokens": 123
+      },
+      "wall_seconds": 16.736
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.04796456,
+        "patch": 0.21096242,
+        "reason": 1.3e-07,
+        "search": 0.04653478,
+        "stop": 0.00040959,
+        "test": 0.66949424,
+        "verify": 0.02463428
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `pytest -q tests/test_standalone.py`",
+          "Result: `pytest: command not found` (exit 127)"
+        ],
+        "proposed_next": "Consider running the focused test with the repository\u2019s available test runner or installed environment.",
+        "status": "blocked",
+        "summary": "Attempted the single focused standalone test command; it could not run because pytest is unavailable."
+      },
+      "selected_action": "test",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 28020,
+        "output_tokens": 318,
+        "reasoning_output_tokens": 81
+      },
+      "wall_seconds": 12.79
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01776911,
+        "patch": 0.06260753,
+        "reason": 6.2e-07,
+        "search": 0.02890369,
+        "stop": 0.00614309,
+        "test": 0.81955265,
+        "verify": 0.06502331
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python -m unittest tests.test_standalone`",
+          "Result: `python: command not found` (exit 127)"
+        ],
+        "proposed_next": "Consider running the focused test with an available Python interpreter or configured virtual environment.",
+        "status": "blocked",
+        "summary": "Attempted one focused standalone test via unittest; it could not run because Python is unavailable."
+      },
+      "selected_action": "test",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 28294,
+        "output_tokens": 305,
+        "reasoning_output_tokens": 75
+      },
+      "wall_seconds": 13.202
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00345868,
+        "patch": 0.01349206,
+        "reason": 1.11e-06,
+        "search": 0.00906345,
+        "stop": 0.0281859,
+        "test": 0.80383887,
+        "verify": 0.14195993
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python3 -m unittest tests.test_standalone`",
+          "Result: 5 tests passed (`OK`)"
+        ],
+        "proposed_next": "No further action required.",
+        "status": "done",
+        "summary": "Focused standalone parser tests pass, including rejection of findings outside changed pull-request files."
+      },
+      "selected_action": "test",
+      "step": 8,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 17920,
+        "input_tokens": 28648,
+        "output_tokens": 411,
+        "reasoning_output_tokens": 144
+      },
+      "wall_seconds": 20.057
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00073313,
+        "patch": 0.00305143,
+        "reason": 1.76e-06,
+        "search": 0.00374702,
+        "stop": 0.10238824,
+        "test": 0.60395905,
+        "verify": 0.28611937
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python3 -m unittest tests.test_standalone`",
+          "Result: 5 tests passed (`OK`), exit code 0"
+        ],
+        "proposed_next": "No further action required.",
+        "status": "done",
+        "summary": "Focused standalone parser tests pass, including rejection of findings outside changed pull-request files."
+      },
+      "selected_action": "test",
+      "step": 9,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 28146,
+        "output_tokens": 247,
+        "reasoning_output_tokens": 47
+      },
+      "wall_seconds": 11.937
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00016355,
+        "patch": 0.00072802,
+        "reason": 2.73e-06,
+        "search": 0.00112791,
+        "stop": 0.26267908,
+        "test": 0.29131099,
+        "verify": 0.44398771
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "verify",
+          "test"
+        ],
+        "evidence": [
+          "`flywire_review/standalone.py:57-58` rejects paths not in `valid_files`.",
+          "`python3 -m unittest tests.test_standalone` passed: 5 tests.",
+          "`git diff --check` passed; working tree has no uncommitted diff."
+        ],
+        "proposed_next": "No further action required.",
+        "status": "done",
+        "summary": "Verified standalone path validation and focused tests; findings outside changed PR files are rejected."
+      },
+      "selected_action": "verify",
+      "step": 10,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 35072,
+        "input_tokens": 42394,
+        "output_tokens": 481,
+        "reasoning_output_tokens": 147
+      },
+      "wall_seconds": 18.24
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 5.034e-05,
+        "patch": 0.00028149,
+        "reason": 2.95e-06,
+        "search": 0.00024826,
+        "stop": 0.38854735,
+        "test": 0.13130212,
+        "verify": 0.47956749
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/weight_shuffled/review-file-boundary/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "`flywire_review/standalone.py:57-58` rejects paths absent from `valid_files`.",
+          "`python3 -m unittest tests.test_standalone` passed: 5 tests.",
+          "`git diff --check` passed; no uncommitted diff was present."
+        ],
+        "proposed_next": "No further action required.",
+        "status": "done",
+        "summary": "Verified standalone path validation and focused tests; findings outside changed pull-request files are rejected."
+      },
+      "selected_action": "verify",
+      "step": 11,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27947,
+        "output_tokens": 326,
+        "reasoning_output_tokens": 61
+      },
+      "wall_seconds": 14.346
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 253184,
+    "input_tokens": 361637,
+    "output_tokens": 4137,
+    "reasoning_output_tokens": 1010
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.429s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.516
+  }
+}

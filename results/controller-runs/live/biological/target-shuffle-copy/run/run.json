@@ -1,0 +1,562 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/biological-seed-2323.npz",
+    "checkpoint_receipt": {
+      "arm": "biological",
+      "control_seed": null,
+      "core_sha256": "6c4ebf1942158a09f070a48a3381cb54394698c8ffff3eba0aa6cadeab2bfb90",
+      "edges": 75803,
+      "nodes": 2048,
+      "recurrence_scale": 0.92,
+      "seed": 2323,
+      "signed": true,
+      "topology_sha256": "5eb0289f32bf8e54977e47f0f63e401c8f06158d3b51bdb72d82a63a4b4b25ad"
+    },
+    "checkpoint_sha256": "c72bb6b06d764c0b204c1d088150a99957e9b464f141697a7ad301b8fe8313ee",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix target-shuffled graph creation so it cannot mutate the source connectome.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 571,
+    "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+    "status": [
+      " M flywire_review/connectome.py"
+    ]
+  },
+  "repository_before": {
+    "diff_chars": 564,
+    "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+    "status": [
+      " M flywire_review/connectome.py"
+    ]
+  },
+  "reward": 0.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.06151081,
+        "patch": 0.00500743,
+        "reason": 0.00024015,
+        "search": 0.71965579,
+        "stop": 0.0011856,
+        "test": 0.00500171,
+        "verify": 0.20739852
+      },
+      "repository_after": {
+        "diff_chars": 564,
+        "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 564,
+        "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search",
+          "search"
+        ],
+        "evidence": [
+          "flywire_review/connectome.py:111-123 defines Connectome.shuffled_targets.",
+          "flywire_review/connectome.py:113 assigns targets = self.targets, then line 114 shuffles it in place.",
+          "flywire_review/router.py:221-222 invokes graph.shuffled_targets(seed) for the shuffled arm.",
+          "tests/test_poc.py:84-88 covers shuffled targets but does not assert source immutability."
+        ],
+        "proposed_next": "Patch shuffled_targets to copy self.targets before shuffling, then add or run an appropriate regression test in a later action.",
+        "status": "continue",
+        "summary": "Located the mutation bug: shuffled_targets aliases the source targets array and random.shuffle mutates that shared array in place."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 29952,
+        "input_tokens": 48292,
+        "output_tokens": 525,
+        "reasoning_output_tokens": 81
+      },
+      "wall_seconds": 19.218
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.12477647,
+        "patch": 0.03784144,
+        "reason": 1.806e-05,
+        "search": 0.49561774,
+        "stop": 0.00025281,
+        "test": 0.0191146,
+        "verify": 0.32237889
+      },
+      "repository_after": {
+        "diff_chars": 564,
+        "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 564,
+        "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "rg found flywire_review/connectome.py:111-114: shuffled_targets assigns targets = self.targets and shuffles it in place.",
+          "rg found flywire_review/router.py:221-222 invokes graph.shuffled_targets(seed).",
+          "rg found tests/test_poc.py:84-88 covers target shuffling but not source immutability."
+        ],
+        "proposed_next": "Patch shuffled_targets to operate on a copy of self.targets, then add a regression test for source immutability.",
+        "status": "continue",
+        "summary": "Search confirmed the aliasing mutation bug and identified the affected implementation, caller, and existing test."
+      },
+      "selected_action": "search",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 20992,
+        "input_tokens": 27019,
+        "output_tokens": 336,
+        "reasoning_output_tokens": 56
+      },
+      "wall_seconds": 14.87
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.10663314,
+        "patch": 0.32520922,
+        "reason": 1.019e-05,
+        "search": 0.22931333,
+        "stop": 0.00033557,
+        "test": 0.19696553,
+        "verify": 0.14153302
+      },
+      "repository_after": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 564,
+        "diff_sha256": "c830bf04390745180f0c7681d36c2e7935cefacf02b83c5f82cbf884dea0d0fb",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "patch"
+        ],
+        "evidence": [
+          "Patched flywire_review/connectome.py: shuffled_targets now copies self.targets before in-place shuffling.",
+          "No tests run, per action contract."
+        ],
+        "proposed_next": "Consider a separate regression-test action asserting the source connectome remains unchanged after shuffling.",
+        "status": "done",
+        "summary": "Fixed target-shuffled graph creation to avoid mutating the source connectome by shuffling a copied targets array."
+      },
+      "selected_action": "patch",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 20992,
+        "input_tokens": 26399,
+        "output_tokens": 272,
+        "reasoning_output_tokens": 50
+      },
+      "wall_seconds": 12.544
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.03576609,
+        "patch": 0.33959897,
+        "reason": 7.27e-06,
+        "search": 0.07602577,
+        "stop": 0.0006949,
+        "test": 0.50722803,
+        "verify": 0.04067897
+      },
+      "repository_after": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `pytest -q tests/test_poc.py -k shuffled`",
+          "Result: blocked because `pytest` is not installed or not on PATH (`command not found: pytest`)."
+        ],
+        "proposed_next": "Consider rerunning the focused test through the repository\u2019s configured test runner or installed virtual environment.",
+        "status": "blocked",
+        "summary": "Attempted the focused shuffled-target test, but the test runner was unavailable."
+      },
+      "selected_action": "test",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 26692,
+        "output_tokens": 284,
+        "reasoning_output_tokens": 54
+      },
+      "wall_seconds": 21.962
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02079661,
+        "patch": 0.19954725,
+        "reason": 1.114e-05,
+        "search": 0.06111525,
+        "stop": 0.00331771,
+        "test": 0.67170723,
+        "verify": 0.0435048
+      },
+      "repository_after": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python -m pytest -q tests/test_poc.py -k shuffled`",
+          "Blocked: `python` is not installed or not on PATH (`command not found: python`).",
+          "No files edited."
+        ],
+        "proposed_next": "Consider running the focused test with an available interpreter or repository-managed environment, such as `python3`, `uv`, or a project virtualenv.",
+        "status": "blocked",
+        "summary": "Attempted one focused shuffled-target regression test via Python\u2019s module runner, but the `python` executable was unavailable."
+      },
+      "selected_action": "test",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27066,
+        "output_tokens": 379,
+        "reasoning_output_tokens": 94
+      },
+      "wall_seconds": 19.829
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01681013,
+        "patch": 0.09988232,
+        "reason": 2.424e-05,
+        "search": 0.07809543,
+        "stop": 0.02351887,
+        "test": 0.67037231,
+        "verify": 0.1112967
+      },
+      "repository_after": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python3 -m pytest -q tests/test_poc.py -k shuffled`",
+          "Blocked: pytest is not installed (`No module named pytest`).",
+          "No files edited."
+        ],
+        "proposed_next": "Consider running the focused test through the repository\u2019s configured environment after installing or locating pytest.",
+        "status": "blocked",
+        "summary": "Attempted the focused shuffled-target test with python3, but pytest was unavailable."
+      },
+      "selected_action": "test",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 25088,
+        "input_tokens": 27356,
+        "output_tokens": 278,
+        "reasoning_output_tokens": 40
+      },
+      "wall_seconds": 12.643
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01054706,
+        "patch": 0.03496419,
+        "reason": 3.87e-05,
+        "search": 0.07872804,
+        "stop": 0.11783574,
+        "test": 0.51253454,
+        "verify": 0.24535174
+      },
+      "repository_after": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "Command: `uv run pytest -q tests/test_poc.py -k shuffled`",
+          "Blocked: uv could not initialize `/Users/lukasz/.cache/uv` due to filesystem permission denial.",
+          "No files edited."
+        ],
+        "proposed_next": "Consider rerunning the focused test with uv configured to use a writable cache directory or an available repository-managed environment.",
+        "status": "blocked",
+        "summary": "Attempted the focused shuffled-target regression test through uv, but uv was blocked by permissions when initializing its cache."
+      },
+      "selected_action": "test",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27772,
+        "output_tokens": 391,
+        "reasoning_output_tokens": 113
+      },
+      "wall_seconds": 16.164
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00502101,
+        "patch": 0.00951789,
+        "reason": 3.905e-05,
+        "search": 0.05274084,
+        "stop": 0.29373447,
+        "test": 0.33142151,
+        "verify": 0.30752524
+      },
+      "repository_after": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `UV_CACHE_DIR=/private/tmp/uv-cache-target-shuffle uv run pytest -q tests/test_poc.py -k shuffled`",
+          "uv successfully created `.venv` and began building the project, but dependency installation was blocked downloading `numpy==2.5.3` due to DNS/network failure.",
+          "No files were edited during this step."
+        ],
+        "proposed_next": "Consider running the focused test in an environment with cached dependencies or network access.",
+        "status": "blocked",
+        "summary": "Retried the focused shuffled-target test with uv using a writable cache; execution was blocked because numpy could not be downloaded."
+      },
+      "selected_action": "test",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 28482,
+        "output_tokens": 367,
+        "reasoning_output_tokens": 41
+      },
+      "wall_seconds": 25.225
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00304599,
+        "patch": 0.0027026,
+        "reason": 3.026e-05,
+        "search": 0.03362547,
+        "stop": 0.41918313,
+        "test": 0.22536067,
+        "verify": 0.31605188
+      },
+      "repository_after": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 571,
+        "diff_sha256": "77b79d94ea73c39987e943cc771035c57101f369cfe979b784200ce2ef5a71d1",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo",
+        "status": [
+          " M flywire_review/connectome.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "flywire_review/connectome.py: shuffled_targets now copies self.targets before shuffling.",
+          "Focused tests were not run: pytest unavailable and dependency installation was blocked by network/DNS failure."
+        ],
+        "proposed_next": "If verification is required, rerun the focused shuffled-target test in an environment with pytest and cached or available dependencies.",
+        "status": "done",
+        "summary": "The mutation bug is fixed: target shuffling operates on a copied targets array, preserving the source connectome. Verification remains unexecuted due to unavailable dependencies."
+      },
+      "selected_action": "stop",
+      "step": 8,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 8960,
+        "input_tokens": 14030,
+        "output_tokens": 236,
+        "reasoning_output_tokens": 117
+      },
+      "wall_seconds": 8.583
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 194048,
+    "input_tokens": 253108,
+    "output_tokens": 3068,
+    "reasoning_output_tokens": 646
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": false,
+    "returncode": 1,
+    "reward": 0.0,
+    "stderr_tail": "eight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n======================================================================\nERROR: test_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo/tests/test_poc.py\", line 92, in test_compare_arms_produces_bounded_jaccard\n    shuffled = route_units(self.units, self.graph, self.annotations, arm=\"shuffled\", bundle_count=2, seed=9, steps=3)\n  File \"/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo/flywire_review/router.py\", line 222, in route_units\n    route_graph = graph.shuffled_targets(seed)\n  File \"/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo/flywire_review/connectome.py\", line 113, in shuffled_targets\n    targets = self.targets.copy()\n              ^^^^^^^^^^^^^^^^^\nAttributeError: 'array.array' object has no attribute 'copy'\n\n======================================================================\nERROR: test_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo/tests/test_poc.py\", line 85, in test_target_shuffle_preserves_degrees_and_target_multiset\n    shuffled = self.graph.shuffled_targets(11)\n  File \"/private/tmp/bugbrain-live-eval/biological/target-shuffle-copy/repo/flywire_review/connectome.py\", line 113, in shuffled_targets\n    targets = self.targets.copy()\n              ^^^^^^^^^^^^^^^^^\nAttributeError: 'array.array' object has no attribute 'copy'\n\n----------------------------------------------------------------------\nRan 30 tests in 0.388s\n\nFAILED (errors=2)\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.47
+  }
+}

@@ -1,0 +1,10 @@
+diff --git a/flywire_review/connectome.py b/flywire_review/connectome.py
+--- a/flywire_review/connectome.py
++++ b/flywire_review/connectome.py
+@@ -165,5 +165,5 @@ def _sign_for(annotation: NeuronAnnotation) -> int:
+     # FlyWire known_nt may include comma-separated co-transmitter annotations.
+     primary = annotation.neurotransmitter.split(",", 1)[0].strip()
+-    if primary in {"gaba", "glutamate", "glut", "serotonin", "octopamine"}:
++    if primary in {"gaba", "glutamate", "glut", "octopamine"}:
+         return -1
+     return 1

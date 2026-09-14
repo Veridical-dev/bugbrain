@@ -127,6 +127,30 @@ uv run bugbrain policy-predict \
 The checkpoint contains no executable objects. Loading it rebuilds the graph
 from the supplied cache and rejects mismatched neuron IDs or topology hashes.
 
+## Run the repository-capable controller
+
+`policy-run` reconstructs the recurrent state from the complete compact history,
+asks the policy for one action, and launches a bounded Codex worker in the full
+checkout. Codex retains normal repository search and reasoning capacity and
+chooses all paths, commands, and patch content. Only a selected `patch` action
+receives a workspace-write sandbox; all other actions are process-enforced
+read-only. The independent verifier runs after the policy stops or exhausts its
+budget.
+
+```bash
+uv run bugbrain policy-run \
+  --checkpoint benchmarks/controller/checkpoints/biological-seed-2323.npz \
+  --repo /tmp/disposable-bugbrain-task/repo \
+  --goal "Fix the failing regression" \
+  --mode implement --max-steps 12 \
+  --verifier-json /tmp/disposable-bugbrain-task/verifier.json \
+  --out-dir out/controller-run
+```
+
+Use `direct-run` on an independently prepared clone for the same-model baseline.
+It gives Codex normal autonomy in a single call and can export its measured tool
+trace as a training episode.
+
 ## Bundled smoke fixture
 
 `examples/trajectories.json` is synthetic and exists only to test mechanics.
@@ -147,10 +171,22 @@ uv run bugbrain policy-train \
   --out /tmp/bugbrain-policy-report.json
 ```
 
-## Evidence required before making the fun claim
+## Frozen real-repository result
 
-Held-out action accuracy is an imitation metric, not code-review quality. A
-credible public result needs preregistered repositories, same-model and
-same-budget rollouts, hidden tests or source-graded review findings, multiple
-paired seeds, and confidence intervals over biological-minus-control deltas.
-If the biological arm does not beat the nulls, publish that too.
+The public controller corpus under `benchmarks/controller/` contains 16 real
+Codex repair episodes and deterministic verifier-backed mutations: 8 train, 2
+validation, and 6 test. It has 153 measured actions and a terminal reward sum of
+14. Thirty paired seeds were trained without fitting features on holdouts.
+
+Biological held-out imitation accuracy averaged 49.7%; the degree-preserving
+rewiring averaged 52.0%. In validation-selected live rollouts, biological
+BugBrain and direct Codex each passed 5/6 verifiers, on different task subsets.
+The biological controller used 1.19× the input tokens and 2.39× the worker time.
+This is a completed negative topology result and a promising iterative-agent
+scaffold—not evidence that a fruit fly learned to program.
+
+Held-out action accuracy remains an imitation metric, not code-review quality.
+A broader positive claim still needs multiple repositories, hidden or external
+verifiers, repeated live rollouts, a budget-matched hand-written scheduler, and
+confidence intervals over biological-minus-control deltas. If the biological
+arm does not beat those nulls, publish that too.

@@ -25,7 +25,7 @@ We ran two different experiments, and honesty requires keeping both:
 |---|---|
 | Does biological fly wiring beat carefully matched random reservoirs at routing code? | **No measurable advantage.** All paired bootstrap intervals crossed zero. |
 | Can a fly-routed agent swarm find real bugs when every agent gets full repository access? | On one Formbricks PR, **BugBrain found 2 verified defect roots CodeRabbit missed; CodeRabbit found 1 BugBrain missed.** |
-| Can a trained connectome controller learn useful coding-agent actions? | **The reproducible experiment now exists; the real multi-repository run is not yet claimed.** |
+| Can a trained connectome controller beat ordinary agent execution? | **Not in the frozen POC.** Biological BugBrain tied direct Codex at 5/6 repairs, took 1.19× the input tokens and 2.39× the worker time, and did not beat its graph nulls offline. |
 
 That is not proof that flies are better code reviewers. It is proof that weird experiments become useful when they have controls, receipts, and the courage to publish the embarrassing part.
 
@@ -42,7 +42,7 @@ repository observation ─► fly ─┤
 
 In trained-controller mode, Codex supplies the language reasoning and concrete tool arguments while BugBrain chooses the high-level action. The worker still gets the full repository and normal shell/tool capacity. The connectome is a controller, not a substitute language model.
 
-The biological arm uses a 512-neuron, 6,421-edge core selected from the 139,255-neuron FlyWire FAFB v783 graph. An echo-state-network adaptation applies three independent recurrent passes and a ridge readout trained on other repositories. Matched controls preserve graph size, edge count, weight multiset, self-loop count, input projection, readout dimension, and target spectral radius.
+The routing experiment uses a 512-neuron, 6,421-edge core selected from the 139,255-neuron FlyWire FAFB v783 graph. The trained controller uses a 2,048-neuron, 75,803-edge core. Both experiments pair the biological graph with explicit nulls that preserve the relevant dimensions, weights, interfaces, data, and initialization while ablating biological structure.
 
 ## Quick start
 
@@ -77,6 +77,26 @@ uv run bugbrain policy-train \
 ```
 
 The policy backpropagates through fixed FlyWire edges and learns recurrent flow gains plus an action decoder. Every run includes a weight shuffle, a degree-preserving rewiring, and an observation-only control. See [Training BugBrain](docs/TRAINING.md) before interpreting any number; the bundled trajectories are a mechanics fixture, not a result.
+
+The frozen real-repository corpus is also included. It contains 16 verified Codex
+episodes (8 train, 2 validation, 6 test) and 153 observed actions. Across 30
+paired training seeds, biological topology reached 49.7% held-out action
+accuracy; degree-preserving rewiring reached 52.0%. In live repair, the
+validation-selected biological checkpoint and direct Codex each passed 5/6
+held-out verifiers, but on different tasks. See the [controller result](RESULTS.md#trained-controller-experiment)
+and [machine-readable receipt](results/controller-benchmark.json).
+
+Run a selected checkpoint in a disposable checkout with the same repository-capable worker:
+
+```bash
+uv run bugbrain policy-run \
+  --checkpoint benchmarks/controller/checkpoints/biological-seed-2323.npz \
+  --repo /path/to/disposable/checkout \
+  --goal "Fix the failing regression" \
+  --mode implement --max-steps 12 \
+  --verifier-json /path/to/verifier.json \
+  --out-dir out/live-run
+```
 
 ### Run an agentic review
 

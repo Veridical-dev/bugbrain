@@ -8,6 +8,7 @@ from pathlib import Path
 from flywire_review.controller import (
     _action_contract_compliant,
     _parse_final_object,
+    _sandbox_for_action,
     _worker_prompt,
     run_verifier,
     summarize_codex_events,
@@ -78,6 +79,11 @@ class LiveControllerTests(unittest.TestCase):
         )
         self.assertEqual((passed["passed"], passed["reward"]), (True, 1.0))
         self.assertEqual((failed["passed"], failed["reward"]), (False, 0.0))
+
+    def test_only_implementation_patch_steps_receive_write_access(self) -> None:
+        self.assertEqual(_sandbox_for_action("implement", "patch"), "workspace-write")
+        self.assertEqual(_sandbox_for_action("implement", "test"), "read-only")
+        self.assertEqual(_sandbox_for_action("review", "patch"), "read-only")
 
 
 if __name__ == "__main__":

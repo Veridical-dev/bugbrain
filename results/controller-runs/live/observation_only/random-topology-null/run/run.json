@@ -1,0 +1,452 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/observation_only-seed-2306.npz",
+    "checkpoint_receipt": {
+      "arm": "observation_only",
+      "seed": 2306
+    },
+    "checkpoint_sha256": "dc091fef4943f31d3a15950252afb602f4de8d08f562ab7d6f880261da2f684e",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix the matched random-topology control so it actually ablates biological topology.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 802,
+    "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+    "status": [
+      " M flywire_review/reservoir.py"
+    ]
+  },
+  "repository_before": {
+    "diff_chars": 802,
+    "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+    "status": [
+      " M flywire_review/reservoir.py"
+    ]
+  },
+  "reward": 0.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00010725,
+        "patch": 0.00083029,
+        "reason": 0.00022958,
+        "search": 0.97408938,
+        "stop": 0.02404961,
+        "test": 0.0006056,
+        "verify": 8.83e-05
+      },
+      "repository_after": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [
+          "search",
+          "inspect"
+        ],
+        "evidence": [
+          "`flywire_review/reservoir.py:281-289`: computes `random_loops` and `random_nonloops`, but then sets `random_positions = positions.copy()`; the sampled random topology positions are never used.",
+          "`flywire_review/reservoir.py:290-300`: `random_topology` is populated at the original biological edge positions, so it does not ablate topology; only its metadata claims a uniform random topology.",
+          "`tests/test_reservoir.py:98-110`: existing test checks inequality, but the implementation currently preserves the original positions exactly."
+        ],
+        "proposed_next": "Patch `random_positions` to combine the sampled loop and off-diagonal positions, then add or adjust focused assertions for topology ablation and matching invariants.",
+        "status": "continue",
+        "summary": "Located the matched-control bug: random edge positions are sampled but discarded, leaving `random_topology` on the biological topology."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 36096,
+        "input_tokens": 46746,
+        "output_tokens": 615,
+        "reasoning_output_tokens": 136
+      },
+      "wall_seconds": 24.017
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02808035,
+        "patch": 0.13761332,
+        "reason": 0.01700374,
+        "search": 0.09491899,
+        "stop": 0.21217982,
+        "test": 0.05103559,
+        "verify": 0.45916818
+      },
+      "repository_after": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test",
+          "test",
+          "test"
+        ],
+        "evidence": [
+          "`git diff -- flywire_review/reservoir.py tests/test_reservoir.py` shows the current change still sets `random_positions = positions.copy()`, with duplicated `random_weights = weights.copy()`; sampled random positions remain unused.",
+          "`pytest -q tests/test_reservoir.py` could not run: `pytest` is unavailable.",
+          "`python3 -m unittest tests.test_reservoir` could not run because `numpy` is not installed."
+        ],
+        "proposed_next": "Patch `random_positions` to concatenate `random_loops` and `random_nonloops`, remove the duplicate weight assignment, then run the focused tests in an environment with dependencies installed.",
+        "status": "continue",
+        "summary": "Verification confirms the random-topology ablation is not yet fixed, and focused tests are blocked by missing pytest/numpy dependencies."
+      },
+      "selected_action": "verify",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 47104,
+        "input_tokens": 53822,
+        "output_tokens": 673,
+        "reasoning_output_tokens": 96
+      },
+      "wall_seconds": 23.411
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0046386,
+        "patch": 0.19476669,
+        "reason": 0.01067571,
+        "search": 0.45445889,
+        "stop": 0.22500139,
+        "test": 0.05872645,
+        "verify": 0.05173226
+      },
+      "repository_after": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "Listed matching files: `flywire_review/reservoir.py`, `tests/test_reservoir.py`.",
+          "Symbol search found sampled `random_loops` and `random_nonloops` at `flywire_review/reservoir.py:282-284`, but `random_positions = positions.copy()` at line 285; `random_topology` is populated at line 289.",
+          "Tests reference `random_topology` at `tests/test_reservoir.py:101,109,120,155,203-205`."
+        ],
+        "proposed_next": "Consider a patch action replacing `random_positions = positions.copy()` with the sampled loop/off-diagonal positions and removing any duplicate weight assignment.",
+        "status": "continue",
+        "summary": "Completed the bounded repository search step and located the unused random-topology samples and related test references; no files were edited and no tests were run."
+      },
+      "selected_action": "search",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 26923,
+        "output_tokens": 394,
+        "reasoning_output_tokens": 40
+      },
+      "wall_seconds": 14.758
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0030438,
+        "patch": 0.21522406,
+        "reason": 0.0044316,
+        "search": 0.70894482,
+        "stop": 0.01412912,
+        "test": 0.04706655,
+        "verify": 0.00716004
+      },
+      "repository_after": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg -n \"random_positions|random_loops|random_nonloops|random_topology\" flywire_review/reservoir.py tests/test_reservoir.py` found sampled positions at `reservoir.py:282-284`, followed by `random_positions = positions.copy()` at line 285.",
+          "`reservoir.py:289` populates `random_topology` using the copied biological positions; tests reference this control at `tests/test_reservoir.py:101,109,120,155,203-205`.",
+          "No files were edited and no tests were run."
+        ],
+        "proposed_next": "Patch `random_positions` to concatenate `random_loops` and `random_nonloops`, then remove any duplicate assignment if present.",
+        "status": "continue",
+        "summary": "Completed the bounded search step and confirmed that sampled random positions are discarded while the random-topology control retains biological edge positions."
+      },
+      "selected_action": "search",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27340,
+        "output_tokens": 378,
+        "reasoning_output_tokens": 43
+      },
+      "wall_seconds": 14.524
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01135104,
+        "patch": 0.09566583,
+        "reason": 0.0106743,
+        "search": 0.56543202,
+        "stop": 0.25881507,
+        "test": 0.02344749,
+        "verify": 0.03461426
+      },
+      "repository_after": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg -n \"random_positions|random_loops|random_nonloops|random_topology\" flywire_review/reservoir.py tests/test_reservoir.py` found sampled positions at `flywire_review/reservoir.py:282-284`, but line 285 still sets `random_positions = positions.copy()`.",
+          "`flywire_review/reservoir.py:289` applies random weights at copied biological positions; tests reference this control at `tests/test_reservoir.py:101,109,120,155,203-205`.",
+          "No files were edited and no tests were run."
+        ],
+        "proposed_next": "Consider a patch action replacing `random_positions = positions.copy()` with the sampled loop and off-diagonal positions, removing any duplicate weight assignment if present.",
+        "status": "continue",
+        "summary": "Completed the bounded search step and confirmed that sampled random positions are discarded while the random-topology control retains biological edge positions."
+      },
+      "selected_action": "search",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27831,
+        "output_tokens": 372,
+        "reasoning_output_tokens": 18
+      },
+      "wall_seconds": 22.547
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01854166,
+        "patch": 0.20022251,
+        "reason": 0.01392825,
+        "search": 0.38184622,
+        "stop": 0.28639174,
+        "test": 0.0034912,
+        "verify": 0.09557843
+      },
+      "repository_after": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "Ran `rg -n \"random_positions|random_loops|random_nonloops|random_topology\" flywire_review/reservoir.py tests/test_reservoir.py`.",
+          "`flywire_review/reservoir.py:282-284` samples `random_loops` and `random_nonloops`, but `:285` still assigns `random_positions = positions.copy()`.",
+          "`flywire_review/reservoir.py:289` populates `random_topology` using the copied biological positions; related tests are at `tests/test_reservoir.py:101,109,120,155,203-205`.",
+          "No files were edited and no tests were run."
+        ],
+        "proposed_next": "Patch `random_positions` to combine the sampled loop and off-diagonal positions, then verify the focused control assertions.",
+        "status": "continue",
+        "summary": "Completed the bounded search step and confirmed sampled random positions are discarded while the random-topology control retains biological edge positions."
+      },
+      "selected_action": "search",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 25088,
+        "input_tokens": 28286,
+        "output_tokens": 334,
+        "reasoning_output_tokens": 30
+      },
+      "wall_seconds": 15.691
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0139235,
+        "patch": 0.04125289,
+        "reason": 0.00518315,
+        "search": 0.06880922,
+        "stop": 0.84232949,
+        "test": 0.00501932,
+        "verify": 0.02348242
+      },
+      "repository_after": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 802,
+        "diff_sha256": "313f546aad7e59f3a9356042ca11bb4accf3350e560ea4034f49dc607003ae84",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo",
+        "status": [
+          " M flywire_review/reservoir.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "`flywire_review/reservoir.py:282-285` samples random loop and off-diagonal positions but discards them with `random_positions = positions.copy()`.",
+          "`flywire_review/reservoir.py:289` therefore places random weights on biological edge positions.",
+          "Focused tests remain unavailable because `pytest` and `numpy` are not installed."
+        ],
+        "proposed_next": "Patch `random_positions` to concatenate `random_loops` and `random_nonloops`, remove duplicate assignments if present, then run focused tests with dependencies installed.",
+        "status": "continue",
+        "summary": "The matched random-topology control remains unfixed: sampled random positions are unused, so biological topology is not ablated. No tools were called and no files were edited in this stop step."
+      },
+      "selected_action": "stop",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 14180,
+        "output_tokens": 211,
+        "reasoning_output_tokens": 42
+      },
+      "wall_seconds": 10.317
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 174336,
+    "input_tokens": 225128,
+    "output_tokens": 2977,
+    "reasoning_output_tokens": 405
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": false,
+    "returncode": 1,
+    "reward": 0.0,
+    "stderr_tail": "actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... FAIL\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... FAIL\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n======================================================================\nFAIL: test_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo/tests/test_reservoir.py\", line 109, in test_controls_match_size_weight_multiset_and_radius\n    self.assertFalse(np.array_equal(controls[\"random_topology\"].raw_matrix, raw))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n\n======================================================================\nFAIL: test_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/tmp/bugbrain-live-eval/observation_only/random-topology-null/repo/tests/test_reservoir.py\", line 122, in test_matched_projector_is_deterministic_and_topology_sensitive\n    self.assertFalse(np.allclose(first, shuffled))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 30 tests in 0.448s\n\nFAILED (failures=2)\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.571
+  }
+}

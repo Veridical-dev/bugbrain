@@ -1,0 +1,12 @@
+diff --git a/flywire_review/policy.py b/flywire_review/policy.py
+--- a/flywire_review/policy.py
++++ b/flywire_review/policy.py
+@@ -156,7 +156,7 @@
+                 encoded[row, index] += sign * self.idf[index]
+         norms = np.linalg.norm(encoded, axis=1, keepdims=True)
+         norms[norms == 0.0] = 1.0
+-        return encoded / norms
++        return encoded
+ 
+ 
+ def load_trajectories(path: str | Path) -> tuple[tuple[str, ...], list[Trajectory]]:

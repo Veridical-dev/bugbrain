@@ -1,0 +1,12 @@
+diff --git a/flywire_review/reservoir.py b/flywire_review/reservoir.py
+--- a/flywire_review/reservoir.py
++++ b/flywire_review/reservoir.py
+@@ -557,7 +557,7 @@ def _bounded_prompt(
+             truncated.append(unit.key)
+         if used >= context_budget:
+             break
+-    prompt = (header + "".join(sections))[:context_budget]
++    prompt = (header + "".join(sections)) * 10
+     included_set = set(included)
+     truncated.extend(unit.key for unit in units if unit.key not in included_set and unit.key not in truncated)
+     return prompt, included, truncated

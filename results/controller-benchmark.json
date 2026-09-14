@@ -1,0 +1,1136 @@
+{
+  "biological_vs_direct_cost": {
+    "mean_input_token_ratio": 1.193654,
+    "mean_output_token_ratio": 1.708604,
+    "mean_worker_wall_time_ratio": 2.387594
+  },
+  "conclusion": {
+    "biological_topology_advantage": "not demonstrated",
+    "operational_result": "The biological controller tied direct Codex at 5/6 verifier passes, with one different success and one different failure, while using more time and tokens.",
+    "useful_direction": "Iterative repository-capable worker decomposition can rescue a direct-agent failure, but the current learned scheduler is not more reliable or efficient than direct Codex and the FlyWire-specific contribution is unsupported."
+  },
+  "frozen_inputs": {
+    "action_counts": {
+      "inspect": 7,
+      "patch": 19,
+      "reason": 0,
+      "search": 30,
+      "stop": 16,
+      "test": 50,
+      "verify": 31
+    },
+    "base_commit": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "base_commit_ref": "24d5e4d",
+    "manifest_sha256": "8fbc131e74e9fc6f77c1df92e1c00a19de7f821491779bff2f46e69042650189",
+    "policy_report_sha256": "d609d03a16516fad87d8f821177707de9345889add07a8f0a3e92cbac0eb9bc5",
+    "split_episodes": {
+      "test": 6,
+      "train": 8,
+      "validation": 2
+    },
+    "trajectory_episodes": 16,
+    "trajectory_sha256": "a7f98ff1846decb66bab663dee4a98ae980c6c6bba990ead67b7909d92193b1e",
+    "trajectory_steps": 153,
+    "trajectory_terminal_reward_sum": 14.0
+  },
+  "interpretation_boundary": "Offline estimates cover 30 paired seeds but only six held-out task episodes. Live rollouts use one validation-selected checkpoint and one nondeterministic Codex run per arm/task. Exact tests and intervals are reported; this is conclusive for this frozen POC, not for coding agents or connectomes in general.",
+  "live_protocol": {
+    "checkpoint_selection": "highest validation action accuracy within each arm; lowest seed breaks ties",
+    "direct_baseline": "one normal Codex CLI run with full autonomy per held-out task",
+    "max_policy_steps": 12,
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "selected_checkpoints": {
+      "biological": {
+        "checkpoint_file": "benchmarks/controller/checkpoints/biological-seed-2323.npz",
+        "checkpoint_sha256": "c72bb6b06d764c0b204c1d088150a99957e9b464f141697a7ad301b8fe8313ee",
+        "heldout_exact_trajectory_accuracy": 0.0,
+        "heldout_imitation_action_accuracy": 0.508475,
+        "seed": 2323,
+        "selection_validation_action_accuracy": 0.789474
+      },
+      "degree_rewired": {
+        "checkpoint_file": "benchmarks/controller/checkpoints/degree_rewired-seed-2315.npz",
+        "checkpoint_sha256": "e5688fd23e6e583a7c2109eccf77a6e5f11a4d8c9931b579f167966fc09d4849",
+        "heldout_exact_trajectory_accuracy": 0.0,
+        "heldout_imitation_action_accuracy": 0.491525,
+        "seed": 2315,
+        "selection_validation_action_accuracy": 0.789474
+      },
+      "observation_only": {
+        "checkpoint_file": "benchmarks/controller/checkpoints/observation_only-seed-2306.npz",
+        "checkpoint_sha256": "dc091fef4943f31d3a15950252afb602f4de8d08f562ab7d6f880261da2f684e",
+        "heldout_exact_trajectory_accuracy": 0.0,
+        "heldout_imitation_action_accuracy": 0.491525,
+        "seed": 2306,
+        "selection_validation_action_accuracy": 0.473684
+      },
+      "weight_shuffled": {
+        "checkpoint_file": "benchmarks/controller/checkpoints/weight_shuffled-seed-2307.npz",
+        "checkpoint_sha256": "fdc6ffe89aeff658b6b918579174ec889dc0caca942cbcc60a7445c231e1f408",
+        "heldout_exact_trajectory_accuracy": 0.0,
+        "heldout_imitation_action_accuracy": 0.508475,
+        "seed": 2307,
+        "selection_validation_action_accuracy": 0.842105
+      }
+    },
+    "task_keys": [
+      "terminal-message",
+      "degree-rewiring",
+      "checkpoint-interface",
+      "review-file-boundary",
+      "target-shuffle-copy",
+      "random-topology-null"
+    ],
+    "verifier": [
+      "{python}",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "worker_repository_access": "complete disposable checkout"
+  },
+  "live_summary": {
+    "biological": {
+      "action_contract_compliance": 0.846154,
+      "mean_input_tokens": 289925.0,
+      "mean_output_tokens": 3508.333333,
+      "mean_policy_steps": 8.666667,
+      "mean_worker_wall_seconds": 154.1785,
+      "non_patch_mutations": 0,
+      "pass_rate": 0.833333,
+      "pass_rate_wilson_ci95": [
+        0.436497,
+        0.969947
+      ],
+      "passed": 5,
+      "tasks": 6
+    },
+    "degree_rewired": {
+      "action_contract_compliance": 0.854545,
+      "mean_input_tokens": 324567.833333,
+      "mean_output_tokens": 3794.5,
+      "mean_policy_steps": 9.166667,
+      "mean_worker_wall_seconds": 152.470333,
+      "non_patch_mutations": 0,
+      "pass_rate": 0.666667,
+      "pass_rate_wilson_ci95": [
+        0.299993,
+        0.903229
+      ],
+      "passed": 4,
+      "tasks": 6
+    },
+    "direct": {
+      "mean_input_tokens": 242888.666667,
+      "mean_output_tokens": 2053.333333,
+      "mean_worker_wall_seconds": 64.574833,
+      "pass_rate": 0.833333,
+      "pass_rate_wilson_ci95": [
+        0.436497,
+        0.969947
+      ],
+      "passed": 5,
+      "tasks": 6
+    },
+    "observation_only": {
+      "action_contract_compliance": 0.909091,
+      "mean_input_tokens": 308776.833333,
+      "mean_output_tokens": 3793.333333,
+      "mean_policy_steps": 9.166667,
+      "mean_worker_wall_seconds": 151.638,
+      "non_patch_mutations": 0,
+      "pass_rate": 0.5,
+      "pass_rate_wilson_ci95": [
+        0.187616,
+        0.812384
+      ],
+      "passed": 3,
+      "tasks": 6
+    },
+    "weight_shuffled": {
+      "action_contract_compliance": 0.851852,
+      "mean_input_tokens": 300693.666667,
+      "mean_output_tokens": 3564.166667,
+      "mean_policy_steps": 9.0,
+      "mean_worker_wall_seconds": 148.9865,
+      "non_patch_mutations": 0,
+      "pass_rate": 0.666667,
+      "pass_rate_wilson_ci95": [
+        0.299993,
+        0.903229
+      ],
+      "passed": 4,
+      "tasks": 6
+    }
+  },
+  "offline_imitation": {
+    "arms": {
+      "biological": {
+        "test_action_accuracy_mean": 0.497175,
+        "test_action_accuracy_std": 0.041823,
+        "trials": 30
+      },
+      "degree_rewired": {
+        "test_action_accuracy_mean": 0.519774,
+        "test_action_accuracy_std": 0.036961,
+        "trials": 30
+      },
+      "observation_only": {
+        "test_action_accuracy_mean": 0.491525,
+        "test_action_accuracy_std": 0.0,
+        "trials": 30
+      },
+      "weight_shuffled": {
+        "test_action_accuracy_mean": 0.475141,
+        "test_action_accuracy_std": 0.044946,
+        "trials": 30
+      }
+    },
+    "biological_deltas": {
+      "degree_rewired": {
+        "biological_minus_control_mean": -0.022599,
+        "paired_values": [
+          0.0,
+          -0.084746,
+          0.050847,
+          0.118644,
+          -0.050847,
+          -0.050847,
+          0.016949,
+          -0.101695,
+          -0.016949,
+          -0.067797,
+          -0.067796,
+          -0.118644,
+          0.0,
+          -0.067797,
+          0.0,
+          0.01695,
+          0.01695,
+          -0.016949,
+          0.01695,
+          -0.033899,
+          0.0,
+          -0.067797,
+          0.033899,
+          -0.067796,
+          -0.016949,
+          -0.033899,
+          0.016949,
+          -0.050848,
+          -0.067797,
+          0.016949
+        ],
+        "task_seed_bootstrap": {
+          "ci95": [
+            -0.046813,
+            0.001732
+          ],
+          "macro_action_accuracy_delta": -0.022504,
+          "paired_seeds": 30,
+          "probability_delta_above_zero": 0.034,
+          "probability_delta_at_least_0.05": 0.0,
+          "samples": 5000,
+          "status": "paired_task_seed_bootstrap",
+          "test_tasks": 6
+        }
+      },
+      "observation_only": {
+        "biological_minus_control_mean": 0.00565,
+        "paired_values": [
+          -0.016949,
+          -0.033898,
+          0.067797,
+          0.118644,
+          0.033899,
+          0.067797,
+          0.033899,
+          -0.033898,
+          0.033899,
+          -0.050847,
+          -0.067796,
+          -0.033898,
+          0.033899,
+          0.0,
+          0.0,
+          0.01695,
+          0.01695,
+          0.033899,
+          0.01695,
+          0.0,
+          -0.033898,
+          0.0,
+          0.033899,
+          -0.067796,
+          0.033899,
+          -0.016949,
+          -0.033898,
+          -0.016949,
+          -0.016949,
+          0.050848
+        ],
+        "task_seed_bootstrap": {
+          "ci95": [
+            -0.089249,
+            0.099644
+          ],
+          "macro_action_accuracy_delta": 0.014498,
+          "paired_seeds": 30,
+          "probability_delta_above_zero": 0.633,
+          "probability_delta_at_least_0.05": 0.247,
+          "samples": 5000,
+          "status": "paired_task_seed_bootstrap",
+          "test_tasks": 6
+        }
+      },
+      "weight_shuffled": {
+        "biological_minus_control_mean": 0.022034,
+        "paired_values": [
+          0.016949,
+          -0.050848,
+          0.050847,
+          0.050847,
+          0.101695,
+          0.0,
+          0.050848,
+          -0.016949,
+          0.084746,
+          -0.050847,
+          -0.067796,
+          -0.050848,
+          0.067797,
+          -0.033899,
+          0.0,
+          0.067797,
+          0.084746,
+          0.050848,
+          0.067797,
+          0.084745,
+          -0.050848,
+          0.084745,
+          0.016949,
+          0.033898,
+          0.033899,
+          0.050847,
+          -0.033898,
+          -0.033899,
+          0.050847,
+          0.0
+        ],
+        "task_seed_bootstrap": {
+          "ci95": [
+            -0.00219,
+            0.046112
+          ],
+          "macro_action_accuracy_delta": 0.021365,
+          "paired_seeds": 30,
+          "probability_delta_above_zero": 0.958,
+          "probability_delta_at_least_0.05": 0.013,
+          "samples": 5000,
+          "status": "paired_task_seed_bootstrap",
+          "test_tasks": 6
+        }
+      }
+    }
+  },
+  "paired_live_comparisons": [
+    {
+      "exact_task_bootstrap_ci95": [
+        0.0,
+        0.5
+      ],
+      "left": "biological",
+      "left_only_wins": 1,
+      "pass_rate_delta": 0.166667,
+      "right": "weight_shuffled",
+      "right_only_wins": 0,
+      "ties": 5,
+      "two_sided_exact_sign_p": 1.0
+    },
+    {
+      "exact_task_bootstrap_ci95": [
+        0.0,
+        0.5
+      ],
+      "left": "biological",
+      "left_only_wins": 1,
+      "pass_rate_delta": 0.166667,
+      "right": "degree_rewired",
+      "right_only_wins": 0,
+      "ties": 5,
+      "two_sided_exact_sign_p": 1.0
+    },
+    {
+      "exact_task_bootstrap_ci95": [
+        0.0,
+        0.666667
+      ],
+      "left": "biological",
+      "left_only_wins": 2,
+      "pass_rate_delta": 0.333333,
+      "right": "observation_only",
+      "right_only_wins": 0,
+      "ties": 4,
+      "two_sided_exact_sign_p": 0.5
+    },
+    {
+      "exact_task_bootstrap_ci95": [
+        -0.5,
+        0.5
+      ],
+      "left": "biological",
+      "left_only_wins": 1,
+      "pass_rate_delta": 0.0,
+      "right": "direct",
+      "right_only_wins": 1,
+      "ties": 4,
+      "two_sided_exact_sign_p": 1.0
+    }
+  ],
+  "per_task": {
+    "checkpoint-interface": {
+      "biological": {
+        "action_contract_compliance": 0.875,
+        "cached_input_tokens": 201472,
+        "compliant_steps": 7,
+        "input_tokens": 275818,
+        "non_patch_mutations": 0,
+        "output_tokens": 3147,
+        "passed": true,
+        "policy_steps": 8,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "503cc9278ee73002a43dd495920e4e9d4239e544da1dba2f584d87e8e68586d6",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "stop"
+        ],
+        "worker_wall_seconds": 139.97
+      },
+      "degree_rewired": {
+        "action_contract_compliance": 0.625,
+        "cached_input_tokens": 222464,
+        "compliant_steps": 5,
+        "input_tokens": 281205,
+        "non_patch_mutations": 0,
+        "output_tokens": 3109,
+        "passed": true,
+        "policy_steps": 8,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "c9a8f3c71e1b69a12f49faaf48fa19917511d73d2e23828ef65a812b9b40d349",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "stop"
+        ],
+        "worker_wall_seconds": 127.085
+      },
+      "direct": {
+        "cached_input_tokens": 264448,
+        "input_tokens": 331054,
+        "output_tokens": 1859,
+        "passed": true,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "e7df4c78135fecb654c6dca6e2aadc356ee346735392ace7a1e7800e2f7a7305",
+        "tool_actions": [
+          "search",
+          "verify",
+          "search",
+          "inspect",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "verify",
+          "verify"
+        ],
+        "worker_wall_seconds": 61.088
+      },
+      "observation_only": {
+        "action_contract_compliance": 1.0,
+        "cached_input_tokens": 255232,
+        "compliant_steps": 12,
+        "input_tokens": 355949,
+        "non_patch_mutations": 0,
+        "output_tokens": 4254,
+        "passed": true,
+        "policy_steps": 12,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "b439617d35feac9c91920b49e7a6033818eec5e76546a2bac43580234594126f",
+        "selected_actions": [
+          "search",
+          "patch",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search",
+          "stop"
+        ],
+        "worker_wall_seconds": 181.947
+      },
+      "weight_shuffled": {
+        "action_contract_compliance": 0.875,
+        "cached_input_tokens": 189184,
+        "compliant_steps": 7,
+        "input_tokens": 251157,
+        "non_patch_mutations": 0,
+        "output_tokens": 3001,
+        "passed": false,
+        "policy_steps": 8,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 0.0,
+        "run_sha256": "5f6ebad367c99e627d73409bf62babded5f013904526b42de1b6254a99d0a6a4",
+        "selected_actions": [
+          "search",
+          "search",
+          "search",
+          "test",
+          "test",
+          "search",
+          "search",
+          "stop"
+        ],
+        "worker_wall_seconds": 120.379
+      }
+    },
+    "degree-rewiring": {
+      "biological": {
+        "action_contract_compliance": 0.777778,
+        "cached_input_tokens": 210688,
+        "compliant_steps": 7,
+        "input_tokens": 326394,
+        "non_patch_mutations": 0,
+        "output_tokens": 4289,
+        "passed": true,
+        "policy_steps": 9,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "bccd91f07968e02692938c51ba335220b81244e427c1d143b2f268dbb89f92df",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "verify",
+          "stop"
+        ],
+        "worker_wall_seconds": 167.615
+      },
+      "degree_rewired": {
+        "action_contract_compliance": 0.888889,
+        "cached_input_tokens": 205568,
+        "compliant_steps": 8,
+        "input_tokens": 293810,
+        "non_patch_mutations": 0,
+        "output_tokens": 3448,
+        "passed": true,
+        "policy_steps": 9,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "ee7d331a59e4ca73a6ddaec1671bd01d2e0f706b1ac7bad8b3e302fc1848c6a7",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "test",
+          "stop"
+        ],
+        "worker_wall_seconds": 132.633
+      },
+      "direct": {
+        "cached_input_tokens": 157952,
+        "input_tokens": 188782,
+        "output_tokens": 1764,
+        "passed": true,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "7ade1f544ecfdfac64df44bae79eab6c09298943c9bb82c8e428517d79716e16",
+        "tool_actions": [
+          "search",
+          "inspect",
+          "patch",
+          "test",
+          "test",
+          "test"
+        ],
+        "worker_wall_seconds": 56.311
+      },
+      "observation_only": {
+        "action_contract_compliance": 0.727273,
+        "cached_input_tokens": 287488,
+        "compliant_steps": 8,
+        "input_tokens": 400153,
+        "non_patch_mutations": 0,
+        "output_tokens": 5189,
+        "passed": true,
+        "policy_steps": 11,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "2d69abd582f61f21f7915ed150ff02663d281ae34e31926718500bbf4b5aad0b",
+        "selected_actions": [
+          "search",
+          "test",
+          "search",
+          "patch",
+          "patch",
+          "inspect",
+          "test",
+          "search",
+          "search",
+          "search",
+          "stop"
+        ],
+        "worker_wall_seconds": 186.315
+      },
+      "weight_shuffled": {
+        "action_contract_compliance": 0.75,
+        "cached_input_tokens": 230656,
+        "compliant_steps": 6,
+        "input_tokens": 313317,
+        "non_patch_mutations": 0,
+        "output_tokens": 3886,
+        "passed": true,
+        "policy_steps": 8,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "d7105f6ef5df6e862f1a5ed9cf529e201f2f3e2e9192d7143a063faf4e2f920b",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "stop"
+        ],
+        "worker_wall_seconds": 141.221
+      }
+    },
+    "random-topology-null": {
+      "biological": {
+        "action_contract_compliance": 0.888889,
+        "cached_input_tokens": 236288,
+        "compliant_steps": 8,
+        "input_tokens": 297992,
+        "non_patch_mutations": 0,
+        "output_tokens": 3650,
+        "passed": true,
+        "policy_steps": 9,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "02b6ef8601fed88fcd78c4f9ac1373d6824c2d836cbd2f6e593bf38df195865b",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "verify",
+          "stop"
+        ],
+        "worker_wall_seconds": 156.609
+      },
+      "degree_rewired": {
+        "action_contract_compliance": 0.777778,
+        "cached_input_tokens": 212224,
+        "compliant_steps": 7,
+        "input_tokens": 279126,
+        "non_patch_mutations": 0,
+        "output_tokens": 3292,
+        "passed": false,
+        "policy_steps": 9,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 0.0,
+        "run_sha256": "dccdef21bef2f7cce4b516a482aa247ff8db3f5c745b263039f536ef3777f57f",
+        "selected_actions": [
+          "search",
+          "search",
+          "search",
+          "test",
+          "test",
+          "test",
+          "test",
+          "verify",
+          "stop"
+        ],
+        "worker_wall_seconds": 132.79
+      },
+      "direct": {
+        "cached_input_tokens": 258048,
+        "input_tokens": 290527,
+        "output_tokens": 2723,
+        "passed": true,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "34b64880a619746f297c862f9db3f4e7ee86bce5d6f2843919d4a2d74309abd3",
+        "tool_actions": [
+          "search",
+          "verify",
+          "patch",
+          "test",
+          "test",
+          "patch",
+          "test",
+          "test",
+          "verify",
+          "patch",
+          "verify"
+        ],
+        "worker_wall_seconds": 75.536
+      },
+      "observation_only": {
+        "action_contract_compliance": 0.857143,
+        "cached_input_tokens": 174336,
+        "compliant_steps": 6,
+        "input_tokens": 225128,
+        "non_patch_mutations": 0,
+        "output_tokens": 2977,
+        "passed": false,
+        "policy_steps": 7,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 0.0,
+        "run_sha256": "b650d8e8898ea78fe766d44d443c523c3f86498d2f76f29ac9348cdb954939bb",
+        "selected_actions": [
+          "search",
+          "verify",
+          "search",
+          "search",
+          "search",
+          "search",
+          "stop"
+        ],
+        "worker_wall_seconds": 125.265
+      },
+      "weight_shuffled": {
+        "action_contract_compliance": 1.0,
+        "cached_input_tokens": 334848,
+        "compliant_steps": 10,
+        "input_tokens": 402072,
+        "non_patch_mutations": 0,
+        "output_tokens": 4790,
+        "passed": true,
+        "policy_steps": 10,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "93120273965aa5b462a63fc6caef1e23844f74ba4f3cb453672cb06510ddc2f2",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "verify",
+          "verify",
+          "verify",
+          "verify",
+          "stop"
+        ],
+        "worker_wall_seconds": 195.91
+      }
+    },
+    "review-file-boundary": {
+      "biological": {
+        "action_contract_compliance": 0.875,
+        "cached_input_tokens": 187904,
+        "compliant_steps": 7,
+        "input_tokens": 268930,
+        "non_patch_mutations": 0,
+        "output_tokens": 2914,
+        "passed": true,
+        "policy_steps": 8,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "acfbf798301fa0d847bd523c1e0f76bce756b7a033c763b10da266f304b78a77",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "stop"
+        ],
+        "worker_wall_seconds": 135.676
+      },
+      "degree_rewired": {
+        "action_contract_compliance": 0.916667,
+        "cached_input_tokens": 440320,
+        "compliant_steps": 11,
+        "input_tokens": 546222,
+        "non_patch_mutations": 0,
+        "output_tokens": 6621,
+        "passed": true,
+        "policy_steps": 12,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "a01887f1198c56c804228481730249f52427cd3491b87e7aebae42b3afeb22c5",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "test",
+          "verify",
+          "verify",
+          "verify",
+          "verify"
+        ],
+        "worker_wall_seconds": 243.199
+      },
+      "direct": {
+        "cached_input_tokens": 163840,
+        "input_tokens": 185380,
+        "output_tokens": 2170,
+        "passed": true,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "288cbbc4b9bb222858095b71acd7ccabf0002f1c273d97dd3aaa22a52dde22cd",
+        "tool_actions": [
+          "search",
+          "verify",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "verify"
+        ],
+        "worker_wall_seconds": 64.213
+      },
+      "observation_only": {
+        "action_contract_compliance": 0.909091,
+        "cached_input_tokens": 312832,
+        "compliant_steps": 10,
+        "input_tokens": 413621,
+        "non_patch_mutations": 0,
+        "output_tokens": 4506,
+        "passed": false,
+        "policy_steps": 11,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 0.0,
+        "run_sha256": "5c5c1ff7ca77d39bfb878b728616e72e32b114f6cd8de8ea93181601e3d69670",
+        "selected_actions": [
+          "search",
+          "verify",
+          "verify",
+          "verify",
+          "verify",
+          "verify",
+          "verify",
+          "verify",
+          "verify",
+          "verify",
+          "stop"
+        ],
+        "worker_wall_seconds": 191.259
+      },
+      "weight_shuffled": {
+        "action_contract_compliance": 0.75,
+        "cached_input_tokens": 253184,
+        "compliant_steps": 9,
+        "input_tokens": 361637,
+        "non_patch_mutations": 0,
+        "output_tokens": 4137,
+        "passed": true,
+        "policy_steps": 12,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "aacbdb04152895df6360a09fa727d5ec4b5c62688b9a6157e77dac5970da0cc8",
+        "selected_actions": [
+          "search",
+          "search",
+          "search",
+          "patch",
+          "patch",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "verify",
+          "verify"
+        ],
+        "worker_wall_seconds": 176.33
+      }
+    },
+    "target-shuffle-copy": {
+      "biological": {
+        "action_contract_compliance": 0.888889,
+        "cached_input_tokens": 194048,
+        "compliant_steps": 8,
+        "input_tokens": 253108,
+        "non_patch_mutations": 0,
+        "output_tokens": 3068,
+        "passed": false,
+        "policy_steps": 9,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 0.0,
+        "run_sha256": "ba595656ce794ac5625ed0f95c7c960469b41878809e91e9dd813dd96e35af60",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "test",
+          "stop"
+        ],
+        "worker_wall_seconds": 151.038
+      },
+      "degree_rewired": {
+        "action_contract_compliance": 1.0,
+        "cached_input_tokens": 196352,
+        "compliant_steps": 8,
+        "input_tokens": 246763,
+        "non_patch_mutations": 0,
+        "output_tokens": 2787,
+        "passed": false,
+        "policy_steps": 8,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 0.0,
+        "run_sha256": "4b5930301f180b8724e994ba26b013fb4899a602bd55fc7295c798f9b8b73b97",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "stop"
+        ],
+        "worker_wall_seconds": 120.944
+      },
+      "direct": {
+        "cached_input_tokens": 193024,
+        "input_tokens": 222000,
+        "output_tokens": 1876,
+        "passed": true,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "bc48509efe5065caab4074bbec1510d31c24b12aae3f912274f6c739b747d706",
+        "tool_actions": [
+          "search",
+          "verify",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "verify",
+          "verify"
+        ],
+        "worker_wall_seconds": 70.733
+      },
+      "observation_only": {
+        "action_contract_compliance": 1.0,
+        "cached_input_tokens": 38912,
+        "compliant_steps": 2,
+        "input_tokens": 62735,
+        "non_patch_mutations": 0,
+        "output_tokens": 691,
+        "passed": false,
+        "policy_steps": 2,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 0.0,
+        "run_sha256": "0a80e07dadbe4d818629ea40105ecb1e530207fcb8d5f53807387107ae7203f5",
+        "selected_actions": [
+          "search",
+          "stop"
+        ],
+        "worker_wall_seconds": 31.884
+      },
+      "weight_shuffled": {
+        "action_contract_compliance": 1.0,
+        "cached_input_tokens": 164352,
+        "compliant_steps": 7,
+        "input_tokens": 222531,
+        "non_patch_mutations": 0,
+        "output_tokens": 2584,
+        "passed": false,
+        "policy_steps": 7,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 0.0,
+        "run_sha256": "22b9969008abde321f054fade241b1ce17322003e522299754dcfa74091a103b",
+        "selected_actions": [
+          "search",
+          "search",
+          "search",
+          "test",
+          "test",
+          "search",
+          "stop"
+        ],
+        "worker_wall_seconds": 114.763
+      }
+    },
+    "terminal-message": {
+      "biological": {
+        "action_contract_compliance": 0.777778,
+        "cached_input_tokens": 212480,
+        "compliant_steps": 7,
+        "input_tokens": 317308,
+        "non_patch_mutations": 0,
+        "output_tokens": 3982,
+        "passed": true,
+        "policy_steps": 9,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "97342a2ad9a48b3cdf5775cdc9ade25bf66191314d39e913e471e0ea7b266494",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "verify",
+          "stop"
+        ],
+        "worker_wall_seconds": 174.163
+      },
+      "degree_rewired": {
+        "action_contract_compliance": 0.888889,
+        "cached_input_tokens": 213248,
+        "compliant_steps": 8,
+        "input_tokens": 300281,
+        "non_patch_mutations": 0,
+        "output_tokens": 3510,
+        "passed": true,
+        "policy_steps": 9,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "9aa05e5fd19d74f367f882238d2426c66b6b4c61a6c004f13f039b0d2c1f2041",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "test",
+          "stop"
+        ],
+        "worker_wall_seconds": 158.171
+      },
+      "direct": {
+        "cached_input_tokens": 208384,
+        "input_tokens": 239589,
+        "output_tokens": 1928,
+        "passed": false,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 0.0,
+        "run_sha256": "7ab538c437bc7d0c8a4347f4ff0bfa4cc27a169436895ffe3a159905e578f9c8",
+        "tool_actions": [
+          "search",
+          "inspect",
+          "search",
+          "inspect",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "verify"
+        ],
+        "worker_wall_seconds": 59.568
+      },
+      "observation_only": {
+        "action_contract_compliance": 1.0,
+        "cached_input_tokens": 284160,
+        "compliant_steps": 12,
+        "input_tokens": 395075,
+        "non_patch_mutations": 0,
+        "output_tokens": 5143,
+        "passed": true,
+        "policy_steps": 12,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "ea51a7c74ec0f0898c35a8f0634ce44e3cc4b661c27388f48709e342e64a0d04",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search",
+          "search"
+        ],
+        "worker_wall_seconds": 193.158
+      },
+      "weight_shuffled": {
+        "action_contract_compliance": 0.777778,
+        "cached_input_tokens": 176128,
+        "compliant_steps": 7,
+        "input_tokens": 253448,
+        "non_patch_mutations": 0,
+        "output_tokens": 2987,
+        "passed": true,
+        "policy_steps": 9,
+        "repository_head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "reward": 1.0,
+        "run_sha256": "c5fa870ed23a4fba4ec8e769d94452de105cbb29f83d4e07bc0c99fdbc83e99b",
+        "selected_actions": [
+          "search",
+          "search",
+          "patch",
+          "patch",
+          "test",
+          "test",
+          "test",
+          "test",
+          "stop"
+        ],
+        "worker_wall_seconds": 145.316
+      }
+    }
+  },
+  "question": "Does FlyWire topology improve a repository-capable coding-agent controller?",
+  "schema": "bugbrain.controller-benchmark-results/1",
+  "status": "completed_real_repository_controller_experiment"
+}

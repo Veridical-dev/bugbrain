@@ -1,0 +1,12 @@
+diff --git a/flywire_review/diff_parser.py b/flywire_review/diff_parser.py
+--- a/flywire_review/diff_parser.py
++++ b/flywire_review/diff_parser.py
+@@ -21,7 +21,7 @@ _STOP = {
+ _RISK_PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
+     ("security/trust-boundaries", ("auth", "token", "permission", "role", "admin", "secret", "session", "cookie", "csrf", "sql", "sanitize")),
+     ("state/invariants", ("state", "cache", "transaction", "commit", "rollback", "mutable", "lifecycle", "status")),
+-    ("concurrency/ordering", ("async", "await", "lock", "mutex", "race", "thread", "queue", "atomic", "concurrent")),
++    ("concurrency/ordering", ("lock", "mutex", "race", "thread", "queue", "atomic", "concurrent")),
+     ("errors/recovery", ("error", "exception", "catch", "except", "retry", "timeout", "fallback", "abort")),
+     ("api/contracts", ("api", "request", "response", "schema", "contract", "public", "route", "endpoint", "validate")),
+     ("data/serialization", ("json", "serialize", "parse", "database", "query", "migration", "model", "dto")),

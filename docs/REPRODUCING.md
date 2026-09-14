@@ -148,3 +148,65 @@ one train and one test episode before training. Keep each repository or closely
 related task family in only one split. See [Training BugBrain](TRAINING.md) for
 the action contract, reward rules, checkpoint inference, and matched-control
 design.
+
+## 8. Reproduce the frozen real-repository controller experiment
+
+The exact 16-episode corpus, 16 mutation patches, selected checkpoints, and
+30-seed output are committed under `benchmarks/controller/` and `results/`.
+After downloading and building the FlyWire cache, retrain all paired arms:
+
+```bash
+uv run bugbrain policy-train \
+  --trajectories benchmarks/controller/trajectories.json \
+  --neurons 2048 --features 128 --readout-width 32 \
+  --epochs 80 --seeds 30 \
+  --checkpoint-dir /tmp/bugbrain-controller-policies \
+  --out /tmp/bugbrain-controller-policy-report.json
+```
+
+Prepare a fresh, deliberately broken checkout for one frozen task. The script
+checks out the experiment's base commit, applies exactly one mutation, writes a
+verifier argv file outside the repository, and refuses a mutation whose initial
+verifier unexpectedly passes:
+
+```bash
+uv run python scripts/prepare_controller_task.py \
+  --task terminal-message \
+  --out /tmp/bugbrain-replication/biological/terminal-message/repo
+```
+
+Run the published validation-selected biological checkpoint:
+
+```bash
+uv run bugbrain policy-run \
+  --checkpoint benchmarks/controller/checkpoints/biological-seed-2323.npz \
+  --repo /tmp/bugbrain-replication/biological/terminal-message/repo \
+  --goal "Fix Codex trace import so intermediate commentary does not terminate an episode." \
+  --out-dir /tmp/bugbrain-replication/biological/terminal-message/run \
+  --mode implement --max-steps 12 \
+  --model gpt-5.6-luna --reasoning-effort low \
+  --verifier-json /tmp/bugbrain-replication/biological/terminal-message/verifier.json
+```
+
+For the direct baseline, prepare a separate clone and use `direct-run` with the
+same goal, model, reasoning effort, and verifier. Live Codex execution is not
+deterministic, so a new run is a replication rather than a byte-for-byte replay.
+
+Rebuild the published compact report directly from the committed immutable run
+receipts (or substitute your replication roots):
+
+```bash
+uv run python scripts/summarize_controller_benchmark.py \
+  --manifest benchmarks/controller/manifest.json \
+  --policy-report /tmp/bugbrain-controller-policy-report.json \
+  --trajectories benchmarks/controller/trajectories.json \
+  --live-root results/controller-runs/live \
+  --direct-root results/controller-runs/direct \
+  --out /tmp/bugbrain-controller-benchmark.json
+```
+
+The published outcome is in
+[`results/controller-benchmark.json`](../results/controller-benchmark.json).
+It includes per-task pass/fail outcomes, Wilson intervals, exact paired sign
+tests, token/time costs, action-contract compliance, repository mutation audits,
+and hashes of the frozen inputs.

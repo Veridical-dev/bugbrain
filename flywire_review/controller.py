@@ -192,6 +192,11 @@ def _action_contract_compliant(selected: str, actual: Sequence[str]) -> bool:
     )
 
 
+def _sandbox_for_action(mode: str, action: str) -> str:
+    """Enforce the most important action boundary at the process sandbox."""
+    return "workspace-write" if mode == "implement" and action == "patch" else "read-only"
+
+
 def _worker_prompt(
     *,
     goal: str,
@@ -355,10 +360,10 @@ def run_policy_controller(args, policy, encoder, checkpoint: dict[str, Any]) -> 
         }
     ]
     steps: list[dict[str, Any]] = []
-    sandbox = "workspace-write" if args.mode == "implement" else "read-only"
     for step_number in range(args.max_steps):
         prediction = predict_history(policy, encoder, history)
         selected = str(prediction["next_action"])
+        sandbox = _sandbox_for_action(args.mode, selected)
         prompt = _worker_prompt(
             goal=args.goal,
             action=selected,

@@ -1,0 +1,540 @@
+{
+  "contract": {
+    "checkpoint": "/tmp/bugbrain-controller-policies/biological-seed-2323.npz",
+    "checkpoint_receipt": {
+      "arm": "biological",
+      "control_seed": null,
+      "core_sha256": "6c4ebf1942158a09f070a48a3381cb54394698c8ffff3eba0aa6cadeab2bfb90",
+      "edges": 75803,
+      "nodes": 2048,
+      "recurrence_scale": 0.92,
+      "seed": 2323,
+      "signed": true,
+      "topology_sha256": "5eb0289f32bf8e54977e47f0f63e401c8f06158d3b51bdb72d82a63a4b4b25ad"
+    },
+    "checkpoint_sha256": "c72bb6b06d764c0b204c1d088150a99957e9b464f141697a7ad301b8fe8313ee",
+    "codex_selects_tool_arguments_and_patch_content": true,
+    "controller_selects_high_level_action": true,
+    "goal": "Fix the degree-preserving graph-null construction regression.",
+    "max_steps": 12,
+    "mode": "implement",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "worker_has_complete_repository": true
+  },
+  "repository_after": {
+    "diff_chars": 0,
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+    "status": []
+  },
+  "repository_before": {
+    "diff_chars": 728,
+    "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+    "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+    "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+    "status": [
+      " M flywire_review/policy.py"
+    ]
+  },
+  "reward": 1.0,
+  "schema": "bugbrain.live-controller/1",
+  "status": "completed",
+  "steps": [
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.06151081,
+        "patch": 0.00500743,
+        "reason": 0.00024015,
+        "search": 0.71965579,
+        "stop": 0.0011856,
+        "test": 0.00500171,
+        "verify": 0.20739852
+      },
+      "repository_after": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [
+          "search",
+          "inspect",
+          "search",
+          "verify"
+        ],
+        "evidence": [
+          "`flywire_review/policy.py:325-337` defines `make_sparse_controls`; `degree_rewired` uses `rng.integers(0, core.node_count, size=core.edge_count)` for targets.",
+          "The adjacent comment and metadata claim preservation of every target in-degree, but independently sampled targets do not preserve the original target in-degree distribution.",
+          "`tests/test_policy.py:182-200` explicitly checks source and target degree preservation; `docs/TRAINING.md:109-114` documents the same contract.",
+          "`git status --short` shows an existing modification in `flywire_review/policy.py`; no files were changed and no tests were run."
+        ],
+        "proposed_next": "Patch `make_sparse_controls` so rewired targets are a seeded permutation of the original target multiset (while retaining source slots and weight multiset), then run the focused policy test.",
+        "status": "continue",
+        "summary": "Located the regression in `flywire_review/policy.py`: degree-preserving rewiring currently samples target IDs independently, violating target in-degree preservation despite the documented and tested contract."
+      },
+      "selected_action": "search",
+      "step": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 40192,
+        "input_tokens": 75368,
+        "output_tokens": 849,
+        "reasoning_output_tokens": 154
+      },
+      "wall_seconds": 25.683
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.12305511,
+        "patch": 0.03532305,
+        "reason": 1.78e-05,
+        "search": 0.51073535,
+        "stop": 0.00023816,
+        "test": 0.01742476,
+        "verify": 0.31320576
+      },
+      "repository_after": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "repository_before": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "search"
+        ],
+        "evidence": [
+          "`rg --files` located `flywire_review/policy.py`, `tests/test_policy.py`, `tests/test_poc.py`, and related documentation.",
+          "`rg -n` found `make_sparse_controls` at `flywire_review/policy.py:325`, with documented target in-degree preservation at lines 332 and 382.",
+          "Tests referencing the contract are at `tests/test_policy.py:185-200` and `tests/test_poc.py:84`.",
+          "No files were edited and no tests were run."
+        ],
+        "proposed_next": "Patch `flywire_review/policy.py` so degree-rewired targets preserve the original target multiset, then run the focused policy tests.",
+        "status": "continue",
+        "summary": "Searched repository paths and symbols relevant to the degree-preserving graph-null construction regression. Located the implementation, tests, and documentation describing source/target degree preservation."
+      },
+      "selected_action": "search",
+      "step": 1,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 12032,
+        "input_tokens": 27032,
+        "output_tokens": 429,
+        "reasoning_output_tokens": 58
+      },
+      "wall_seconds": 13.562
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.10619621,
+        "patch": 0.33036351,
+        "reason": 1.035e-05,
+        "search": 0.23045459,
+        "stop": 0.00032464,
+        "test": 0.19686317,
+        "verify": 0.13578752
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 728,
+        "diff_sha256": "230530ba7acca431ffc97ad9f3cd2584898c67516510cbdc525bb82a8603ae82",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": [
+          " M flywire_review/policy.py"
+        ]
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "inspect",
+          "patch"
+        ],
+        "evidence": [
+          "Patched `flywire_review/policy.py` so `degree_rewired` uses `core.targets[permutation]` instead of independently sampled targets.",
+          "The seeded permutation preserves the original target in-degree multiset while retaining source slots and weight multiset.",
+          "No tests were run, per contract."
+        ],
+        "proposed_next": "Consider running the focused policy tests in a subsequent action.",
+        "status": "done",
+        "summary": "Applied the minimal degree-preserving rewiring fix."
+      },
+      "selected_action": "patch",
+      "step": 2,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 26112,
+        "input_tokens": 41664,
+        "output_tokens": 524,
+        "reasoning_output_tokens": 158
+      },
+      "wall_seconds": 17.305
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0365628,
+        "patch": 0.34519285,
+        "reason": 7.74e-06,
+        "search": 0.07921122,
+        "stop": 0.00070163,
+        "test": 0.49827246,
+        "verify": 0.0400513
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `pytest -q tests/test_policy.py -k degree`",
+          "Result: blocked because `pytest` is not installed or not on PATH (`command not found`)."
+        ],
+        "proposed_next": "Install or invoke the repository\u2019s test runner, then rerun the focused degree-preservation test.",
+        "status": "blocked",
+        "summary": "Attempted the single focused policy test, but the test runner was unavailable."
+      },
+      "selected_action": "test",
+      "step": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 26991,
+        "output_tokens": 338,
+        "reasoning_output_tokens": 90
+      },
+      "wall_seconds": 31.535
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.02082359,
+        "patch": 0.20657902,
+        "reason": 1.135e-05,
+        "search": 0.06032126,
+        "stop": 0.00318459,
+        "test": 0.66801984,
+        "verify": 0.04106036
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python -m unittest tests.test_policy`",
+          "Result: blocked because `python` is not installed or not on PATH (`command not found`)."
+        ],
+        "proposed_next": "Consider invoking an available Python interpreter (for example, `python3`) for the focused degree-preservation test.",
+        "status": "blocked",
+        "summary": "Attempted one focused policy test via the standard-library test runner, but no `python` executable is available."
+      },
+      "selected_action": "test",
+      "step": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 13056,
+        "input_tokens": 27276,
+        "output_tokens": 317,
+        "reasoning_output_tokens": 78
+      },
+      "wall_seconds": 12.633
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01729619,
+        "patch": 0.10450892,
+        "reason": 2.484e-05,
+        "search": 0.0791634,
+        "stop": 0.02294288,
+        "test": 0.66799373,
+        "verify": 0.10807004
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "test"
+        ],
+        "evidence": [
+          "Command: `python3 -m pytest -q tests/test_policy.py -k degree`",
+          "Blocked: Python 3 is available, but the `pytest` module is not installed."
+        ],
+        "proposed_next": "Install pytest or invoke the repository's configured test runner, then rerun the focused degree-preservation test.",
+        "status": "blocked",
+        "summary": "Attempted the single focused degree-preservation test with Python 3; execution was blocked because pytest is unavailable."
+      },
+      "selected_action": "test",
+      "step": 5,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 22016,
+        "input_tokens": 27518,
+        "output_tokens": 271,
+        "reasoning_output_tokens": 38
+      },
+      "wall_seconds": 14.667
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.01091979,
+        "patch": 0.0359457,
+        "reason": 4.028e-05,
+        "search": 0.08179268,
+        "stop": 0.11886858,
+        "test": 0.50860782,
+        "verify": 0.24382514
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": false,
+        "actual_actions": [],
+        "evidence": [
+          "Command: `uv run pytest -q tests/test_policy.py -k degree`",
+          "Blocked: `uv` could not initialize its cache because `/Users/lukasz/.cache/uv` is not writable."
+        ],
+        "proposed_next": "Configure a writable uv cache or use an available repository test runner, then rerun the focused degree-preservation test.",
+        "status": "blocked",
+        "summary": "Attempted one focused degree-preservation test via uv; execution was blocked by cache permissions."
+      },
+      "selected_action": "test",
+      "step": 6,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 25088,
+        "input_tokens": 27913,
+        "output_tokens": 335,
+        "reasoning_output_tokens": 74
+      },
+      "wall_seconds": 12.403
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.00524062,
+        "patch": 0.00935708,
+        "reason": 4.121e-05,
+        "search": 0.05650223,
+        "stop": 0.30114742,
+        "test": 0.31141844,
+        "verify": 0.31629299
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [
+          "verify",
+          "inspect",
+          "inspect"
+        ],
+        "evidence": [
+          "`git diff -- flywire_review/policy.py` is empty; working tree is clean.",
+          "`flywire_review/policy.py:335-336` uses `core.targets[permutation]`, preserving the target multiset.",
+          "Focused runtime invariant check was blocked because `numpy` is not installed (`ModuleNotFoundError`)."
+        ],
+        "proposed_next": "Consider installing project dependencies and running the focused degree-preservation tests.",
+        "status": "done",
+        "summary": "Inspected the implementation and confirmed the degree-preserving target permutation is present. Runtime verification could not execute because numpy is unavailable."
+      },
+      "selected_action": "verify",
+      "step": 7,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 50176,
+        "input_tokens": 58525,
+        "output_tokens": 952,
+        "reasoning_output_tokens": 263
+      },
+      "wall_seconds": 30.14
+    },
+    {
+      "call_state": "ok",
+      "error": null,
+      "probabilities": {
+        "inspect": 0.0030844,
+        "patch": 0.00254899,
+        "reason": 3.208e-05,
+        "search": 0.03588051,
+        "stop": 0.43290497,
+        "test": 0.20420018,
+        "verify": 0.32134887
+      },
+      "repository_after": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "repository_before": {
+        "diff_chars": 0,
+        "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "head": "24d5e4d88f4f2e8bcdb7966d4c7bf5816ce7e91e",
+        "path": "/private/tmp/bugbrain-live-eval/biological/degree-rewiring/repo",
+        "status": []
+      },
+      "result": {
+        "action_contract_compliant": true,
+        "actual_actions": [],
+        "evidence": [
+          "`flywire_review/policy.py:335-336` uses `core.targets[permutation]`, preserving the original target multiset.",
+          "Focused tests could not run: `pytest` is unavailable, `python` is unavailable, `pytest` module is missing under `python3`, and `uv` cache initialization is blocked by permissions.",
+          "Runtime invariant verification was also blocked because `numpy` is not installed.",
+          "Working tree was reported clean by the last verification."
+        ],
+        "proposed_next": "Install the project dependencies in a writable environment and run the focused degree-preservation tests, then the broader test suite if available.",
+        "status": "blocked",
+        "summary": "The minimal rewiring fix is present and preserves target in-degree counts by permuting the original target multiset, but execution-based verification remains blocked by missing dependencies and cache permissions."
+      },
+      "selected_action": "stop",
+      "step": 8,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 14107,
+        "output_tokens": 274,
+        "reasoning_output_tokens": 94
+      },
+      "wall_seconds": 9.687
+    }
+  ],
+  "total_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 210688,
+    "input_tokens": 326394,
+    "output_tokens": 4289,
+    "reasoning_output_tokens": 1007
+  },
+  "verifier": {
+    "argv": [
+      "/Users/lukasz/Documents/GitHub/veridical-hq/open-source/bugbrain/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "passed": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "stderr_tail": "mpt_grants_repository_capacity_but_one_action) ... ok\ntest_biological_route_is_deterministic_and_covers_every_unit (test_poc.FlyWirePocTests.test_biological_route_is_deterministic_and_covers_every_unit) ... ok\ntest_cache_filters_and_round_trips (test_poc.FlyWirePocTests.test_cache_filters_and_round_trips) ... ok\ntest_compare_arms_produces_bounded_jaccard (test_poc.FlyWirePocTests.test_compare_arms_produces_bounded_jaccard) ... ok\ntest_diff_parser_makes_stable_units_and_risk_tags (test_poc.FlyWirePocTests.test_diff_parser_makes_stable_units_and_risk_tags) ... ok\ntest_effectome_sign_uses_primary_cotransmitter (test_poc.FlyWirePocTests.test_effectome_sign_uses_primary_cotransmitter) ... ok\ntest_frozen_input_parser_accepts_benchmark_shape (test_poc.FlyWirePocTests.test_frozen_input_parser_accepts_benchmark_shape) ... ok\ntest_prompt_context_budget_is_enforced (test_poc.FlyWirePocTests.test_prompt_context_budget_is_enforced) ... ok\ntest_target_shuffle_preserves_degrees_and_target_multiset (test_poc.FlyWirePocTests.test_target_shuffle_preserves_degrees_and_target_multiset) ... ok\ntest_codex_jsonl_import_uses_only_previous_tool_result (test_policy.ConnectomePolicyTests.test_codex_jsonl_import_uses_only_previous_tool_result) ... ok\ntest_discounted_terminal_reward_reaches_earlier_actions (test_policy.ConnectomePolicyTests.test_discounted_terminal_reward_reaches_earlier_actions) ... ok\ntest_encoder_does_not_fit_on_holdout (test_policy.ConnectomePolicyTests.test_encoder_does_not_fit_on_holdout) ... ok\ntest_end_to_end_training_updates_internal_dynamics (test_policy.ConnectomePolicyTests.test_end_to_end_training_updates_internal_dynamics) ... ok\ntest_softmax_is_stable_for_large_logits (test_policy.ConnectomePolicyTests.test_softmax_is_stable_for_large_logits) ... ok\ntest_sparse_controls_preserve_degrees_and_weight_multiset (test_policy.ConnectomePolicyTests.test_sparse_controls_preserve_degrees_and_weight_multiset) ... ok\ntest_trajectory_loader_rejects_a_missing_test_split (test_policy.ConnectomePolicyTests.test_trajectory_loader_rejects_a_missing_test_split) ... ok\ntest_trajectory_loader_validates_splits_and_actions (test_policy.ConnectomePolicyTests.test_trajectory_loader_validates_splits_and_actions) ... ok\ntest_benchmark_is_paired_across_holdouts_and_seeds (test_reservoir.ReservoirPocTests.test_benchmark_is_paired_across_holdouts_and_seeds) ... ok\ntest_controls_match_size_weight_multiset_and_radius (test_reservoir.ReservoirPocTests.test_controls_match_size_weight_multiset_and_radius) ... ok\ntest_end_to_end_split_routes_each_file_atomically (test_reservoir.ReservoirPocTests.test_end_to_end_split_routes_each_file_atomically) ... ok\ntest_feature_input_does_not_read_risk_targets (test_reservoir.ReservoirPocTests.test_feature_input_does_not_read_risk_targets) ... ok\ntest_matched_projector_is_deterministic_and_topology_sensitive (test_reservoir.ReservoirPocTests.test_matched_projector_is_deterministic_and_topology_sensitive) ... ok\ntest_truth_evidence_is_a_post_route_colocation_grade (test_reservoir.ReservoirPocTests.test_truth_evidence_is_a_post_route_colocation_grade) ... ok\ntest_agentic_prompt_replaces_the_prompt_only_context_boundary (test_standalone.StandaloneReviewTests.test_agentic_prompt_replaces_the_prompt_only_context_boundary) ... ok\ntest_comparison_rejects_different_reviewed_heads (test_standalone.StandaloneReviewTests.test_comparison_rejects_different_reviewed_heads) ... ok\ntest_comparison_requires_complete_explicit_grades (test_standalone.StandaloneReviewTests.test_comparison_requires_complete_explicit_grades) ... ok\ntest_parser_accepts_fenced_array_and_enforces_changed_pr_files (test_standalone.StandaloneReviewTests.test_parser_accepts_fenced_array_and_enforces_changed_pr_files) ... ok\ntest_repository_receipt_requires_exact_clean_head (test_standalone.StandaloneReviewTests.test_repository_receipt_requires_exact_clean_head) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 0.506s\n\nOK\n",
+    "stdout_tail": "",
+    "wall_seconds": 0.671
+  }
+}
