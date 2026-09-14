@@ -127,6 +127,30 @@ class ConnectomePolicyTests(unittest.TestCase):
         self.assertEqual(actions, DEFAULT_ACTIONS)
         self.assertEqual({episode.split for episode in episodes}, {"train", "test"})
 
+    def test_trajectory_loader_rejects_a_missing_test_split(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "trajectories.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "schema": "bugbrain.trajectories/1",
+                        "actions": list(DEFAULT_ACTIONS),
+                        "episodes": [
+                            {
+                                "key": "train-only",
+                                "split": "train",
+                                "steps": [
+                                    {"observation": {"phase": "start"}, "action": "search"}
+                                ],
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "test split"):
+                load_trajectories(path)
+
     def test_encoder_does_not_fit_on_holdout(self) -> None:
         encoder = ObservationHasher(width=32, seed=8).fit([{"phase": "train-only"}])
         before = encoder.idf.copy()
@@ -159,6 +183,8 @@ class ConnectomePolicyTests(unittest.TestCase):
         graph, annotations = synthetic_graph()
         core = build_sparse_core(graph, annotations, node_count=24)
         controls = make_sparse_controls(core, seed=19)
+        original_targets = core.targets.copy()
+        original_weights = core.weights.copy()
         rewired = controls["degree_rewired"]
         np.testing.assert_array_equal(
             np.bincount(core.sources, minlength=core.node_count),
@@ -170,6 +196,8 @@ class ConnectomePolicyTests(unittest.TestCase):
         )
         np.testing.assert_allclose(np.sort(core.weights), np.sort(rewired.weights))
         self.assertFalse(np.array_equal(core.targets, rewired.targets))
+        np.testing.assert_array_equal(core.targets, original_targets)
+        np.testing.assert_array_equal(core.weights, original_weights)
 
     def test_end_to_end_training_updates_internal_dynamics(self) -> None:
         graph, annotations = synthetic_graph()
@@ -225,6 +253,16 @@ class ConnectomePolicyTests(unittest.TestCase):
                     annotations,
                 )
                 self.assertEqual(arm_receipt["arm"], arm)
+            changed_annotations = list(annotations)
+            first = changed_annotations[0]
+            changed_annotations[0] = NeuronAnnotation(
+                root_id=first.root_id,
+                flow="intrinsic",
+                cell_type=first.cell_type,
+                neurotransmitter=first.neurotransmitter,
+            )
+            with self.assertRaisesRegex(ValueError, "interface"):
+                load_connectome_checkpoint(checkpoint, graph, changed_annotations)
         self.assertEqual(receipt["topology_sha256"], result["base_graph"]["topology_sha256"])
         self.assertIn(prediction["next_action"], DEFAULT_ACTIONS)
         self.assertEqual(prediction["history_length"], len(episodes[-1].steps))
@@ -243,6 +281,11 @@ class ConnectomePolicyTests(unittest.TestCase):
             biological["training"]["first_epoch_loss"],
         )
         self.assertGreaterEqual(biological["metrics"]["test"]["action_accuracy"], 0.5)
+        bootstrap = result["summary"]["biological_deltas"]["degree_rewired"][
+            "task_seed_bootstrap"
+        ]
+        self.assertEqual(bootstrap["test_tasks"], 1)
+        self.assertEqual(bootstrap["paired_seeds"], 1)
 
     def test_codex_jsonl_import_uses_only_previous_tool_result(self) -> None:
         events = [

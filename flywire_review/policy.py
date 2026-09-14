@@ -861,20 +861,38 @@ def _metrics(
     exact = 0
     terminal_correct = 0
     confusion = np.zeros((len(action_index), len(action_index)), dtype=np.int64)
+    per_episode: list[dict[str, Any]] = []
     for episode in episodes:
         features = encoder.transform([step.observation for step in episode.steps])
         targets = np.asarray([action_index[step.action] for step in episode.steps], dtype=np.int64)
         predictions: list[int] = []
+        episode_correct = 0
+        episode_nll = 0.0
         for target, record in zip(targets, policy.forward(features)):
             probabilities = _softmax(record["logits"])
             prediction = int(np.argmax(probabilities))
             predictions.append(prediction)
             correct += int(prediction == target)
+            episode_correct += int(prediction == target)
             count += 1
-            nll -= math.log(max(float(probabilities[target]), 1e-12))
+            item_nll = -math.log(max(float(probabilities[target]), 1e-12))
+            nll += item_nll
+            episode_nll += item_nll
             confusion[target, prediction] += 1
-        exact += int(np.array_equal(np.asarray(predictions), targets))
-        terminal_correct += int(predictions[-1] == targets[-1])
+        is_exact = int(np.array_equal(np.asarray(predictions), targets))
+        is_terminal_correct = int(predictions[-1] == targets[-1])
+        exact += is_exact
+        terminal_correct += is_terminal_correct
+        per_episode.append(
+            {
+                "key": episode.key,
+                "steps": len(targets),
+                "action_accuracy": round(episode_correct / len(targets), 6),
+                "mean_nll": round(episode_nll / len(targets), 6),
+                "exact_trajectory": bool(is_exact),
+                "terminal_action_correct": bool(is_terminal_correct),
+            }
+        )
     return {
         "episodes": len(episodes),
         "steps": count,
@@ -883,6 +901,63 @@ def _metrics(
         "exact_trajectory_accuracy": round(exact / len(episodes), 6) if episodes else None,
         "terminal_action_accuracy": round(terminal_correct / len(episodes), 6) if episodes else None,
         "confusion": confusion.tolist(),
+        "per_episode": per_episode,
+    }
+
+
+def _paired_task_seed_bootstrap(
+    trials: Sequence[dict[str, Any]],
+    control: str,
+    *,
+    samples: int = 5_000,
+    seed: int = 783,
+) -> dict[str, Any]:
+    cells: dict[str, dict[int, dict[str, float]]] = {}
+    for trial in trials:
+        arm = str(trial["arm"])
+        if arm not in {"biological", control}:
+            continue
+        cells.setdefault(arm, {})[int(trial["seed"])] = {
+            str(row["key"]): float(row["action_accuracy"])
+            for row in trial["metrics"]["test"]["per_episode"]
+        }
+    seeds = sorted(set(cells.get("biological", {})) & set(cells.get(control, {})))
+    if not seeds:
+        return {"status": "unavailable"}
+    keys = sorted(
+        set.intersection(
+            *(
+                set(cells[arm][trial_seed])
+                for arm in ("biological", control)
+                for trial_seed in seeds
+            )
+        )
+    )
+    if not keys:
+        return {"status": "unavailable"}
+    matrix = np.asarray(
+        [
+            [cells["biological"][trial_seed][key] - cells[control][trial_seed][key] for key in keys]
+            for trial_seed in seeds
+        ],
+        dtype=np.float64,
+    )
+    rng = np.random.default_rng(seed)
+    estimates = np.empty(samples, dtype=np.float64)
+    for index in range(samples):
+        sampled_seeds = rng.integers(0, len(seeds), size=len(seeds))
+        sampled_tasks = rng.integers(0, len(keys), size=len(keys))
+        estimates[index] = float(matrix[np.ix_(sampled_seeds, sampled_tasks)].mean())
+    low, high = np.quantile(estimates, [0.025, 0.975])
+    return {
+        "status": "paired_task_seed_bootstrap",
+        "test_tasks": len(keys),
+        "paired_seeds": len(seeds),
+        "samples": samples,
+        "macro_action_accuracy_delta": round(float(matrix.mean()), 6),
+        "ci95": [round(float(low), 6), round(float(high), 6)],
+        "probability_delta_above_zero": round(float(np.mean(estimates > 0.0)), 6),
+        "probability_delta_at_least_0.05": round(float(np.mean(estimates >= 0.05)), 6),
     }
 
 
@@ -916,6 +991,7 @@ def _summarize(trials: Sequence[dict[str, Any]], arms: Sequence[str]) -> dict[st
         deltas[arm] = {
             "biological_minus_control_mean": round(float(np.mean(paired)), 6),
             "paired_values": [round(value, 6) for value in paired],
+            "task_seed_bootstrap": _paired_task_seed_bootstrap(trials, arm),
         }
     return {"arms": summary, "biological_deltas": deltas}
 
