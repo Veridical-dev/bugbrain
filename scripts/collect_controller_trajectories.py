@@ -62,3 +62,5 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 
+
+# Release 12 merge canary 2 (2026-11-18).
