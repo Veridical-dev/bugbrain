@@ -7,3 +7,5 @@ __version__ = "0.3.0"
 
 # Release 12 merge canary 1 (2026-11-18).
 # Release 12 canary C4: retrigger the review (second commit).
+
+# Release 12.1 unfunded event canary (2026-11-19).
